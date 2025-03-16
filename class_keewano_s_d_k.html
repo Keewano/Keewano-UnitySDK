@@ -148,6 +148,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a3f3fd38d4d987900b2ec64ce196d5914" id="r_a3f3fd38d4d987900b2ec64ce196d5914"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f3fd38d4d987900b2ec64ce196d5914">ReportGameLanguage</a> (string language)</td></tr>
 <tr class="memdesc:a3f3fd38d4d987900b2ec64ce196d5914"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports the game language.  <br /></td></tr>
 <tr class="separator:a3f3fd38d4d987900b2ec64ce196d5914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed72b3384a06c6a62ab37c4a281b4a93" id="r_aed72b3384a06c6a62ab37c4a281b4a93"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed72b3384a06c6a62ab37c4a281b4a93">ReportOnboardingMilestone</a> (string milestone)</td></tr>
+<tr class="memdesc:aed72b3384a06c6a62ab37c4a281b4a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report that a user has reached a milestone during the onboarding (game tutorial) process.  <br /></td></tr>
+<tr class="separator:aed72b3384a06c6a62ab37c4a281b4a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcac900a769f4dddda9d65cc267a223f" id="r_adcac900a769f4dddda9d65cc267a223f"><td class="memItemLeft" align="right" valign="top"><a id="adcac900a769f4dddda9d65cc267a223f" name="adcac900a769f4dddda9d65cc267a223f"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>ReportABTestGroupAssignment</b> (string testName, char group)</td></tr>
 <tr class="memdesc:adcac900a769f4dddda9d65cc267a223f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks the user as a participant in an specific test group. <br /></td></tr>
@@ -499,6 +502,34 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>ReportUserCoun
 
 <p>Resets the user's items at a specified location. </p>
 <p>This function notifies the system to reset the user's items at the given location, typically used to initialize or correct the user's item balance. </p>
+
+</div>
+</div>
+<a id="aed72b3384a06c6a62ab37c4a281b4a93" name="aed72b3384a06c6a62ab37c4a281b4a93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed72b3384a06c6a62ab37c4a281b4a93">&#9670;&#160;</a></span>ReportOnboardingMilestone()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void KeewanoSDK.ReportOnboardingMilestone </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>milestone</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Report that a user has reached a milestone during the onboarding (game tutorial) process. </p>
+<p>The data reported using this method will be used to automatically generate an FTUE (first-time user experience) funnel for your players and will be used by our AI to investigate the behavior of users who are churning during the onboarding process. </p>
 
 </div>
 </div>
