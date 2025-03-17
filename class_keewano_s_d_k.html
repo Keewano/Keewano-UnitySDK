@@ -151,9 +151,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aed72b3384a06c6a62ab37c4a281b4a93" id="r_aed72b3384a06c6a62ab37c4a281b4a93"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed72b3384a06c6a62ab37c4a281b4a93">ReportOnboardingMilestone</a> (string milestone)</td></tr>
 <tr class="memdesc:aed72b3384a06c6a62ab37c4a281b4a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report that a user has reached a milestone during the onboarding (game tutorial) process.  <br /></td></tr>
 <tr class="separator:aed72b3384a06c6a62ab37c4a281b4a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcac900a769f4dddda9d65cc267a223f" id="r_adcac900a769f4dddda9d65cc267a223f"><td class="memItemLeft" align="right" valign="top"><a id="adcac900a769f4dddda9d65cc267a223f" name="adcac900a769f4dddda9d65cc267a223f"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>ReportABTestGroupAssignment</b> (string testName, char group)</td></tr>
-<tr class="memdesc:adcac900a769f4dddda9d65cc267a223f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks the user as a participant in an specific test group. <br /></td></tr>
+<tr class="memitem:adcac900a769f4dddda9d65cc267a223f" id="r_adcac900a769f4dddda9d65cc267a223f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adcac900a769f4dddda9d65cc267a223f">ReportABTestGroupAssignment</a> (string testName, char group)</td></tr>
+<tr class="memdesc:adcac900a769f4dddda9d65cc267a223f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks the user as a participant in an specific test group.  <br /></td></tr>
 <tr class="separator:adcac900a769f4dddda9d65cc267a223f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03af6ed00403dce0cad7dbcc44f88463" id="r_a03af6ed00403dce0cad7dbcc44f88463"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a> (string exchangeLocation, <a class="el" href="struct_keewano_1_1_item.html">Item</a>[] from, <a class="el" href="struct_keewano_1_1_item.html">Item</a>[] to)</td></tr>
 <tr class="memdesc:a03af6ed00403dce0cad7dbcc44f88463"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports an item exchange event using item arrays.  <br /></td></tr>
@@ -264,6 +263,39 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>ReportUserCoun
 
 <p>Marks the device as a test device. </p>
 <p>Marking a device as a test device allows <a class="el" href="namespace_keewano.html">Keewano</a> AI to ignore any unusual behavior and bugs reported from it during statistics calculations and investigations. </p>
+
+</div>
+</div>
+<a id="adcac900a769f4dddda9d65cc267a223f" name="adcac900a769f4dddda9d65cc267a223f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcac900a769f4dddda9d65cc267a223f">&#9670;&#160;</a></span>ReportABTestGroupAssignment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void KeewanoSDK.ReportABTestGroupAssignment </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>testName</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char</td>          <td class="paramname"><span class="paramname"><em>group</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Marks the user as a participant in an specific test group. </p>
+<p>A/B testing is a technique used to compare two or more versions of a feature to see which one performs better. In game development, this helps you understand which changes improve gameplay, player satisfaction, or overall balance.</p>
+<p>When you assign users to test groups, you can compare how different versions of a feature perform with real players. For example, you might test different reward systems or control schemes by splitting your players into groups, then analyze their behavior and feedback to make data-driven improvements. </p>
 
 </div>
 </div>
@@ -529,7 +561,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>ReportUserCoun
 </div><div class="memdoc">
 
 <p>Report that a user has reached a milestone during the onboarding (game tutorial) process. </p>
-<p>The data reported using this method will be used to automatically generate an FTUE (first-time user experience) funnel for your players and will be used by our AI to investigate the behavior of users who are churning during the onboarding process. </p>
+<p>The data reported using this method will be used to automatically generate an FTUE (first-time user experience) funnel for your players and will be used by our AI to investigate the behavior of users who are churning during the onboarding process.</p>
+<dl class="section note"><dt>Note</dt><dd>Each milestone should have a unique name and must not be reported more than once during onboarding. This ensures that analytics accurately reflect the user's progress, while still allowing flexibility. </dd></dl>
 
 </div>
 </div>
