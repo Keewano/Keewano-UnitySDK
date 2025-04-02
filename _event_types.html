@@ -129,6 +129,9 @@ $(function(){initNavTree('_event_types.html',''); initResizable(true); });
   <li class="level1">
     <a href="#ManualEvents">Manual Event Types</a>
   </li>
+  <li class="level1">
+    <a href="#CustomEventsSection">Custom Events</a>
+  </li>
 </ul>
 </div>
 <div class="textblock"><h1><a class="anchor" id="AutomaticEvents"></a>
@@ -146,7 +149,7 @@ Automatic Event Types</h1>
 </ul>
 <h1><a class="anchor" id="ManualEvents"></a>
 Manual Event Types</h1>
-<p>In cases where the SDK may not capture all necessary data automatically, manual event reporting is used to provide additional context and details, thereby enhancing the insights available to the <a class="el" href="namespace_keewano.html">Keewano</a> AI Agent. These gaps may occur due to privacy regulations (such as GDPR), the need for specific game context, or specific game implementation.</p>
+<p>In cases where the SDK may not capture all necessary data automatically, manual event reporting is used to provide additional context and details, thereby enhancing the insights available to the <a class="el" href="namespace_keewano.html">Keewano</a> AI Agents. These gaps may occur due to privacy regulations (such as GDPR), the need for specific game context, or specific game implementation.</p>
 <p>Examples of manual event methods include:</p>
 <ul>
 <li><a class="el" href="class_keewano_s_d_k.html#ac3e1433b5be7b52e16886f9cc5e64cf5" title="Reports a marketing install campaign for this user.">KeewanoSDK.ReportInstallCampaign</a></li>
@@ -155,7 +158,10 @@ Manual Event Types</h1>
 <li><a class="el" href="class_keewano_s_d_k.html#a263fa179fc50f8ff84598bb34b99978d" title="Reports a technical issue encountered during gameplay.">KeewanoSDK.LogError</a></li>
 <li><a class="el" href="class_keewano_s_d_k.html#aca10811bff16611511be5b985c61dd0f" title="Reports a window/popup open event.">KeewanoSDK.ReportWindowOpen</a></li>
 </ul>
-<p>For the complete list of manual event methods, please refer to the <a class="el" href="class_keewano_s_d_k.html">KeewanoSDK</a> class reference. </p>
+<p>For the complete list of manual event methods, please refer to the <a class="el" href="class_keewano_s_d_k.html">KeewanoSDK</a> class reference.</p>
+<h1><a class="anchor" id="CustomEventsSection"></a>
+Custom Events</h1>
+<p><a class="el" href="class_keewano_s_d_k.html">KeewanoSDK</a> allows you to define custom events specific to your gameplay. We highly encourage reporting custom events, as doing so enables our AI_agents to perform highly detailed and personalized analysis of user behavior during gameplay. This tailored insight helps identify patterns, optimize gameplay, and enhance the overall player experience. For more details on implementing custom events, please refer to the <a class="el" href="_custom_events_page.html">Custom Events</a> page. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

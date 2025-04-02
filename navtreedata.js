@@ -34,7 +34,15 @@ var NAVTREE =
     ] ],
     [ "Event Types", "_event_types.html", [
       [ "Automatic Event Types", "_event_types.html#AutomaticEvents", null ],
-      [ "Manual Event Types", "_event_types.html#ManualEvents", null ]
+      [ "Manual Event Types", "_event_types.html#ManualEvents", null ],
+      [ "Custom Events", "_event_types.html#CustomEventsSection", null ]
+    ] ],
+    [ "Onboarding (Tutorial)", "onboarding_milestone.html", [
+      [ "Rationale", "onboarding_milestone.html#rationale", null ],
+      [ "Overview", "onboarding_milestone.html#overview", null ],
+      [ "Description", "onboarding_milestone.html#description", null ],
+      [ "Use Cases", "onboarding_milestone.html#use_cases", null ],
+      [ "Example", "onboarding_milestone.html#example", null ]
     ] ],
     [ "In-Game Balance", "_item_exchange.html", [
       [ "Defining an \"Item\"", "_item_exchange.html#ItemConcept", null ],
@@ -48,14 +56,11 @@ var NAVTREE =
         [ "User Balance Fix Reset by Support Team", "_item_exchange.html#Example5", null ]
       ] ]
     ] ],
+    [ "Marketing Campaign", "install_campaign.html", null ],
     [ "Windows and Popups", "_windows.html", null ],
-    [ "Custom Events", "_custom_events.html", null ],
-    [ "Packages", "namespaces.html", [
-      [ "Package List", "namespaces.html", "namespaces_dup" ]
-    ] ],
-    [ "Classes", "annotated.html", [
+    [ "Custom Events", "_custom_events_page.html", null ],
+    [ "API Reference", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
@@ -67,7 +72,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_custom_events.html"
+"_custom_events_page.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['overview_0',['Overview',['../index.html',1,'']]]
+  ['marketing_20campaign_0',['Marketing Campaign',['../install_campaign.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['types_0',['Event Types',['../_event_types.html',1,'']]]
+  ['start_20guide_0',['Quick Start Guide',['../_quick_start.html',1,'']]]
 ];

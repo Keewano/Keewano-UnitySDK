@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['custom_20events_0',['Custom Events',['../_custom_events.html',1,'']]]
+  ['campaign_0',['Marketing Campaign',['../install_campaign.html',1,'']]],
+  ['custom_20events_1',['Custom Events',['../_custom_events_page.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['quick_20start_20guide_0',['Quick Start Guide',['../_quick_start.html',1,'']]]
+  ['popups_0',['Windows and Popups',['../_windows.html',1,'']]]
 ];
