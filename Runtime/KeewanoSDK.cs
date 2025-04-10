@@ -39,6 +39,8 @@ public partial class KeewanoSDK : MonoBehaviour
     void Init(KeewanoSettings settings)
     {
         UserIdentifiers uid = loadOrInitIdentifiers();
+        if (string.IsNullOrEmpty(settings.APIKey))
+            Debug.LogError("[KeewanoSDK] No API key was provided.");
 
         Application.lowMemory += handleLowMemoryWarning;
         Application.logMessageReceivedThreaded += handleLogMessageReceivedThreaded;
@@ -351,7 +353,6 @@ public partial class KeewanoSDK : MonoBehaviour
         atomicSaveIdentifiers(ids);
     }
 
-
     /**
         @brief Resets the user's items at a specified location.
 
@@ -362,7 +363,6 @@ public partial class KeewanoSDK : MonoBehaviour
     {
         m_instance.m_dispatcher.ReportItemsReset(location, items);
     }
-
 
     /**
    @brief Marks the device as a test user.

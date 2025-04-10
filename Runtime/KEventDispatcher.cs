@@ -119,14 +119,15 @@ namespace Keewano.Internal
             CancellationToken ct = m_cancellationTokenSource.Token;
             List<PendingBatchInfo> pendingBatches = loadUnsentBatchesList(m_workFolder);
 
-            const uint diskUsageLimit = 500 * 1024 * 1024; //50mb
+            const uint diskUsageLimit = 50 * 1024 * 1024; //50mb
             reduceStorageSize(pendingBatches, diskUsageLimit);
 
             while (!ct.IsCancellationRequested)
             {
-                bool newDataReady = m_readyToSendEvent.WaitOne(pendingBatches.Count == 0 ? 30_000 : 0);
+                bool serverReachable = sendPendingBatches(pendingBatches, ref ceMap, ct);
+                bool noWorkToDo = !serverReachable || pendingBatches.Count == 0;
 
-                sendPendingBatches(pendingBatches, ref ceMap, ct);
+                bool newDataReady = m_readyToSendEvent.WaitOne(noWorkToDo ? 30_000 : 0);
 
                 if (newDataReady)
                 {
@@ -298,6 +299,7 @@ namespace Keewano.Internal
         bool sendPendingBatches(List<PendingBatchInfo> unsentBatches, ref CustomEventsMap ceMap, CancellationToken ct)
         {
             int numSentBatches = 0;
+            bool serverReachable = true;
 
             if (unsentBatches.Count > 0)
             {
@@ -316,18 +318,23 @@ namespace Keewano.Internal
                         deleteFile(filename);
                         ++numSentBatches;
                     }
-                    else if (sendBatch(b, ceMap, ct))
-                    {
-                        deleteFile(filename);
-                        ++numSentBatches;
-                    }
                     else
-                        break;
+                    {
+                        serverReachable &= sendBatch(b, ceMap, ct);
+
+                        if (serverReachable)
+                        {
+                            deleteFile(filename);
+                            ++numSentBatches;
+                        }
+                        else
+                            break;
+                    }
                 }
             }
 
             unsentBatches.RemoveRange(0, numSentBatches);
-            return unsentBatches.Count == 0;
+            return serverReachable;
         }
 
         bool sendBatch(KBatch b, CustomEventsMap ceMap, CancellationToken ct)
@@ -358,6 +365,7 @@ namespace Keewano.Internal
         static List<PendingBatchInfo> loadUnsentBatchesList(string folder)
         {
             List<PendingBatchInfo> result = new List<PendingBatchInfo>(100);
+
             try
             {
                 if (Directory.Exists(folder))
@@ -592,24 +600,8 @@ namespace Keewano.Internal
                 int lastIdx = m_inBatch.CutPositions.Count - 1;
                 int lastCutPos = lastIdx == -1 ? 0 : m_inBatch.CutPositions[lastIdx];
 
-                int cutSize = currentBatchSize - lastCutPos;
-
-                if (cutSize == 102430)
-                {
-                    byte[] data = m_inBatch.Data.GetBuffer();
-                    if (data[lastCutPos + cutSize - 8] != 108)
-                    {
-                        byte[] b = new byte[cutSize];
-                        Array.Copy(m_inBatch.Data.GetBuffer(), lastCutPos, b, 0, cutSize);
-                        File.WriteAllBytes("c:\\Projects\\NewData.bin", b);
-                        Console.Beep();
-                    }
-                }
-
                 if (currentBatchSize - lastCutPos >= BATCH_CUTTING_TRESHOLD)
-                {
                     m_inBatch.CutPositions.Add(currentBatchSize);
-                }
 
                 m_readyToSendEvent.Set();
             }
