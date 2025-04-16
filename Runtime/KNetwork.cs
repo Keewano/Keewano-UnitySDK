@@ -10,8 +10,18 @@ namespace Keewano.Internal
 
     internal class KNetwork
     {
-        static readonly HttpClient m_client = new HttpClient();
-        static readonly MediaTypeHeaderValue m_contentTypeHeader = new MediaTypeHeaderValue("application/octet-stream");
+        static readonly HttpClient m_client;
+        static readonly MediaTypeHeaderValue m_contentTypeHeader;
+
+        static KNetwork()
+        {
+            m_client = new HttpClient();
+#if KEEWANO_TEST_ENDPOINT
+            //Used for internal testing
+            m_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("KEEWANO_AUTH_BEARER"));
+#endif
+            m_contentTypeHeader = new MediaTypeHeaderValue("application/octet-stream");
+        }
 
         public static bool SendBatch(Uri endpoint, string appSecret, KBatch batch, string testUser, CancellationToken ct)
         {

@@ -13,6 +13,7 @@ using Keewano.Internal;
 #pragma warning disable S2696, S101, S3903
 
 [DisallowMultipleComponent]
+[DefaultExecutionOrder(-100000)] //Needed to intercept button clicks before click callback
 public partial class KeewanoSDK : MonoBehaviour
 {
     private static KeewanoSDK m_instance;
@@ -60,8 +61,8 @@ public partial class KeewanoSDK : MonoBehaviour
 
         m_dispatcher.addEvent((ushort)KEvents.APP_LAUNCH, Application.version);
 
-        if (Application.genuineCheckAvailable)
-            m_dispatcher.addEvent((ushort)KEvents.GENUINITY_CHECK, Application.genuine);
+        if (Application.genuineCheckAvailable && !Application.genuine)
+            m_dispatcher.addEvent((ushort)KEvents.GENUINITY_CHECK, false);
 
         m_dispatcher.addEvent((ushort)KEvents.PLATFORM, Application.platform.ToString());
         m_dispatcher.addEvent((ushort)KEvents.DEVICE_TYPE, SystemInfo.deviceModel);

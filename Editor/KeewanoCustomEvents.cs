@@ -10,7 +10,8 @@ namespace Keewano.Internal
         UnsignedInt = 2,
         Bool = 3,
         Timestamp = 4,
-        UnsignedShortVec2 = 5
+        UnsignedShortVec2 = 5,
+        PriceInUSDCents = 6,
     }
 
     [Serializable]

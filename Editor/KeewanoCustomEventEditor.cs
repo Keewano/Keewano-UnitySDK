@@ -288,6 +288,12 @@ namespace Keewano.Internal
                     sb.AppendFormat("\t\tm_instance.m_dispatcher.addEvent({0}, x, y);\n", customEventId);
                     sb.Append("\t}\n");
                     break;
+
+                case CustomEventType.PriceInUSDCents:
+                    sb.Append("(int value)\n\t{\n");
+                    sb.AppendFormat("\t\tm_instance.m_dispatcher.addEvent({0}, value);\n", customEventId);
+                    sb.Append("\t}\n");
+                    break;
                 default:
                     throw new ArgumentException($"Unhandled param type {e.t}");
             }

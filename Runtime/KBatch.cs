@@ -4,12 +4,6 @@ using System.IO;
 
 namespace Keewano.Internal
 {
-    struct CutPosition
-    {
-        public uint Position;
-        public uint EventCount;
-    }
-
     class KBatch
     {
         public Guid DataSessionId;
