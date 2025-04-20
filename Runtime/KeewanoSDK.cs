@@ -352,6 +352,7 @@ public partial class KeewanoSDK : MonoBehaviour
         UserIdentifiers ids = loadOrInitIdentifiers();
         ids.UserId = uid;
         atomicSaveIdentifiers(ids);
+        m_instance.m_dispatcher.SetUserId(uid);
     }
 
     /**

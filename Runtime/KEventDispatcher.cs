@@ -400,12 +400,14 @@ namespace Keewano.Internal
             return result;
         }
 
-        internal void setUserId(Guid userId)
+        internal void SetUserId(Guid userId)
         {
             m_userId = userId;
             lock (m_swapLock)
             {
                 m_inBatch.UserId = userId;
+                m_inBatch.Writer.Write((ushort)KEvents.USER_ID_ASSIGNED);
+
             }
 
         }
