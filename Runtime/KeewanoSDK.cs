@@ -108,10 +108,16 @@ public partial class KeewanoSDK : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
         {
-            GameObject clicked = EventSystem.current.currentSelectedGameObject;
+            EventSystem eventSystem = EventSystem.current;
+            if (eventSystem != null)
+            {
+                GameObject clicked = eventSystem.currentSelectedGameObject;
 
-            if (clicked && clicked.TryGetComponent<Button>(out Button btn))
-                ReportButtonClick(btn.name);
+                if (clicked && clicked.TryGetComponent<Button>(out Button btn))
+                    ReportButtonClick(btn.name);
+            }
+            else
+                Debug.LogWarning("Keewano SDK: EventSystem not found in the scene; automatic button-click detection unavailable.");
         }
 
 #if UNITY_ANDROID

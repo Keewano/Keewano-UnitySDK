@@ -656,7 +656,7 @@ namespace Keewano.Internal
 
         internal void ReportLowMemory()
         {
-            addEvent((ushort)KEvents.LOW_MEM_WARNING, false);
+            addEvent((ushort)KEvents.LOW_MEM_WARNING);
         }
 
         internal void ReportGameLanguage(string language)
