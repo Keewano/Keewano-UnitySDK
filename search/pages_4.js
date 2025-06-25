@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['game_20balance_0',['In-Game Balance',['../_item_exchange.html',1,'']]],
-  ['guide_1',['Quick Start Guide',['../_quick_start.html',1,'']]]
+  ['event_20types_0',['Event Types',['../_event_types.html',1,'']]],
+  ['events_1',['Custom Events',['../_custom_events_page.html',1,'']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['popups_0',['Windows and Popups',['../_windows.html',1,'']]]
+  ['onboarding_20tutorial_0',['Onboarding (Tutorial)',['../onboarding_milestone.html',1,'']]],
+  ['overview_1',['Overview',['../index.html',1,'']]]
 ];

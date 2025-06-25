@@ -13,7 +13,8 @@ var searchData=
   ['reportonboardingmilestone_10',['ReportOnboardingMilestone',['../class_keewano_s_d_k.html#ae478925a922b732056426e5a082c3e04',1,'KeewanoSDK']]],
   ['reportwindowclose_11',['ReportWindowClose',['../class_keewano_s_d_k.html#a01e9a0872f73f6e758d6bb2b8182978b',1,'KeewanoSDK']]],
   ['reportwindowopen_12',['ReportWindowOpen',['../class_keewano_s_d_k.html#aca10811bff16611511be5b985c61dd0f',1,'KeewanoSDK']]],
-  ['reset_13',['Items Reset',['../_item_exchange.html#Items',1,'']]],
-  ['reset_20by_20support_20team_14',['User Balance Fix Reset by Support Team',['../_item_exchange.html#Example5',1,'']]],
-  ['reward_20one_20sided_20transaction_15',['Player Receives a Reward (One-Sided Transaction)',['../_item_exchange.html#Example3',1,'']]]
+  ['requirement_13',['Configuring Consent Requirement',['../_data_privacy.html#DP_configure',1,'']]],
+  ['reset_14',['Items Reset',['../_item_exchange.html#Items',1,'']]],
+  ['reset_20by_20support_20team_15',['User Balance Fix Reset by Support Team',['../_item_exchange.html#Example5',1,'']]],
+  ['reward_20one_20sided_20transaction_16',['Player Receives a Reward (One-Sided Transaction)',['../_item_exchange.html#Example3',1,'']]]
 ];

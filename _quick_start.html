@@ -135,6 +135,12 @@ $(function(){initNavTree('_quick_start.html',''); initResizable(true); });
   <li class="level1">
     <a href="#ReportEvents">Report Events</a>
   </li>
+  <li class="level1">
+    <a href="#Default">Privacy Compliance</a>
+  </li>
+  <li class="level1">
+    <a href="#Optional">User Consent</a>
+  </li>
 </ul>
 </div>
 <div class="textblock"><p>Sending events to Keewano is easy, this guide will show you how to do it with out SDK.</p>
@@ -153,11 +159,17 @@ Configure your Project</h1>
 Identify Users</h1>
 <p>Associate your in-game user id with current game installation to help Keewano identify your users. </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#ae320ed2c960ce5635e229c14da73ad6d">SetUserId</a>(USER_ID);</div>
 <div class="ttc" id="aclass_keewano_s_d_k_html"><div class="ttname"><a href="class_keewano_s_d_k.html">KeewanoSDK</a></div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:18</div></div>
-<div class="ttc" id="aclass_keewano_s_d_k_html_ae320ed2c960ce5635e229c14da73ad6d"><div class="ttname"><a href="class_keewano_s_d_k.html#ae320ed2c960ce5635e229c14da73ad6d">KeewanoSDK.SetUserId</a></div><div class="ttdeci">static void SetUserId(UInt64 uid)</div><div class="ttdoc">Sets the user identifier using a UInt64 value.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:325</div></div>
+<div class="ttc" id="aclass_keewano_s_d_k_html_ae320ed2c960ce5635e229c14da73ad6d"><div class="ttname"><a href="class_keewano_s_d_k.html#ae320ed2c960ce5635e229c14da73ad6d">KeewanoSDK.SetUserId</a></div><div class="ttdeci">static void SetUserId(UInt64 uid)</div><div class="ttdoc">Sets the user identifier using a UInt64 value.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:367</div></div>
 </div><!-- fragment --><p> For your convinience two overloads are available, one for games that use numeric user ids, and one for games that use Guids.</p>
 <h1><a class="anchor" id="ReportEvents"></a>
 Report Events</h1>
-<p>The <a class="el" href="class_keewano_s_d_k.html">KeewanoSDK</a> will start <a class="el" href="_event_types.html#AutomaticEvents">automatically report some events</a> but we also recomend you to add <a class="el" href="_event_types.html#ManualEvents">manual</a> and <a class="el" href="_custom_events_page.html">custom events</a> to give the Keewano AI Agents more knowledge about nuances behaviors specific to behaviour of your players. </p>
+<p>The <a class="el" href="class_keewano_s_d_k.html">KeewanoSDK</a> will start <a class="el" href="_event_types.html#AutomaticEvents">automatically report some events</a> but we also recomend you to add <a class="el" href="_event_types.html#ManualEvents">manual</a> and <a class="el" href="_custom_events_page.html">custom events</a> to give the Keewano AI Agents more knowledge about nuances behaviors specific to behaviour of your players.</p>
+<h1><a class="anchor" id="Default"></a>
+Privacy Compliance</h1>
+<p>By default, the Keewano SDK is fully compliant with privacy regulations and does not collect any personally identifiable information (PII). No additional setup is required—analytics data will be collected automatically, without exposing user PII, in accordance with our privacy policy.</p>
+<h1><a class="anchor" id="Optional"></a>
+User Consent</h1>
+<p>If your project demand explicit player consent before any analytics data is sent, see <a class="el" href="_data_privacy.html">Data Privacy</a>. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

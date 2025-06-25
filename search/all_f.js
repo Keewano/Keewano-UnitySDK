@@ -8,5 +8,7 @@ var searchData=
   ['popups_5',['Popups',['../_windows.html#tracking-in-game-windows-and-popups',1,'Tracking In-Game Windows and Popups'],['../_windows.html',1,'Windows and Popups']]],
   ['potion_20to_20get_201_20vial_20of_20eternal_20life_6',['Player Spends 5 Gold Coins and a Healing Potion to Get 1 Vial of Eternal Life',['../_item_exchange.html#Example1',1,'']]],
   ['principles_7',['Design Principles',['../index.html#design-principles',1,'']]],
-  ['project_8',['Configure your Project',['../_quick_start.html#Configure',1,'']]]
+  ['privacy_8',['Data Privacy',['../_data_privacy.html',1,'']]],
+  ['privacy_20compliance_9',['Privacy Compliance',['../_data_privacy.html#DP_default',1,'Default Privacy Compliance'],['../_quick_start.html#Default',1,'Privacy Compliance']]],
+  ['project_10',['Configure your Project',['../_quick_start.html#Configure',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['marketing_20campaign_0',['Marketing Campaign',['../install_campaign.html',1,'']]]
+  ['in_20game_20balance_0',['In-Game Balance',['../_item_exchange.html',1,'']]]
 ];

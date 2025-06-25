@@ -30,7 +30,9 @@ var NAVTREE =
       [ "Installation", "_quick_start.html#Install", null ],
       [ "Configure your Project", "_quick_start.html#Configure", null ],
       [ "Identify Users", "_quick_start.html#UserId", null ],
-      [ "Report Events", "_quick_start.html#ReportEvents", null ]
+      [ "Report Events", "_quick_start.html#ReportEvents", null ],
+      [ "Privacy Compliance", "_quick_start.html#Default", null ],
+      [ "User Consent", "_quick_start.html#Optional", null ]
     ] ],
     [ "Event Types", "_event_types.html", [
       [ "Automatic Event Types", "_event_types.html#AutomaticEvents", null ],
@@ -59,6 +61,13 @@ var NAVTREE =
     [ "Marketing Campaign", "install_campaign.html", null ],
     [ "Windows and Popups", "_windows.html", null ],
     [ "Custom Events", "_custom_events_page.html", null ],
+    [ "Data Privacy", "_data_privacy.html", [
+      [ "Default Privacy Compliance", "_data_privacy.html#DP_default", null ],
+      [ "Optional User Consent", "_data_privacy.html#DP_consent", null ],
+      [ "Configuring Consent Requirement", "_data_privacy.html#DP_configure", null ],
+      [ "SetUserConsent Method", "_data_privacy.html#DP_method", null ],
+      [ "Example Usage", "_data_privacy.html#DP_example", null ]
+    ] ],
     [ "API Reference", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Members", "functions.html", [

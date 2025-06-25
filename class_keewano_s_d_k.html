@@ -127,6 +127,9 @@ $(function(){initNavTree('class_keewano_s_d_k.html',''); initResizable(true); })
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a24c255658725d19b5c47654aeb8c1f17" id="r_a24c255658725d19b5c47654aeb8c1f17"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24c255658725d19b5c47654aeb8c1f17">SetUserConsent</a> (bool consentGiven)</td></tr>
+<tr class="memdesc:a24c255658725d19b5c47654aeb8c1f17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the user's consent for data collection and analytics.  <br /></td></tr>
+<tr class="separator:a24c255658725d19b5c47654aeb8c1f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3e2e868ee711a3e289cbcade6839fdd" id="r_af3e2e868ee711a3e289cbcade6839fdd"><td class="memItemLeft" align="right" valign="top">static Guid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af3e2e868ee711a3e289cbcade6839fdd">GetInstallId</a> ()</td></tr>
 <tr class="memdesc:af3e2e868ee711a3e289cbcade6839fdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the unique installation ID for the game.  <br /></td></tr>
 <tr class="separator:af3e2e868ee711a3e289cbcade6839fdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,9 +178,6 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a263fa179fc50f8ff84598bb34b99978d" id="r_a263fa179fc50f8ff84598bb34b99978d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a263fa179fc50f8ff84598bb34b99978d">LogError</a> (string message)</td></tr>
 <tr class="memdesc:a263fa179fc50f8ff84598bb34b99978d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports a technical issue encountered during gameplay.  <br /></td></tr>
 <tr class="separator:a263fa179fc50f8ff84598bb34b99978d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fb11e4d8ae0fc47dd299f90cea273e9" id="r_a1fb11e4d8ae0fc47dd299f90cea273e9"><td class="memItemLeft" align="right" valign="top"><a id="a1fb11e4d8ae0fc47dd299f90cea273e9" name="a1fb11e4d8ae0fc47dd299f90cea273e9"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>ReportUserCountry</b> (string countryName)</td></tr>
-<tr class="separator:a1fb11e4d8ae0fc47dd299f90cea273e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="af3e2e868ee711a3e289cbcade6839fdd" name="af3e2e868ee711a3e289cbcade6839fdd"></a>
@@ -636,6 +636,50 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>ReportUserCoun
 
 <p>Reports a window/popup open event. </p>
 <p>This method is used to capture the event when a window or popup is opened, helping to understand the context and scope of the user's actions. </p>
+
+</div>
+</div>
+<a id="a24c255658725d19b5c47654aeb8c1f17" name="a24c255658725d19b5c47654aeb8c1f17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24c255658725d19b5c47654aeb8c1f17">&#9670;&#160;</a></span>SetUserConsent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void KeewanoSDK.SetUserConsent </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>consentGiven</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the user's consent for data collection and analytics. </p>
+<p>This method is used to inform the <a class="el" href="class_keewano_s_d_k.html">KeewanoSDK</a> whether the player has granted or denied consent for data collection, in compliance with privacy regulations such as GDPR and CCPA.</p>
+<p>If the "Require Player Consent" option is enabled, the SDK will buffer analytics data locally until you call this method:</p><ul>
+<li>If you call <code>SetUserConsent(true)</code>, all buffered data will be sent to the server, and the SDK will continue to collect and send analytics data from that point onward.</li>
+<li>If you call <code>SetUserConsent(false)</code>, all buffered data will be discarded and no further data will be collected or sent.</li>
+</ul>
+<p>If the "Require Player Consent" option is disabled, the SDK will start collecting and sending data automatically on app launch.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">consentGiven</td><td>Pass <code>true</code> if the player has granted consent for data collection, or <code>false</code> if the player has denied consent.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Usage:</p><ul>
+<li>Show your own consent dialog to the player at app launch or at an appropriate time.</li>
+<li>Call <code>KeewanoSDK.SetUserConsent(true)</code> or <code>KeewanoSDK.SetUserConsent(false)</code> based on the player's choice.</li>
+</ul>
+<dl class="section see"><dt>See also</dt><dd>Please refer to <a class="el" href="_data_privacy.html">Data Privacy</a> for more information on the topic. </dd></dl>
 
 </div>
 </div>
