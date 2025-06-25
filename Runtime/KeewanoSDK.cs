@@ -39,9 +39,16 @@ public partial class KeewanoSDK : MonoBehaviour
 
     void Init(KeewanoSettings settings)
     {
-        UserIdentifiers uid = loadOrInitIdentifiers();
         if (string.IsNullOrEmpty(settings.APIKey))
             Debug.LogError("[KeewanoSDK] No API key was provided.");
+
+        UserIdentifiers uid = loadOrInitIdentifiers();
+
+        if (!loadUserConsentState(out UserConsentState consentState))
+        {
+            consentState = settings.requirePlayerConsent ? UserConsentState.Pending : UserConsentState.NotRequired;
+            atomicSaveUserConsentState(consentState);
+        }
 
         Application.lowMemory += handleLowMemoryWarning;
         Application.logMessageReceivedThreaded += handleLogMessageReceivedThreaded;
@@ -52,12 +59,13 @@ public partial class KeewanoSDK : MonoBehaviour
 #if KEEWANO_TEST_ENDPOINT
         //Used for internal testing
         string endpoint = Environment.GetEnvironmentVariable("KEEWANO_TEST_ENDPOINT");
+        settings.APIKey = Environment.GetEnvironmentVariable("KEEWANO_TEST_API_KEY");
 #else
         const string endpoint = "https://api.keewano.com/event/ingress/v1/data";
 #endif
 
         string dispatcherWorkingDir = Application.persistentDataPath + "/Keewano/";
-        m_dispatcher = new KEventDispatcher(dispatcherWorkingDir, endpoint, settings.APIKey, uid.InstallId, uid.UserId, dataSessionId);
+        m_dispatcher = new KEventDispatcher(dispatcherWorkingDir, endpoint, settings.APIKey, consentState, uid.InstallId, uid.UserId, dataSessionId);
 
         m_dispatcher.addEvent((ushort)KEvents.APP_LAUNCH, Application.version);
 
@@ -164,6 +172,34 @@ public partial class KeewanoSDK : MonoBehaviour
         }
         else
             m_dispatcher.ReportAppResume();
+    }
+
+    /**
+     @brief Sets the user's consent for data collection and analytics.
+
+     This method is used to inform the KeewanoSDK whether the player has granted or denied consent for data collection,
+     in compliance with privacy regulations such as GDPR and CCPA.
+
+     If the "Require Player Consent" option is enabled, the SDK will buffer analytics data locally until you call this method:
+     - If you call `SetUserConsent(true)`, all buffered data will be sent to the server, and the SDK will continue to collect and send analytics data from that point onward.
+     - If you call `SetUserConsent(false)`, all buffered data will be discarded and no further data will be collected or sent.
+
+     If the "Require Player Consent" option is disabled, the SDK will start collecting and sending data automatically on app launch.
+
+     @param consentGiven
+         Pass `true` if the player has granted consent for data collection, or `false` if the player has denied consent.
+
+     Usage:
+     - Show your own consent dialog to the player at app launch or at an appropriate time.
+     - Call `KeewanoSDK.SetUserConsent(true)` or `KeewanoSDK.SetUserConsent(false)` based on the player's choice.
+
+    @sa 
+    Please refer to @ref DataPrivacy for more information on the topic.
+     */
+    static public void SetUserConsent(bool consentGiven)
+    {
+        UserConsentState state = m_instance.m_dispatcher.SetUserConsent(consentGiven);
+        atomicSaveUserConsentState(state);
     }
 
     /**
@@ -408,11 +444,6 @@ public partial class KeewanoSDK : MonoBehaviour
         m_instance.m_dispatcher.LogError(message);
     }
 
-    static public void ReportUserCountry(string countryName)
-    {
-        m_instance.m_dispatcher.ReportUserCountry(countryName);
-    }
-
     static UserIdentifiers loadOrInitIdentifiers()
     {
         string filename = $"{Application.persistentDataPath}/Keewano_Ids";
@@ -464,5 +495,51 @@ public partial class KeewanoSDK : MonoBehaviour
             File.Move(tmpFilename, finalFilename);
         }
         catch { /*Nothing to do_here*/}
+    }
+
+    static void atomicSaveUserConsentState(UserConsentState state)
+    {
+        try
+        {
+            string tmpFilename = $"{Application.persistentDataPath}/Keewano_UserConsent.tmp";
+            string finalFilename = $"{Application.persistentDataPath}/Keewano_UserConsent";
+            using (FileStream fs = new FileStream(tmpFilename, FileMode.Create))
+            {
+                Span<UserConsentState> span = MemoryMarshal.CreateSpan(ref state, 1);
+                Span<byte> byteSpan = MemoryMarshal.AsBytes(span);
+                fs.Write(byteSpan);
+            }
+
+            File.Delete(finalFilename);
+            File.Move(tmpFilename, finalFilename);
+        }
+        catch { /*Nothing to do_here*/}
+    }
+
+    static bool loadUserConsentState(out UserConsentState state)
+    {
+        string filename = $"{Application.persistentDataPath}/Keewano_UserConsent";
+        state = UserConsentState.NotRequired;
+        bool success = false;
+
+        try
+        {
+            if (File.Exists(filename))
+            {
+                using (FileStream fs = new FileStream(filename, FileMode.Open))
+                {
+                    int size = Marshal.SizeOf<UserConsentState>();
+                    if (fs.Length >= size)
+                    {
+                        Span<UserConsentState> span = MemoryMarshal.CreateSpan(ref state, 1);
+                        Span<byte> byteSpan = MemoryMarshal.AsBytes(span);
+                        success = fs.Read(byteSpan) == size;
+                    }
+                }
+            }
+        }
+        catch { /*Nothing to do_here*/}
+
+        return success;
     }
 }

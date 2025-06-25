@@ -25,6 +25,14 @@ namespace Keewano.Internal
         public uint Size;
     }
 
+    enum UserConsentState
+    {
+        NotRequired,
+        Pending,
+        Granted,
+        Denied,
+    }
+
     partial class KEventDispatcher
     {
         readonly object m_swapLock = new object();
@@ -49,8 +57,12 @@ namespace Keewano.Internal
         private Uri m_ingresEndPoint;
         private Uri m_ceRegPoint;
 
-        internal KEventDispatcher(string workingDirectory, string endpoint, string appSecret, Guid installId, Guid userId, Guid dataSessionId)
+        private UserConsentState m_userConsentState;
+
+        internal KEventDispatcher(string workingDirectory, string endpoint, string appSecret, UserConsentState userConsentState, Guid installId, Guid userId, Guid dataSessionId)
         {
+            m_userConsentState = userConsentState;
+
             m_ingresEndPoint = new Uri(endpoint + "/in");
             m_ceRegPoint = new Uri(endpoint + "/custom");
 
@@ -109,6 +121,14 @@ namespace Keewano.Internal
         internal void SendNow()
         {
             m_readyToSendEvent.Set();
+        }
+
+        internal UserConsentState SetUserConsent(bool granted)
+        {
+            if (m_userConsentState == UserConsentState.Pending)
+                m_userConsentState = granted ? UserConsentState.Granted : UserConsentState.Denied;
+
+            return m_userConsentState;
         }
 
         private void sendThreadFunc()
@@ -339,27 +359,40 @@ namespace Keewano.Internal
 
         bool sendBatch(KBatch b, CustomEventsMap ceMap, CancellationToken ct)
         {
-            if (b.CustomEventsVersion != ceMap.Version && b.CustomEventsVersion != 0)
+            switch (m_userConsentState)
             {
-                bool hasMapping = KNetwork.GetCustomEventIds(m_ceRegPoint, m_appSecret,
-                    b.CustomEventsVersion, out ushort[] ids, out bool needToRegister, ct);
-
-                if (needToRegister)
+                case UserConsentState.NotRequired:
+                case UserConsentState.Granted:
                 {
+                    if (b.CustomEventsVersion != ceMap.Version && b.CustomEventsVersion != 0)
+                    {
+                        bool hasMapping = KNetwork.GetCustomEventIds(m_ceRegPoint, m_appSecret,
+                            b.CustomEventsVersion, out ushort[] ids, out bool needToRegister, ct);
 
-                    string ceFilename = getCustomEventSetFilename(b.CustomEventsVersion);
-                    if (!KSerializer.LoadFromFile(ceFilename, out CustomEventSet ceSet))
-                        return false;
-                    hasMapping = KNetwork.RegisterCustomEvents(m_ceRegPoint, m_appSecret, ceSet, ct);
+                        if (needToRegister)
+                        {
+
+                            string ceFilename = getCustomEventSetFilename(b.CustomEventsVersion);
+                            if (!KSerializer.LoadFromFile(ceFilename, out CustomEventSet ceSet))
+                                return false;
+                            hasMapping = KNetwork.RegisterCustomEvents(m_ceRegPoint, m_appSecret, ceSet, ct);
+                        }
+
+                        if (hasMapping)
+                            ceMap.Version = b.CustomEventsVersion;
+                        else
+                            return false;
+                    }
+
+                    return KNetwork.SendBatch(m_ingresEndPoint, m_appSecret, b, m_sendTestUserName, ct);
                 }
-
-                if (hasMapping)
-                    ceMap.Version = b.CustomEventsVersion;
-                else
-                    return false;
+                case UserConsentState.Denied:
+                    return true; //Delete the batch without actually sending
+                case UserConsentState.Pending:
+                    return false; //Retry later when we have a consent
+                default:
+                    return true;
             }
-
-            return KNetwork.SendBatch(m_ingresEndPoint, m_appSecret, b, m_sendTestUserName, ct);
         }
 
         static List<PendingBatchInfo> loadUnsentBatchesList(string folder)
@@ -597,7 +630,7 @@ namespace Keewano.Internal
 
             if (currentBatchSize >= 1024)
             {
-                const uint BATCH_CUTTING_TRESHOLD = 100 * 1024;
+                const uint BATCH_CUTTING_TRESHOLD = 50 * 1024;
 
                 int lastIdx = m_inBatch.CutPositions.Count - 1;
                 int lastCutPos = lastIdx == -1 ? 0 : m_inBatch.CutPositions[lastIdx];

@@ -2,7 +2,7 @@
 
 namespace Keewano.Internal
 {
-    internal class KeewanoSettingsProvider: SettingsProvider
+    internal class KeewanoSettingsProvider : SettingsProvider
     {
         private Editor m_editor;
         private KeewanoSettings m_settings;
@@ -11,10 +11,9 @@ namespace Keewano.Internal
         internal static SettingsProvider CreateSettingsProvider()
         {
             return new KeewanoSettingsProvider("Project/Keewano™", SettingsScope.Project);
-          
         }
 
-        KeewanoSettingsProvider(string path, SettingsScope scope): 
+        KeewanoSettingsProvider(string path, SettingsScope scope) :
             base(path, scope)
         {
             m_settings = KeewanoSettings.Load();
@@ -37,7 +36,23 @@ namespace Keewano.Internal
     {
         public override void OnInspectorGUI()
         {
+            EditorGUI.BeginChangeCheck();
             DrawDefaultInspector();
+
+            KeewanoSettings settings = (KeewanoSettings)target;
+            if (settings.requirePlayerConsent)
+            {
+                EditorGUILayout.HelpBox("See KeewanoSDK.SetUserConsent() in the documentation.\n\n" +
+                                        " \u2022 The SDK will buffer analytics data but will not send it to the server until consent is given.\n" +
+                                        " \u2022 Call KeewanoSDK.SetUserConsent(true) to start sending data,\n" +
+                                        " \u2022 Call KeewanoSDK.SetUserConsent(false) to drop buffered data and stop future collection.", MessageType.Info);
+            }
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(settings);
+                UnityEditor.AssetDatabase.SaveAssets();
+            }
         }
     }
 }

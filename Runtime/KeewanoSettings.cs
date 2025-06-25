@@ -10,8 +10,12 @@ namespace Keewano.Internal
 {
     public class KeewanoSettings : ScriptableObject
     {
-        [Header("General settings")]
+        [Header("General Settings")]
         public string APIKey;
+
+        [Header("Data Privacy Compliance")]
+        [Tooltip("If true, the SDK will not send data to the server unless the player consents to tracking.\nSee KeewanoSDK.SetUserConsent() documentation.")]
+        public bool requirePlayerConsent = false;
 
         public static KeewanoSettings Load()
         {
