@@ -332,7 +332,7 @@ public partial class KeewanoSDK : MonoBehaviour
     */
     static public void ReportItemsExchange(string exchangeLocation, Item[] from, Item[] to)
     {
-        ReadOnlySpan<Item> fromSpan = from == null ? ReadOnlySpan<Item>.Empty : to.AsSpan();
+        ReadOnlySpan<Item> fromSpan = from == null ? ReadOnlySpan<Item>.Empty : from.AsSpan();
         ReadOnlySpan<Item> toSpan = to == null ? ReadOnlySpan<Item>.Empty : to.AsSpan();
 
         m_instance.m_dispatcher.ReportItemExchange(exchangeLocation, fromSpan, toSpan);
