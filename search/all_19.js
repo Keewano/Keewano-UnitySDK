@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['rationale_0',['Rationale',['../onboarding_milestone.html#rationale',1,'']]],
+  ['receives_20a_20reward_20one_20sided_20transaction_1',['Player Receives a Reward (One-Sided Transaction)',['../_item_exchange.html#Example3',1,'']]],
+  ['registration_20sign_20in_2',['Scenario 2: Player Registration &amp; Sign-In',['../_dummy_game_integration.html#Scenario_2',1,'']]],
+  ['report_20events_3',['Report Events',['../_quick_start.html#ReportEvents',1,'']]],
+  ['reportabtestgroupassignment_4',['ReportABTestGroupAssignment',['../class_keewano_s_d_k.html#adcac900a769f4dddda9d65cc267a223f',1,'KeewanoSDK']]],
+  ['reportbuttonclick_5',['ReportButtonClick',['../class_keewano_s_d_k.html#a9944b568e714a66a4626f0bff69fe5bd',1,'KeewanoSDK']]],
+  ['reportgamelanguage_6',['ReportGameLanguage',['../class_keewano_s_d_k.html#a3f3fd38d4d987900b2ec64ce196d5914',1,'KeewanoSDK']]],
+  ['reportinapppurchase_7',['ReportInAppPurchase',['../class_keewano_s_d_k.html#a865cb9d89581de571b8e52f113661cec',1,'KeewanoSDK']]],
+  ['reporting_8',['Scenario 11: Custom Error Reporting',['../_dummy_game_integration.html#Scenario_11',1,'']]],
+  ['reportinstallcampaign_9',['ReportInstallCampaign',['../class_keewano_s_d_k.html#ac3e1433b5be7b52e16886f9cc5e64cf5',1,'KeewanoSDK']]],
+  ['reportitemsexchange_10',['ReportItemsExchange',['../class_keewano_s_d_k.html#a03af6ed00403dce0cad7dbcc44f88463',1,'KeewanoSDK.ReportItemsExchange(string exchangeLocation, Item[] from, Item[] to)'],['../class_keewano_s_d_k.html#a37d2e41f2089fd6693be14fd59e99391',1,'KeewanoSDK.ReportItemsExchange(string exchangeLocation, ReadOnlySpan&lt; Keewano.Item &gt; from, ReadOnlySpan&lt; Keewano.Item &gt; to)']]],
+  ['reportitemsreset_11',['ReportItemsReset',['../class_keewano_s_d_k.html#a9e551800fbca5b7c84e61ac882fbe787',1,'KeewanoSDK']]],
+  ['reportonboardingmilestone_12',['ReportOnboardingMilestone',['../class_keewano_s_d_k.html#ae478925a922b732056426e5a082c3e04',1,'KeewanoSDK']]],
+  ['reportwindowclose_13',['ReportWindowClose',['../class_keewano_s_d_k.html#a01e9a0872f73f6e758d6bb2b8182978b',1,'KeewanoSDK']]],
+  ['reportwindowopen_14',['ReportWindowOpen',['../class_keewano_s_d_k.html#aca10811bff16611511be5b985c61dd0f',1,'KeewanoSDK']]],
+  ['requirement_15',['Configuring Consent Requirement',['../_data_privacy.html#DP_configure',1,'']]],
+  ['reset_16',['Items Reset',['../_item_exchange.html#Items',1,'']]],
+  ['reset_20by_20support_20team_17',['User Balance Fix Reset by Support Team',['../_item_exchange.html#Example6',1,'']]],
+  ['reset_20mid_20trip_20changes_20end_20of_20day_20settlement_18',['Road Trip Day: Reset, Mid-Trip Changes, End-of-Day Settlement',['../_item_exchange.html#Example9',1,'']]],
+  ['resets_19',['Scenario 8: Daily Resets',['../_dummy_game_integration.html#Scenario_8',1,'']]],
+  ['reward_20one_20sided_20transaction_20',['Player Receives a Reward (One-Sided Transaction)',['../_item_exchange.html#Example3',1,'']]],
+  ['road_20trip_20day_3a_20reset_20mid_20trip_20changes_20end_20of_20day_20settlement_21',['Road Trip Day: Reset, Mid-Trip Changes, End-of-Day Settlement',['../_item_exchange.html#Example9',1,'']]]
+];

@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['of_20eternal_20life_0',['Player Spends 5 Gold Coins and a Healing Potion to Get 1 Vial of Eternal Life',['../_item_exchange.html#Example1',1,'']]],
-  ['onboarding_20tutorial_1',['Onboarding (Tutorial)',['../onboarding_milestone.html',1,'']]],
-  ['one_20sided_20transaction_2',['One Sided Transaction',['../_item_exchange.html#Example2',1,'Player Loses a Broken Sword (One-Sided Transaction)'],['../_item_exchange.html#Example3',1,'Player Receives a Reward (One-Sided Transaction)']]],
-  ['optimizations_3',['Performance Optimizations',['../index.html#performance-optimizations',1,'']]],
-  ['optional_20user_20consent_4',['Optional User Consent',['../_data_privacy.html#DP_consent',1,'']]],
-  ['overview_5',['Overview',['../index.html',1,'Overview'],['../install_campaign.html#overview',1,'Overview']]]
+  ['features_0',['Key Features',['../index.html#key-features',1,'']]],
+  ['first_20events_1',['Key Concept: Context-First Events',['../_dummy_game_integration.html#ConceptShift',1,'']]],
+  ['first_20ideology_2',['Performance-First Ideology',['../index.html#performance-first-ideology',1,'']]],
+  ['first_20launch_20consent_3',['Scenario 1: First Launch &amp; Consent',['../_dummy_game_integration.html#Scenario_1',1,'']]],
+  ['fix_20reset_20by_20support_20team_4',['User Balance Fix Reset by Support Team',['../_item_exchange.html#Example6',1,'']]],
+  ['flow_5',['Scenario 9: Non Unity.UI Buttons &amp; Window Flow',['../_dummy_game_integration.html#Scenario_9',1,'']]],
+  ['ftue_20milestones_20tracking_6',['Scenario 4: FTUE Milestones Tracking',['../_dummy_game_integration.html#Scenario_4',1,'']]]
 ];

@@ -148,7 +148,13 @@ $(function(){initNavTree('_item_exchange.html',''); initResizable(true); });
         <a href="#Example4">Match3 Level Scenario</a>
       </li>
       <li class="level2">
-        <a href="#Example5">User Balance Fix Reset by Support Team</a>
+        <a href="#Example6">User Balance Fix Reset by Support Team</a>
+      </li>
+      <li class="level2">
+        <a href="#Example7">Coffee Shop: Pay with Voucher or Credits + Stamp Card</a>
+      </li>
+      <li class="level2">
+        <a href="#Example9">Road Trip Day: Reset, Mid-Trip Changes, End-of-Day Settlement</a>
       </li>
     </ul>
   </li>
@@ -210,12 +216,65 @@ Match3 Level Scenario</h2>
 <div class="line">                             <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Rainbow Booster&quot;</span>) };</div>
 <div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a>(<span class="stringliteral">&quot;Match3 Win&quot;</span>, <span class="keyword">null</span>, winReward);</div>
 <div class="ttc" id="aclass_keewano_s_d_k_html_a9e551800fbca5b7c84e61ac882fbe787"><div class="ttname"><a href="class_keewano_s_d_k.html#a9e551800fbca5b7c84e61ac882fbe787">KeewanoSDK.ReportItemsReset</a></div><div class="ttdeci">static void ReportItemsReset(string location, Item[] items)</div><div class="ttdoc">Resets the user&#39;s items at a specified location.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:406</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="Example5"></a>
+</div><!-- fragment --><h2><a class="anchor" id="Example6"></a>
 User Balance Fix Reset by Support Team</h2>
 <p>In this scenario, the support team issues a command to fix a user's balance, resetting it to a predefined default state. </p><div class="fragment"><div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] balanceFix = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Gold Coin&quot;</span>, 100),</div>
 <div class="line">                               <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Healing Potion&quot;</span>, 2),</div>
 <div class="line">                               <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Attempt&quot;</span>, 3) };</div>
 <div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a9e551800fbca5b7c84e61ac882fbe787">ReportItemsReset</a>(<span class="stringliteral">&quot;Support Balance Reset&quot;</span>, balanceFix);</div>
+</div><!-- fragment --><h2><a class="anchor" id="Example7"></a>
+Coffee Shop: Pay with Voucher or Credits + Stamp Card</h2>
+<p>A coffee can be paid with EITHER a Drink Voucher OR 5 Cafe Credits.<br  />
+Every purchase adds +1 to a simple stamp card. At 10 stamps, the next coffee is free.<br  />
+ </p><div class="fragment"><div class="line"><span class="comment">// Case A - Pay with a voucher, also add one stamp</span></div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] fromVoucher = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Drink_Voucher&quot;</span>) };</div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] toStamp     = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Stamp_Count&quot;</span>) };</div>
+<div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a>(<span class="stringliteral">&quot;Cafe_BuyCoffee_Voucher&quot;</span>, fromVoucher, toStamp);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Case B - Pay with cafe credits instead, also add one stamp</span></div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] fromCredits = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Cafe_Credits&quot;</span>, 5) };</div>
+<div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a>(<span class="stringliteral">&quot;Cafe_BuyCoffee_Credits&quot;</span>, fromCredits, toStamp);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Case C — Pay with a combination: 1 voucher + 2 credits → 1 specialty coffee</span></div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] fromCombo = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Drink_Voucher&quot;</span>), <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Cafe_Credits&quot;</span>, 2) };</div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] toSpecial = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Coffee_Specialty&quot;</span>) };</div>
+<div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a>(<span class="stringliteral">&quot;Cafe_BuyCoffee_Combo&quot;</span>, fromCombo, toSpecial);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// When Stamp_Count reaches 10 → consume 10 stamps and grant the free coffee</span></div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] spendStamps = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Stamp_Count&quot;</span>, 10) };</div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] freeCoffee  = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Coffee_Free&quot;</span>) };</div>
+<div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a>(<span class="stringliteral">&quot;Cafe_StampReward&quot;</span>, spendStamps, freeCoffee);</div>
+</div><!-- fragment --><h2><a class="anchor" id="Example9"></a>
+Road Trip Day: Reset, Mid-Trip Changes, End-of-Day Settlement</h2>
+<div class="fragment"><div class="line"><span class="comment">// Start of the day: set a clear baseline for the trip-only items</span></div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] dayStart = {</div>
+<div class="line">  <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Trip_FuelUnits&quot;</span>, 100),</div>
+<div class="line">  <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Trip_Snacks&quot;</span>, 0),</div>
+<div class="line">  <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Trip_Credits&quot;</span>, 30)</div>
+<div class="line">};</div>
+<div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a9e551800fbca5b7c84e61ac882fbe787">ReportItemsReset</a>(<span class="stringliteral">&quot;Trip_StartOfDay&quot;</span>, dayStart);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Drive a segment → use fuel</span></div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] fuelUse = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Trip_FuelUnits&quot;</span>, 15) };</div>
+<div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a>(<span class="stringliteral">&quot;Trip_DriveSegment&quot;</span>, fuelUse, <span class="keyword">null</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Buy snacks → spend credits, gain snacks</span></div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] paySnacks = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Trip_Credits&quot;</span>, 3) };</div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] getSnacks = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Trip_Snacks&quot;</span>, 2) };</div>
+<div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a>(<span class="stringliteral">&quot;Trip_BuySnacks&quot;</span>, paySnacks, getSnacks);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Pay a toll → spend credits (one-sided)</span></div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] payToll = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Trip_Credits&quot;</span>, 4) };</div>
+<div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a>(<span class="stringliteral">&quot;Trip_PayToll&quot;</span>, payToll, <span class="keyword">null</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Find a coupon → gain credits (one-sided)</span></div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] couponGain = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Trip_Credits&quot;</span>, 2) };</div>
+<div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a>(<span class="stringliteral">&quot;Trip_FindCoupon&quot;</span>, <span class="keyword">null</span>, couponGain);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// End of day: convert leftover trip credits into “savings” (persistent)</span></div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] settleFrom = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;Trip_Credits&quot;</span>, 7) };</div>
+<div class="line"><a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>[] settleTo   = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_keewano.html">Keewano</a>.<a class="code hl_struct" href="struct_keewano_1_1_item.html">Item</a>(<span class="stringliteral">&quot;PiggyBank_Points&quot;</span>, 7) };</div>
+<div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a>(<span class="stringliteral">&quot;Trip_EndOfDay_Settle&quot;</span>, settleFrom, settleTo);</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

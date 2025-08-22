@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Keewano Unity SDK: Marketing Campaign</title>
+<title>Keewano Unity SDK: SDK Integration Testing</title>
 <link rel="icon" href="KeewanoLogo.svg" type="image/x-icon" />
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -92,7 +92,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('install_campaign.html',''); initResizable(true); });
+$(function(){initNavTree('_integration_testing.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -118,47 +118,56 @@ $(function(){initNavTree('install_campaign.html',''); initResizable(true); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Marketing Campaign</div></div>
+  <div class="headertitle"><div class="title">SDK Integration Testing</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
 <ul>
   <li class="level1">
-    <a href="#campaign_overview">Overview</a>
-  </li>
-  <li class="level1">
-    <a href="#campaign_description">Description</a>
-  </li>
-  <li class="level1">
-    <a href="#campaign_use_cases">Use Cases</a>
-  </li>
-  <li class="level1">
-    <a href="#campaign_example">Example</a>
+    <a href="#WhyTest">Safely test without polluting production</a>
   </li>
 </ul>
 </div>
-<div class="textblock"><h1><a class="anchor" id="campaign_overview"></a>
-Overview</h1>
-<p>Use <code><a class="el" href="class_keewano_s_d_k.html#ac3e1433b5be7b52e16886f9cc5e64cf5" title="Reports a marketing install campaign for this user.">KeewanoSDK.ReportInstallCampaign</a></code> to record the marketing campaign that brought in a new user. This function logs the campaign detail so you can later assess which marketing channels work best.</p>
-<h1><a class="anchor" id="campaign_description"></a>
-Description</h1>
-<p>Provide the name of your marketing campaign (for example, "Facebook Ads - Campaign A") as the parameter. The system stores this information for analysis, enabling you to compare the effectiveness of different campaigns over time.</p>
-<h1><a class="anchor" id="campaign_use_cases"></a>
-Use Cases</h1>
-<p>This function is ideal when you want to:</p><ul>
-<li><b>Leverage AI-Driven Insights:</b> - Benefit from AI insights that track user behavior during gameplay. When the Keewano AI Agents identify a marketing channel as a key factor, it highlights this in its reports with actionable guidance.</li>
-<li>Track the success of various marketing campaigns.</li>
-<li>Identify which channels deliver the most user installations.</li>
-<li>Refine your marketing approach with data-driven decisions based on comprehensive reporting.</li>
+<div class="textblock"><h1><a class="anchor" id="WhyTest"></a>
+Safely test without polluting production</h1>
+<p>When you validate your Keewano integration, keep test data isolated and under your control. There are <b>two approaches</b> you can use:</p>
+<div class="tabbed"></div><div class="tabbed"><ul>
+<li><p class="startli"><b class="tab-title">Separate Projects (Recommended)</b></p>
+<p class="startli"><b>Setup:</b></p><ol type="1">
+<li>Create <b>two Keewano projects</b>:<ul>
+<li><b>Development project</b> - used by your QA builds</li>
+<li><b>Production project</b> - used by the live app</li>
 </ul>
-<h1><a class="anchor" id="campaign_example"></a>
-Example</h1>
-<p>For instance, to log a campaign named "Facebook Ads - Campaign A", simply call: </p><div class="fragment"><div class="line"><span class="comment">// Log the marketing campaign responsible for the user installation.</span></div>
-<div class="line"><a class="code hl_class" href="class_keewano_s_d_k.html">KeewanoSDK</a>.<a class="code hl_function" href="class_keewano_s_d_k.html#ac3e1433b5be7b52e16886f9cc5e64cf5">ReportInstallCampaign</a>(<span class="stringliteral">&quot;Facebook Ads - Campaign A&quot;</span>);</div>
-<div class="ttc" id="aclass_keewano_s_d_k_html"><div class="ttname"><a href="class_keewano_s_d_k.html">KeewanoSDK</a></div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:18</div></div>
-<div class="ttc" id="aclass_keewano_s_d_k_html_ac3e1433b5be7b52e16886f9cc5e64cf5"><div class="ttname"><a href="class_keewano_s_d_k.html#ac3e1433b5be7b52e16886f9cc5e64cf5">KeewanoSDK.ReportInstallCampaign</a></div><div class="ttdeci">static void ReportInstallCampaign(string campaignName)</div><div class="ttdoc">Reports a marketing install campaign for this user.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:276</div></div>
-</div><!-- fragment --><p> This call records that the new user was acquired through the specified marketing campaign. </p>
-</div></div><!-- contents -->
+</li>
+<li>Use the <b>Development API key</b> for testing builds and <b>Production API key</b> for production builds<ul>
+<li>See <a class="el" href="_quick_start.html#Install">Installation</a> for how to configure the API key</li>
+<li>This keeps accidental QA data out of prod permanently</li>
+</ul>
+</li>
+</ol>
+<p class="startli"><b>Testing:</b></p><ol type="1">
+<li>Launch the game - the SDK will automatically report <a class="el" href="_event_types.html#AutomaticEvents">Automatic Event Types</a> events</li>
+<li>After a few minutes, check Basic KPIs updated at your <a class="el" href="namespace_keewano.html">Keewano</a> project website</li>
+<li>Create a new "Blank Report" to see the timeline of all events reported by the SDK</li>
+</ol>
+</li>
+<li><p class="startli"><b class="tab-title">Mark Test Users</b></p>
+<p class="startli"><b>Setup:</b></p><ol type="1">
+<li>Use <a class="el" href="class_keewano_s_d_k.html#a856040b9eda8528ccfbe38fa792a0e7b" title="Marks the device as a test user.">KeewanoSDK.MarkAsTestUser</a> to exclude QA sessions from product reports</li>
+</ol>
+<p class="startli"><b>Testing:</b></p><ol type="1">
+<li>Launch the game - the SDK will automatically report <a class="el" href="_event_types.html#AutomaticEvents">Automatic Event Types</a> events</li>
+<li>After a few minutes, check Basic KPIs updated at your <a class="el" href="namespace_keewano.html">Keewano</a> project website</li>
+<li>To see test data:<ul>
+<li>Create a new "Blank Report" with "Test Users" filter</li>
+<li>Select a test user from the list (names passed to MarkAsTestUser)</li>
+<li>View the timeline of all events reported by the SDK </li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</div> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

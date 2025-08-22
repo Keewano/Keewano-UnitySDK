@@ -55,12 +55,45 @@ var NAVTREE =
         [ "Player Loses a Broken Sword (One-Sided Transaction)", "_item_exchange.html#Example2", null ],
         [ "Player Receives a Reward (One-Sided Transaction)", "_item_exchange.html#Example3", null ],
         [ "Match3 Level Scenario", "_item_exchange.html#Example4", null ],
-        [ "User Balance Fix Reset by Support Team", "_item_exchange.html#Example5", null ]
+        [ "User Balance Fix Reset by Support Team", "_item_exchange.html#Example6", null ],
+        [ "Coffee Shop: Pay with Voucher or Credits + Stamp Card", "_item_exchange.html#Example7", null ],
+        [ "Road Trip Day: Reset, Mid-Trip Changes, End-of-Day Settlement", "_item_exchange.html#Example9", null ]
       ] ]
     ] ],
-    [ "Marketing Campaign", "install_campaign.html", null ],
+    [ "Marketing Campaign", "install_campaign.html", [
+      [ "Overview", "install_campaign.html#campaign_overview", null ],
+      [ "Description", "install_campaign.html#campaign_description", null ],
+      [ "Use Cases", "install_campaign.html#campaign_use_cases", null ],
+      [ "Example", "install_campaign.html#campaign_example", null ]
+    ] ],
     [ "Windows and Popups", "_windows.html", null ],
     [ "Custom Events", "_custom_events_page.html", null ],
+    [ "Step-by-Step Example Integration", "_dummy_game_integration.html", [
+      [ "Overview", "_dummy_game_integration.html#Overview", null ],
+      [ "Key Concept: Context-First Events", "_dummy_game_integration.html#ConceptShift", null ],
+      [ "Game Name", "_dummy_game_integration.html#GameName", null ],
+      [ "Game Description", "_dummy_game_integration.html#GameDescription", null ],
+      [ "Integration Scenarios", "_dummy_game_integration.html#IntegrationScenarios", [
+        [ "Scenario 1: First Launch & Consent", "_dummy_game_integration.html#Scenario_1", null ],
+        [ "Scenario 2: Player Registration & Sign-In", "_dummy_game_integration.html#Scenario_2", null ],
+        [ "Scenario 3: Entering Main Menu & Changing Language", "_dummy_game_integration.html#Scenario_3", null ],
+        [ "Scenario 4: FTUE Milestones Tracking", "_dummy_game_integration.html#Scenario_4", null ],
+        [ "Scenario 5: Level Start & Completion", "_dummy_game_integration.html#Scenario_5", null ],
+        [ "Scenario 6: In-Game Combat & Power-Ups", "_dummy_game_integration.html#Scenario_6", null ],
+        [ "Scenario 7: Store Purchases (IAP)", "_dummy_game_integration.html#Scenario_7", null ],
+        [ "Scenario 8: Daily Resets", "_dummy_game_integration.html#Scenario_8", null ],
+        [ "Scenario 9: Non Unity.UI Buttons & Window Flow", "_dummy_game_integration.html#Scenario_9", null ],
+        [ "Scenario 10: Advanced Item & Goal Tracking", "_dummy_game_integration.html#Scenario_10", null ],
+        [ "Scenario 11: Custom Error Reporting", "_dummy_game_integration.html#Scenario_11", null ]
+      ] ]
+    ] ],
+    [ "SDK Integration Testing", "_integration_testing.html", [
+      [ "Safely test without polluting production", "_integration_testing.html#WhyTest", null ]
+    ] ],
+    [ "Offline Analytics", "_offline_analytics.html", [
+      [ "Your Data is Never Lost", "_offline_analytics.html#OfflineOverview", null ],
+      [ "How It Works", "_offline_analytics.html#OfflineHow", null ]
+    ] ],
     [ "Data Privacy", "_data_privacy.html", [
       [ "Default Privacy Compliance", "_data_privacy.html#DP_default", null ],
       [ "Optional User Consent", "_data_privacy.html#DP_consent", null ],

@@ -1,9 +1,11 @@
 var searchData=
 [
-  ['team_0',['User Balance Fix Reset by Support Team',['../_item_exchange.html#Example5',1,'']]],
-  ['to_20get_201_20vial_20of_20eternal_20life_1',['Player Spends 5 Gold Coins and a Healing Potion to Get 1 Vial of Eternal Life',['../_item_exchange.html#Example1',1,'']]],
-  ['tracking_20in_20game_20windows_20and_20popups_2',['Tracking In-Game Windows and Popups',['../_windows.html#tracking-in-game-windows-and-popups',1,'']]],
-  ['transaction_3',['Transaction',['../_item_exchange.html#Example2',1,'Player Loses a Broken Sword (One-Sided Transaction)'],['../_item_exchange.html#Example3',1,'Player Receives a Reward (One-Sided Transaction)']]],
-  ['tutorial_4',['Onboarding (Tutorial)',['../onboarding_milestone.html',1,'']]],
-  ['types_5',['Types',['../_event_types.html#AutomaticEvents',1,'Automatic Event Types'],['../_event_types.html',1,'Event Types'],['../_event_types.html#ManualEvents',1,'Manual Event Types']]]
+  ['language_0',['Scenario 3: Entering Main Menu &amp; Changing Language',['../_dummy_game_integration.html#Scenario_3',1,'']]],
+  ['launch_20consent_1',['Scenario 1: First Launch &amp; Consent',['../_dummy_game_integration.html#Scenario_1',1,'']]],
+  ['level_20scenario_2',['Match3 Level Scenario',['../_item_exchange.html#Example4',1,'']]],
+  ['level_20start_20completion_3',['Scenario 5: Level Start &amp; Completion',['../_dummy_game_integration.html#Scenario_5',1,'']]],
+  ['life_4',['Player Spends 5 Gold Coins and a Healing Potion to Get 1 Vial of Eternal Life',['../_item_exchange.html#Example1',1,'']]],
+  ['logerror_5',['LogError',['../class_keewano_s_d_k.html#a263fa179fc50f8ff84598bb34b99978d',1,'KeewanoSDK']]],
+  ['loses_20a_20broken_20sword_20one_20sided_20transaction_6',['Player Loses a Broken Sword (One-Sided Transaction)',['../_item_exchange.html#Example2',1,'']]],
+  ['lost_7',['Your Data is Never Lost',['../_offline_analytics.html#OfflineOverview',1,'']]]
 ];

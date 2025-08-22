@@ -136,16 +136,21 @@ $(function(){initNavTree('_event_types.html',''); initResizable(true); });
 </div>
 <div class="textblock"><h1><a class="anchor" id="AutomaticEvents"></a>
 Automatic Event Types</h1>
-<p>The SDK automatically detects various events to provide insights into your game's performance and player behavior. Below is an example list of auto-detected events (this list is not exhaustive):</p><ul>
+<p>The SDK automatically detects various events to provide insights into your game's performance and player behavior. Below is a full list of auto-detected events:</p><ul>
 <li>Game launches.</li>
 <li>Detection of third-party modifications to the game executable (if possible).</li>
 <li>Unhandled C# exceptions.</li>
 <li>Low memory warnings.</li>
 <li>App background/resume events.</li>
 <li>Internet connectivity changes.</li>
-<li>Device type and technical specifications.</li>
-<li>Unity UI button clicks.</li>
+<li>Platform and technical specifications (such as Device-type, GPU-type, OS, RAM-size, VRAM-size and screen resolution).</li>
+<li>Unity UI button clicks (empty space clicks included).</li>
 <li>System language.</li>
+<li>Deep-link activation.</li>
+<li>Genuinity check.</li>
+<li>Sessions detection (start and end of sessions).</li>
+<li>Scene transitions (loading and unloading of scenes).</li>
+<li>Batch drops.</li>
 </ul>
 <h1><a class="anchor" id="ManualEvents"></a>
 Manual Event Types</h1>
