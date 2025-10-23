@@ -1,0 +1,126 @@
+/* Custom enhancements for professional documentation */
+
+/* Improved attention/warning boxes */
+.attention,
+dl.attention {
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+    border-left: 4px solid #FF9800;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.attention dt {
+    font-weight: bold;
+    color: #E65100;
+    margin-bottom: 8px;
+}
+
+/* Note boxes */
+.note,
+dl.note {
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    border-left: 4px solid #2196F3;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.note dt {
+    font-weight: bold;
+    color: #1565C0;
+    margin-bottom: 8px;
+}
+
+/* Code blocks enhancement */
+.fragment {
+    border-radius: 8px;
+    border: 1px solid #E0E0E0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Section headers with subtle underline */
+h2 {
+    border-bottom: 2px solid #E0E0E0;
+    padding-bottom: 8px;
+    margin-top: 32px;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Better table styling */
+table.markdownTable {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table.markdownTable th {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+table.markdownTable td {
+    padding: 12px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+table.markdownTable tr:hover {
+    background: #F5F5F5;
+}
+
+/* Improved parameter documentation */
+.params {
+    background: #FAFAFA;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+/* Return value styling */
+.retval {
+    background: #E8F5E9;
+    border-left: 3px solid #4CAF50;
+    padding: 12px;
+    border-radius: 4px;
+    margin: 12px 0;
+}
+
+/* Page navigation breadcrumbs enhancement */
+.navpath {
+    background: linear-gradient(135deg, #F5F5F5 0%, #EEEEEE 100%);
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+
+/* Enhanced search box */
+#MSearchBox {
+    border-radius: 20px;
+    border: 2px solid #E0E0E0;
+    transition: border-color 0.3s;
+}
+
+#MSearchBox:focus-within {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+/* Professional footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #263238 0%, #37474F 100%);
+    color: #B0BEC5;
+    border-top: 3px solid #4CAF50;
+}
