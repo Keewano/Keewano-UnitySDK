@@ -1,8 +1,8 @@
 var annotated_dup =
 [
-    [ "Keewano", "namespace_keewano.html", [
-      [ "Item", "struct_keewano_1_1_item.html", "struct_keewano_1_1_item" ]
+    [ "Keewano", "namespaceKeewano.html", [
+      [ "Item", "structKeewano_1_1Item.html", "structKeewano_1_1Item" ]
     ] ],
-    [ "KeewanoSDK", "class_keewano_s_d_k.html", null ],
-    [ "KeewanoWindow", "class_keewano_window.html", null ]
+    [ "KeewanoSDK", "classKeewanoSDK.html", null ],
+    [ "KeewanoWindow", "classKeewanoWindow.html", null ]
 ];
