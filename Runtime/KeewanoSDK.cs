@@ -20,6 +20,7 @@ public partial class KeewanoSDK : MonoBehaviour
     private bool m_internetReachable;
     private readonly object m_exceptionReportLock = new object();
     private KEventDispatcher m_dispatcher;
+    private bool m_disableAutomaticButtonClickTracking;
 
     struct UserIdentifiers
     {
@@ -41,6 +42,8 @@ public partial class KeewanoSDK : MonoBehaviour
     {
         if (string.IsNullOrEmpty(settings.APIKey))
             Debug.LogError("[KeewanoSDK] No API key was provided.");
+
+        m_disableAutomaticButtonClickTracking = settings.disableButtonTracking;
 
         UserIdentifiers uid = loadOrInitIdentifiers();
 
@@ -88,7 +91,7 @@ public partial class KeewanoSDK : MonoBehaviour
 
     private void handleOnDeepLinkActivated(string link)
     {
-        m_dispatcher.addEvent((ushort)KEvents.DEEP_LINK_ACTIVATED, link);
+        m_dispatcher.addEventLongString((ushort)KEvents.DEEP_LINK_ACTIVATED, link);
     }
 
     private static void handleSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -114,24 +117,27 @@ public partial class KeewanoSDK : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
+        if (!m_disableAutomaticButtonClickTracking)
         {
-            EventSystem eventSystem = EventSystem.current;
-            if (eventSystem != null)
+            if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
             {
-                GameObject clicked = eventSystem.currentSelectedGameObject;
+                EventSystem eventSystem = EventSystem.current;
+                if (eventSystem != null)
+                {
+                    GameObject clicked = eventSystem.currentSelectedGameObject;
 
-                if (clicked && clicked.TryGetComponent<Button>(out Button btn))
-                    ReportButtonClick(btn.name);
+                    if (clicked && clicked.TryGetComponent<Button>(out Button btn))
+                        ReportButtonClick(btn.name);
+                }
+                else
+                    Debug.LogWarning("Keewano SDK: EventSystem not found in the scene; automatic button-click detection unavailable.");
             }
-            else
-                Debug.LogWarning("Keewano SDK: EventSystem not found in the scene; automatic button-click detection unavailable.");
-        }
 
 #if UNITY_ANDROID
-        if (Input.GetKeyDown(KeyCode.Escape))
-            m_instance.m_dispatcher.ReportButtonClick("Android Device Back Button");
+            if (Input.GetKeyDown(KeyCode.Escape))
+                m_instance.m_dispatcher.ReportButtonClick("Android Device Back Button");
 #endif
+        }
         checkInternetReachability();
     }
 
@@ -173,6 +179,15 @@ public partial class KeewanoSDK : MonoBehaviour
         else
             m_dispatcher.ReportAppResume();
     }
+
+#if UNITY_EDITOR
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+            m_dispatcher.SendNow();
+
+    }
+#endif
 
     /**
      @brief Sets the user's consent for data collection and analytics.
@@ -221,12 +236,14 @@ public partial class KeewanoSDK : MonoBehaviour
 
     /**
     @brief Reports a button click event.
-    
+
     KeewanoSDK automatically collects button click events when using Unity.UI system,
     capturing the button GameObject names to infer user actions. However, if your
-    game uses a custom UI subsystem or if certain interactive objects—treated as buttons
+    game uses a custom UI subsystem or if certain interactive objects-treated as buttons
     during gameplay but not implemented as standard Unity.UI,
     use this method to manually report those button clicks.
+
+    @sa \ref DataFormatSpecs for string parameter requirements.
      */
     static public void ReportButtonClick(string buttonName)
     {
@@ -238,6 +255,8 @@ public partial class KeewanoSDK : MonoBehaviour
 
       This method is used to capture the event when a window or popup is opened,
       helping to understand the context and scope of the user's actions.
+
+      @sa \ref DataFormatSpecs for string parameter requirements.
      */
     static public void ReportWindowOpen(string windowName)
     {
@@ -246,9 +265,11 @@ public partial class KeewanoSDK : MonoBehaviour
 
     /**
       @brief Reports a window/popup close event.
-      
+
       This method is used to capture the event when a window or popup is closed,
       helping to understand the context and scope of the user's actions.
+
+      @sa \ref DataFormatSpecs for string parameter requirements.
      */
     static public void ReportWindowClose(string windowName)
     {
@@ -257,10 +278,14 @@ public partial class KeewanoSDK : MonoBehaviour
 
     /**
      @brief Reports an in-app purchase event.
-    
+
      Use this method to log an in-app purchase by specifying the product name and
      the price in US cents. This event helps track purchase activity within the
      %Keewano system for further analysis and reporting.
+
+     @note This method should ONLY be called after the purchase has been validated by your server.
+           Never report purchases immediately upon store callback - always validate with Apple/Google first.
+     @sa \ref DataFormatSpecs for string parameter requirements.
     */
     static public void ReportInAppPurchase(string productName, uint priceUsdCents)
     {
@@ -268,10 +293,53 @@ public partial class KeewanoSDK : MonoBehaviour
     }
 
     /**
+        @brief Reports items granted from an in-app purchase.
+
+        Use this method to track virtual items or currencies granted to the player after completing
+        an in-app purchase. This is especially useful when items are granted asynchronously or at a
+        different time than the purchase event itself (e.g., server-side validation, delayed grants).
+
+        @param productName The product ID as defined in app stores (Apple App Store, Google Play).
+        @param items An array of items granted to the user from this purchase.
+
+        @note This method should ONLY be called after the purchase has been validated by your server
+              and the items have been successfully granted to the player.
+
+        @sa ReportInAppPurchase, ReportItemsExchange, \ref InAppPurchases, \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportInAppPurchaseItemsGranted(string productName, Item[] items)
+    {
+        ReadOnlySpan<Item> itemsSpan = items == null ? ReadOnlySpan<Item>.Empty : items.AsSpan();
+        m_instance.m_dispatcher.ReportInAppPurchaseItemsGranted(productName, itemsSpan);
+    }
+
+    /**
+        @brief Reports items granted from an in-app purchase using read-only spans.
+
+        Use this method to track virtual items or currencies granted to the player after completing
+        an in-app purchase. This is especially useful when items are granted asynchronously or at a
+        different time than the purchase event itself (e.g., server-side validation, delayed grants).
+
+        @param productName The product ID as defined in app stores (Apple App Store, Google Play).
+        @param items A read-only span of items granted to the user from this purchase.
+
+        @note This method should ONLY be called after the purchase has been validated by your server
+              and the items have been successfully granted to the player.
+
+        @sa ReportInAppPurchase, ReportItemsExchange, \ref InAppPurchases, \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportInAppPurchaseItemsGranted(string productName, ReadOnlySpan<Keewano.Item> items)
+    {
+        m_instance.m_dispatcher.ReportInAppPurchaseItemsGranted(productName, items);
+    }
+
+    /**
         @brief Reports a marketing install campaign for this user.
 
         This method logs the marketing campaign that was used to acquire the user into the game.
         It is used to compare the performance of different marketing sources and their effectiveness in driving user acquisitions.
+
+        @sa \ref DataFormatSpecs for string parameter requirements.
     */
     static public void ReportInstallCampaign(string campaignName)
     {
@@ -284,6 +352,8 @@ public partial class KeewanoSDK : MonoBehaviour
         This method logs the game's language setting. While the SDK automatically collects the system language,
         this method is useful for detecting cases where the game language differs from the system language,
         which may indicate that the language was manually changed by the user or that the game lacks proper localization.
+
+        @sa \ref DataFormatSpecs for string parameter requirements.
      */
     static public void ReportGameLanguage(string language)
     {
@@ -292,12 +362,13 @@ public partial class KeewanoSDK : MonoBehaviour
 
     /**
        @brief Report that a user has reached a milestone during the onboarding (game tutorial) process.
-       
+
        The data reported using this method will be used to automatically generate an FTUE (first-time user experience)
        funnel for your players and will be used by our AI to investigate the behavior of users who are churning during the onboarding process.
-       
+
        @note Each milestone should have a unique name and must not be reported more than once during onboarding.
              This ensures that analytics accurately reflect the user's progress, while still allowing flexibility.
+       @sa \ref DataFormatSpecs for string parameter requirements.
      */
     static public void ReportOnboardingMilestone(string milestoneName)
     {
@@ -309,10 +380,12 @@ public partial class KeewanoSDK : MonoBehaviour
 
        A/B testing is a technique used to compare two or more versions of a feature to see which one performs better.
        In game development, this helps you understand which changes improve gameplay, player satisfaction, or overall balance.
- 
+
        When you assign users to test groups, you can compare how different versions of a feature perform with real players.
        For example, you might test different reward systems or control schemes by splitting your players into groups,
        then analyze their behavior and feedback to make data-driven improvements.
+
+       @sa \ref DataFormatSpecs for string parameter requirements.
     */
     static public void ReportABTestGroupAssignment(string testName, char group)
     {
@@ -329,6 +402,8 @@ public partial class KeewanoSDK : MonoBehaviour
         @param exchangeLocation The location or context of the item exchange.
         @param from An array of items to be removed from the user's balance (can be null).
         @param to An array of items to be added to the user's balance (can be null).
+
+        @sa \ref DataFormatSpecs for string parameter requirements.
     */
     static public void ReportItemsExchange(string exchangeLocation, Item[] from, Item[] to)
     {
@@ -348,6 +423,8 @@ public partial class KeewanoSDK : MonoBehaviour
         @param exchangeLocation The location or context of the item exchange.
         @param from A read-only span of items to be removed from the user's balance.
         @param to A read-only span of items to be added to the user's balance.
+
+        @sa \ref DataFormatSpecs for string parameter requirements.
     */
     static public void ReportItemsExchange(string exchangeLocation, ReadOnlySpan<Keewano.Item> from, ReadOnlySpan<Keewano.Item> to)
     {
@@ -402,6 +479,8 @@ public partial class KeewanoSDK : MonoBehaviour
 
         This function notifies the system to reset the user's items at the given location,
         typically used to initialize or correct the user's item balance.
+
+        @sa \ref DataFormatSpecs for string parameter requirements.
      */
     static public void ReportItemsReset(string location, Item[] items)
     {
@@ -410,7 +489,7 @@ public partial class KeewanoSDK : MonoBehaviour
 
     /**
    @brief Marks the device as a test user.
-   
+
    Marking a device as a test user allows %Keewano AI to ignore any unusual behavior
    and bugs reported from it during statistics calculations and investigations.
    This is especially useful during game testing and integrations.
@@ -426,6 +505,8 @@ public partial class KeewanoSDK : MonoBehaviour
    Usage:
     - Call this API method to explicitly mark and identify test users, enabling
       clearer validation and debugging during your integration with the game.
+
+   @sa \ref DataFormatSpecs for string parameter requirements.
     */
     static public void MarkAsTestUser(string testerName)
     {
@@ -434,10 +515,12 @@ public partial class KeewanoSDK : MonoBehaviour
 
     /**
     @brief Reports a technical issue encountered during gameplay.
-     
+
     Use this method to log any additional or custom errors that may not be captured by the system.
     This is particularly useful for recording issues unique to your application's behavior.
     Keewano AI automatically gathers exceptions and Unity error log messages.
+
+    @sa \ref DataFormatSpecs for string parameter requirements.
      */
     static public void LogError(string message)
     {

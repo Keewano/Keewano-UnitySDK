@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Linq;
 using System.IO;
 
@@ -16,6 +16,10 @@ namespace Keewano.Internal
         [Header("Data Privacy Compliance")]
         [Tooltip("If true, the SDK will not send data to the server unless the player consents to tracking.\nSee KeewanoSDK.SetUserConsent() documentation.")]
         public bool requirePlayerConsent = false;
+
+        [Header("Event Tracking Options")]
+        [Tooltip("If true, the SDK will not automatically capture and report button clicks.\nNOTE: We DO NOT recommend disabling automatic capture, as button clicks provide the AI Analyst with additional context for user behavior.")]
+        public bool disableButtonTracking = false;
 
         public static KeewanoSettings Load()
         {

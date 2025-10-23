@@ -363,29 +363,29 @@ namespace Keewano.Internal
             {
                 case UserConsentState.NotRequired:
                 case UserConsentState.Granted:
-                {
-                    if (b.CustomEventsVersion != ceMap.Version && b.CustomEventsVersion != 0)
                     {
-                        bool hasMapping = KNetwork.GetCustomEventIds(m_ceRegPoint, m_appSecret,
-                            b.CustomEventsVersion, out ushort[] ids, out bool needToRegister, ct);
-
-                        if (needToRegister)
+                        if (b.CustomEventsVersion != ceMap.Version && b.CustomEventsVersion != 0)
                         {
+                            bool hasMapping = KNetwork.GetCustomEventIds(m_ceRegPoint, m_appSecret,
+                                b.CustomEventsVersion, out bool needToRegister, ct);
 
-                            string ceFilename = getCustomEventSetFilename(b.CustomEventsVersion);
-                            if (!KSerializer.LoadFromFile(ceFilename, out CustomEventSet ceSet))
+                            if (needToRegister)
+                            {
+
+                                string ceFilename = getCustomEventSetFilename(b.CustomEventsVersion);
+                                if (!KSerializer.LoadFromFile(ceFilename, out CustomEventSet ceSet))
+                                    return false;
+                                hasMapping = KNetwork.RegisterCustomEvents(m_ceRegPoint, m_appSecret, ceSet, ct);
+                            }
+
+                            if (hasMapping)
+                                ceMap.Version = b.CustomEventsVersion;
+                            else
                                 return false;
-                            hasMapping = KNetwork.RegisterCustomEvents(m_ceRegPoint, m_appSecret, ceSet, ct);
                         }
 
-                        if (hasMapping)
-                            ceMap.Version = b.CustomEventsVersion;
-                        else
-                            return false;
+                        return KNetwork.SendBatch(m_ingresEndPoint, m_appSecret, b, m_sendTestUserName, ct);
                     }
-
-                    return KNetwork.SendBatch(m_ingresEndPoint, m_appSecret, b, m_sendTestUserName, ct);
-                }
                 case UserConsentState.Denied:
                     return true; //Delete the batch without actually sending
                 case UserConsentState.Pending:
@@ -435,18 +435,19 @@ namespace Keewano.Internal
 
         internal void SetUserId(Guid userId)
         {
-            m_userId = userId;
             lock (m_swapLock)
             {
+                m_userId = userId;
                 m_inBatch.UserId = userId;
                 m_inBatch.Writer.Write((ushort)KEvents.USER_ID_ASSIGNED);
-
             }
-
         }
 
         internal void AssignToABTestGroup(string testName, char group)
         {
+#if UNITY_EDITOR
+            validateString(testName);
+#endif
             lock (m_swapLock)
             {
                 m_inBatch.Writer.Write((ushort)KEvents.AB_TEST_ASSIGNMENT);
@@ -458,6 +459,9 @@ namespace Keewano.Internal
 
         internal void ReportInAppPurchase(string productName, uint priceUsdCents)
         {
+#if UNITY_EDITOR
+            validateString(productName);
+#endif
             lock (m_swapLock)
             {
                 uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
@@ -539,8 +543,30 @@ namespace Keewano.Internal
 
         internal void LogError(string msg)
         {
-            addEvent((ushort)KEvents.ERROR_MSG, msg);
+            addEventLongString((ushort)KEvents.ERROR_MSG, msg);
         }
+
+#if UNITY_EDITOR
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool validateStringNotEmpty(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                UnityEngine.Debug.LogError("[KeewanoSDK] String event parameter cannot be null or empty. The entire event will be discarded.");
+                return false;
+            }
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void validateString(string str)
+        {
+            if (validateStringNotEmpty(str) && str.Length > 256)
+            {
+                UnityEngine.Debug.LogError($"[KeewanoSDK] String event parameter exceeds maximum length of 256 characters (actual: {str.Length}). The string will be truncated to 256 characters.");
+            }
+        }
+#endif
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void addEvent(ushort eventType)
@@ -555,6 +581,23 @@ namespace Keewano.Internal
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void addEvent(ushort eventType, string str)
         {
+#if UNITY_EDITOR
+            validateString(str);
+#endif
+            lock (m_swapLock)
+            {
+                m_inBatch.Writer.Write(eventType);
+                m_inBatch.Writer.Write(str);
+                sendIfNeeded();
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void addEventLongString(ushort eventType, string str)
+        {
+#if UNITY_EDITOR
+            validateStringNotEmpty(str);
+#endif
             lock (m_swapLock)
             {
                 m_inBatch.Writer.Write(eventType);
@@ -653,6 +696,9 @@ namespace Keewano.Internal
             w.Write(items.Length);
             for (int i = 0; i < items.Length; ++i)
             {
+#if UNITY_EDITOR
+                validateString(items[i].UniqItemName);
+#endif
                 w.Write(items[i].UniqItemName);
                 w.Write(items[i].Count);
             }
@@ -660,6 +706,9 @@ namespace Keewano.Internal
 
         internal void ReportItemExchange(string exchangePoint, ReadOnlySpan<Item> from, ReadOnlySpan<Item> to)
         {
+#if UNITY_EDITOR
+            validateString(exchangePoint);
+#endif
             lock (m_swapLock)
             {
                 m_inBatch.Writer.Write((ushort)KEvents.ITEMS_EXCHANGE);
@@ -672,10 +721,27 @@ namespace Keewano.Internal
 
         internal void ReportItemsReset(string location, ReadOnlySpan<Item> items)
         {
+#if UNITY_EDITOR
+            validateString(location);
+#endif
             lock (m_swapLock)
             {
                 m_inBatch.Writer.Write((ushort)KEvents.ITEMS_RESET);
                 m_inBatch.Writer.Write(location);
+                writeItems(m_inBatch.Writer, items);
+                sendIfNeeded();
+            }
+        }
+
+        internal void ReportInAppPurchaseItemsGranted(string productId, ReadOnlySpan<Item> items)
+        {
+#if UNITY_EDITOR
+            validateString(productId);
+#endif
+            lock (m_swapLock)
+            {
+                m_inBatch.Writer.Write((ushort)KEvents.ITEMS_PURCHASED_GRANT);
+                m_inBatch.Writer.Write(productId);
                 writeItems(m_inBatch.Writer, items);
                 sendIfNeeded();
             }

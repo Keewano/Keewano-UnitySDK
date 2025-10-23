@@ -37,9 +37,23 @@ namespace Keewano.Internal
         public override void OnInspectorGUI()
         {
             EditorGUI.BeginChangeCheck();
-            DrawDefaultInspector();
+
+            serializedObject.Update();
 
             KeewanoSettings settings = (KeewanoSettings)target;
+
+            // Draw properties manually to insert help boxes after related fields
+            SerializedProperty apiKeyProp = serializedObject.FindProperty("APIKey");
+            SerializedProperty requireConsentProp = serializedObject.FindProperty("requirePlayerConsent");
+            SerializedProperty disableButtonProp = serializedObject.FindProperty("disableButtonTracking");
+
+            // General Settings
+            EditorGUILayout.PropertyField(apiKeyProp, true);
+
+            EditorGUILayout.Space();
+
+            // Data Privacy Compliance
+            EditorGUILayout.PropertyField(requireConsentProp, true);
             if (settings.requirePlayerConsent)
             {
                 EditorGUILayout.HelpBox("See KeewanoSDK.SetUserConsent() in the documentation.\n\n" +
@@ -47,6 +61,19 @@ namespace Keewano.Internal
                                         " \u2022 Call KeewanoSDK.SetUserConsent(true) to start sending data,\n" +
                                         " \u2022 Call KeewanoSDK.SetUserConsent(false) to drop buffered data and stop future collection.", MessageType.Info);
             }
+
+            EditorGUILayout.Space();
+
+            // Event Tracking Options
+            EditorGUILayout.PropertyField(disableButtonProp, true);
+            if (settings.disableButtonTracking)
+            {
+                EditorGUILayout.HelpBox("Automatic button click tracking is disabled.\n\n" +
+                                        "NOTE: We DO NOT recommend disabling automatic capture, as button clicks provide the AI Analyst with additional context for user behavior.\n\n" +
+                                        " \u2022 Manual button click tracking via KeewanoSDK.ReportButtonClick() will still work.", MessageType.Warning);
+            }
+
+            serializedObject.ApplyModifiedProperties();
 
             if (EditorGUI.EndChangeCheck())
             {

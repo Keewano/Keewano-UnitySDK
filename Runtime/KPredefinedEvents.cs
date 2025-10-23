@@ -49,10 +49,11 @@ namespace Keewano.Internal
 
         GAME_LANG = 43,
         ONBOARDING_MILESTONE = 50,
+        ITEMS_PURCHASED_GRANT = 54,
 
     }
 
-    enum KBatchDropReason: uint
+    enum KBatchDropReason : uint
     {
         BROKEN_CUSTOM_EVENT_MAPPING = 1,
         TOO_MANY_UNSENT_EVENTS = 2

@@ -10,6 +10,8 @@ namespace Keewano.Internal
 
     internal class KNetwork
     {
+        private const string SDK_VERSION = "Unity/1.0.82";
+
         static readonly HttpClient m_client;
         static readonly MediaTypeHeaderValue m_contentTypeHeader;
 
@@ -44,6 +46,7 @@ namespace Keewano.Internal
                     ctx.Headers.Add("K-Tester", testUser);
 
                 ctx.Headers.Add("K-Token", appSecret);
+                ctx.Headers.Add("K-SDK", SDK_VERSION);
 
                 HttpRequestMessage req = new HttpRequestMessage()
                 {
@@ -63,9 +66,8 @@ namespace Keewano.Internal
             }
         }
 
-        public static bool GetCustomEventIds(Uri endpoint, string appSecret, uint ceVersion, out ushort[] dstIds, out bool needToRegister, CancellationToken ct)
+        public static bool GetCustomEventIds(Uri endpoint, string appSecret, uint ceVersion, out bool needToRegister, CancellationToken ct)
         {
-            dstIds = null;
             needToRegister = false;
 
             try
@@ -78,22 +80,13 @@ namespace Keewano.Internal
 
                 req.Headers.Add("K-Token", appSecret);
                 req.Headers.Add("K-CustomEventHash", ceVersion.ToString());
+                req.Headers.Add("K-SDK", SDK_VERSION);
 
                 HttpResponseMessage reply = m_client.SendAsync(req, ct).Result;
                 switch (reply.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                    {
-                        byte[] data = reply.Content.ReadAsByteArrayAsync().Result;
-                        if (data.Length % 2 == 0)
-                        {
-                            dstIds = new ushort[data.Length / 2];
-                            Buffer.BlockCopy(data, 0, dstIds, 0, data.Length);
-                            return true;
-                        }
-
-                        return false;
-                    }
+                        return true;
                     case HttpStatusCode.NoContent:
                         needToRegister = true;
                         return false;
@@ -121,6 +114,7 @@ namespace Keewano.Internal
                 req.Headers.Add("K-Token", appSecret);
                 req.Headers.Add("K-CustomEventHash", ceSet.Version.ToString());
                 req.Headers.Add("K-CustomEventCount", ceSet.EventCount.ToString());
+                req.Headers.Add("K-SDK", SDK_VERSION);
 
                 req.Content.Headers.ContentEncoding.Add("gzip");
                 req.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
@@ -135,3 +129,4 @@ namespace Keewano.Internal
         }
     }
 }
+

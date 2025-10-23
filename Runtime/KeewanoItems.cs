@@ -2,8 +2,11 @@
 
 namespace Keewano
 {
-    ///@brief Represents a game item with a unique identifier and a quantity.
+    /**
+    @brief Represents a game item with a unique identifier and a quantity.
 
+    @sa \ref DataFormatSpecs for name parameter requirements.
+    */
     public struct Item
     {
         /// Unique name of the item.
