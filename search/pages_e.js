@@ -1,4 +1,26 @@
 var searchData=
 [
-  ['windows_20and_20popups_0',['Windows and Popups',['../_windows.html',1,'']]]
+  ['failed_20watch_20for_20extra_20moves_0',['Scenario 3: Level Failed - Watch for Extra Moves',['../AdRevenue.html#ad_scenario_level_failed',1,'']]],
+  ['fails_1',['Scenario 5: Purchase Validated but Grant Fails',['../InAppPurchases.html#iap_scenario_failed',1,'']]],
+  ['feature_20tutorials_2',['FTUE vs Feature Tutorials',['../onboarding_milestone.html#tutorial_comparison',1,'']]],
+  ['features_3',['Features',['../index.html#key-features',1,'Key Features'],['../onboarding_milestone.html#advanced_tutorials',1,'Tutorials for Advanced Game Features']]],
+  ['first_20events_4',['Key Concept: Context-First Events',['../DummyGameIntegration.html#ConceptShift',1,'']]],
+  ['first_20ideology_5',['Performance-First Ideology',['../index.html#performance-first-ideology',1,'']]],
+  ['first_20launch_20consent_6',['Scenario 1: First Launch &amp;amp; Consent',['../DummyGameIntegration.html#Scenario_1',1,'']]],
+  ['first_20time_20user_20experience_20ftue_7',['First-Time User Experience (FTUE)',['../onboarding_milestone.html#ftue_tracking',1,'']]],
+  ['fix_20reset_20by_20support_20team_8',['User Balance Fix Reset by Support Team',['../ItemExchange.html#Example6',1,'']]],
+  ['flow_9',['Flow',['../DummyGameIntegration.html#Scenario_9',1,'Scenario 9: Non Unity.UI Buttons &amp; Window Flow'],['../InAppPurchases.html#iap_flow',1,'The Complete Purchase Flow']]],
+  ['flow_20diagram_10',['Flow Diagram',['../InAppPurchases.html#iap_flow_diagram',1,'']]],
+  ['for_20advanced_20game_20features_11',['Tutorials for Advanced Game Features',['../onboarding_milestone.html#advanced_tutorials',1,'']]],
+  ['for_20extra_20moves_12',['Scenario 3: Level Failed - Watch for Extra Moves',['../AdRevenue.html#ad_scenario_level_failed',1,'']]],
+  ['for_20free_20coins_13',['Scenario 6: Shop - Watch for Free Coins',['../AdRevenue.html#ad_scenario_shop',1,'']]],
+  ['for_20rewarded_20ads_14',['Only Call ReportAdItemsGranted for Rewarded Ads',['../AdRevenue.html#ad_only_rewarded_grants',1,'']]],
+  ['for_20separation_15',['Common Cases for Separation',['../InAppPurchases.html#iap_separation_reasons',1,'']]],
+  ['format_20specifications_16',['Data Format Specifications',['../DataFormatSpecs.html',1,'']]],
+  ['free_20coins_17',['Scenario 6: Shop - Watch for Free Coins',['../AdRevenue.html#ad_scenario_shop',1,'']]],
+  ['free_20trial_20period_18',['Scenario 2: Free Trial Period',['../SubscriptionRevenue.html#sub_scenario_trial',1,'']]],
+  ['ftue_19',['First-Time User Experience (FTUE)',['../onboarding_milestone.html#ftue_tracking',1,'']]],
+  ['ftue_20milestones_20tracking_20',['Scenario 4: FTUE Milestones Tracking',['../DummyGameIntegration.html#Scenario_4',1,'']]],
+  ['ftue_20vs_20feature_20tutorials_21',['FTUE vs Feature Tutorials',['../onboarding_milestone.html#tutorial_comparison',1,'']]],
+  ['funnels_20are_20built_22',['How Funnels Are Built',['../onboarding_milestone.html#ftue_funnel',1,'']]]
 ];

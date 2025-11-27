@@ -23,7 +23,7 @@ var searchData=
   ['is_20critical_20',['Server Validation is Critical',['../InAppPurchases.html#iap_validation_critical',1,'']]],
   ['is_20never_20lost_21',['Your Data is Never Lost',['../OfflineAnalytics.html#OfflineOverview',1,'']]],
   ['it_20works_22',['How It Works',['../OfflineAnalytics.html#OfflineHow',1,'']]],
-  ['item_23',['Item',['../ItemExchange.html#ItemConcept',1,'Defining an "Item"'],['../structKeewano_1_1Item.html',1,'Keewano.Item'],['../structKeewano_1_1Item.html#a5556bd6dff4ee0cfb34d439a99362075',1,'Keewano.Item.Item(string uniqItemName, uint count)'],['../structKeewano_1_1Item.html#ae6f2e655ce1f8e0a5ba6ec3bb9289eee',1,'Keewano.Item.Item(string uniqItemName)']]],
+  ['item_23',['Defining an &quot;Item&quot;',['../ItemExchange.html#ItemConcept',1,'']]],
   ['item_20goal_20tracking_24',['Scenario 10: Advanced Item &amp;amp; Goal Tracking',['../DummyGameIntegration.html#Scenario_10',1,'']]],
   ['item_20names_20identify_20items_20across_20all_20apis_25',['Item Names Identify Items Across All APIs',['../ItemExchange.html#ItemConsistency',1,'']]],
   ['item_20rewards_26',['Item Rewards',['../SubscriptionRevenue.html#sub_scenario_multiple',1,'Scenario 5: Multiple Item Rewards'],['../AdRevenue.html#ad_scenario_multiple_items',1,'Scenario 7: Multiple Item Rewards']]],

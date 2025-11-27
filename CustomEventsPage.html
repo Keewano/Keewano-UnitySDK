@@ -142,11 +142,64 @@ $(function(){initNavTree('CustomEventsPage.html','',''); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>In addition to <a class="el" href="EventTypes.html#AutomaticEvents">automatically collected events</a>, it's recommended to add custom events to help <b>Keewano AI Agents</b> to better understand your gameplay and user behavior patterns specific to your product.</p>
-<dl class="section note"><dt>Note</dt><dd>Please provide informative event names as they will be used by the <b>Keewano AI Agents</b> later during analysis in order to understand what is happening in your game.<br  />
-<br  />
-✅ Prefer event names like <span class="tt">OpenedMagicChest</span> and <span class="tt">HeroUpgraded</span>.<br  />
-⛔Avoid generic names such as <span class="tt">CustomEvent8</span> or <span class="tt">Action7</span>.</dd></dl>
-<h1 class="doxsection"><a class="anchor" id="custom_events_adding"></a>
+<p><b>Good news:</b> Unlike traditional analytics, you don't need to repeat context (level, difficulty, user_id) on every event. After <span class="tt">ReportLevelStart(15)</span>, any <span class="tt">ReportEnemyKilled("Orc")</span> is automatically linked to level 15:</p>
+<center> <table class="markdownTable">
+<tr>
+<th>Traditional Analytics</th><th>Keewano</th></tr>
+<tr>
+<td style="vertical-align: top;"><div class="fragment"><div class="line"><span class="comment">// Game level start</span></div>
+<div class="line">SendEvent(<span class="stringliteral">&quot;level_start&quot;</span>, <span class="keyword">new</span> {</div>
+<div class="line">    game_level = 15,</div>
+<div class="line">    difficulty = <span class="stringliteral">&quot;hard&quot;</span>,</div>
+<div class="line">    user_id = <span class="stringliteral">&quot;abc123&quot;</span>,</div>
+<div class="line">    device = <span class="stringliteral">&quot;iPhone13&quot;</span>,</div>
+<div class="line">    session = <span class="stringliteral">&quot;sess_456&quot;</span></div>
+<div class="line">});</div>
+</div><!-- fragment --> </td><td style="vertical-align: top;"><div class="fragment"><div class="line"><span class="comment">// Level start - context set once</span></div>
+<div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.ReportLevelStart(15);</div>
+<div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.ReportDifficultySet(<span class="stringliteral">&quot;hard&quot;</span>);</div>
+<div class="ttc" id="aclassKeewanoSDK_html"><div class="ttname"><a href="classKeewanoSDK.html">KeewanoSDK</a></div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:18</div></div>
+</div><!-- fragment --> </td></tr>
+<tr>
+<td style="vertical-align: top;"><div class="fragment"><div class="line"><span class="comment">// Enemy killed</span></div>
+<div class="line">SendEvent(<span class="stringliteral">&quot;enemy_killed&quot;</span>, <span class="keyword">new</span> {</div>
+<div class="line">    enemy = <span class="stringliteral">&quot;Orc&quot;</span>,</div>
+<div class="line">    game_level = 15,      <span class="comment">// repeated</span></div>
+<div class="line">    difficulty = <span class="stringliteral">&quot;hard&quot;</span>,  <span class="comment">// repeated</span></div>
+<div class="line">    user_id = <span class="stringliteral">&quot;abc123&quot;</span>,   <span class="comment">// repeated</span></div>
+<div class="line">    device = <span class="stringliteral">&quot;iPhone13&quot;</span>,  <span class="comment">// repeated</span></div>
+<div class="line">    session = <span class="stringliteral">&quot;sess_456&quot;</span>  <span class="comment">// repeated</span></div>
+<div class="line">});</div>
+</div><!-- fragment --> </td><td style="vertical-align: top;"><div class="fragment"><div class="line"><span class="comment">// Enemy killed - just the action</span></div>
+<div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.ReportEnemyKilled(<span class="stringliteral">&quot;Orc&quot;</span>);</div>
+</div><!-- fragment --> </td></tr>
+<tr>
+<td style="vertical-align: top;"><div class="fragment"><div class="line"><span class="comment">// Chest opened</span></div>
+<div class="line">SendEvent(<span class="stringliteral">&quot;chest_opened&quot;</span>, <span class="keyword">new</span> {</div>
+<div class="line">    chest_type = <span class="stringliteral">&quot;Gold&quot;</span>,</div>
+<div class="line">    game_level = 15,      <span class="comment">// repeated</span></div>
+<div class="line">    difficulty = <span class="stringliteral">&quot;hard&quot;</span>,  <span class="comment">// repeated</span></div>
+<div class="line">    user_id = <span class="stringliteral">&quot;abc123&quot;</span>,   <span class="comment">// repeated</span></div>
+<div class="line">    device = <span class="stringliteral">&quot;iPhone13&quot;</span>,  <span class="comment">// repeated</span></div>
+<div class="line">    session = <span class="stringliteral">&quot;sess_456&quot;</span>  <span class="comment">// repeated</span></div>
+<div class="line">});</div>
+</div><!-- fragment --> </td><td style="vertical-align: top;"><div class="fragment"><div class="line"><span class="comment">// Chest opened - just the action</span></div>
+<div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.ReportChestOpened(<span class="stringliteral">&quot;Gold&quot;</span>);</div>
+</div><!-- fragment --> </td></tr>
+<tr>
+<td style="vertical-align: top;"><div class="fragment"><div class="line"><span class="comment">// Game level end</span></div>
+<div class="line">SendEvent(<span class="stringliteral">&quot;level_end&quot;</span>, <span class="keyword">new</span> {</div>
+<div class="line">    game_level = 15,      <span class="comment">// repeated</span></div>
+<div class="line">    difficulty = <span class="stringliteral">&quot;hard&quot;</span>,  <span class="comment">// repeated</span></div>
+<div class="line">    user_id = <span class="stringliteral">&quot;abc123&quot;</span>,   <span class="comment">// repeated</span></div>
+<div class="line">    device = <span class="stringliteral">&quot;iPhone13&quot;</span>,  <span class="comment">// repeated</span></div>
+<div class="line">    session = <span class="stringliteral">&quot;sess_456&quot;</span>  <span class="comment">// repeated</span></div>
+<div class="line">});</div>
+</div><!-- fragment --> </td><td style="vertical-align: top;"><div class="fragment"><div class="line"><span class="comment">// Level end</span></div>
+<div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.ReportLevelEnd(15);</div>
+</div><!-- fragment --> </td></tr>
+</table>
+</center><h1 class="doxsection"><a class="anchor" id="custom_events_adding"></a>
 Adding Custom Events</h1>
 <p>To add a custom event, open the <a class="el" href="namespaceKeewano.html">Keewano</a> <b>Custom Event Editor</b> by accessing <span class="tt">Keewano &gt; Custom Event Editor</span> menu item.</p>
 <div class="image">
@@ -154,11 +207,14 @@ Adding Custom Events</h1>
 <div class="caption">
 Custom Event Editor</div></div>
     <p>In the <b>Custom Event Editor</b> you can add new events and their types.<br  />
- After adding or editing custom, save the changes. Custom events are added to the <a class="el" href="classKeewanoSDK.html">KeewanoSDK</a> class.</p>
+ </p><dl class="section note"><dt>Note</dt><dd>Please provide informative event names as they will be used by the <b>Keewano AI Agents</b> later during analysis in order to understand what is happening in your game.<br  />
+<br  />
+✅ Prefer event names like <span class="tt">OpenedMagicChest</span> and <span class="tt">HeroUpgraded</span>.<br  />
+⛔Avoid generic names such as <span class="tt">CustomEvent8</span> or <span class="tt">Action7</span>.</dd></dl>
+<p>After adding or editing custom, save the changes. Custom events are added to the <a class="el" href="classKeewanoSDK.html">KeewanoSDK</a> class.</p>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.ReportMainLevelStart(15); <span class="comment">//Level #15 started</span></div>
 <div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.ReportMainLevelWin(15); <span class="comment">//User has won level #15</span></div>
 <div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.ReportSetHeadHear(<span class="stringliteral">&quot;Boeotian helmet&quot;</span>);</div>
-<div class="ttc" id="aclassKeewanoSDK_html"><div class="ttname"><a href="classKeewanoSDK.html">KeewanoSDK</a></div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:18</div></div>
 </div><!-- fragment --><p>The library will create a new folder called <span class="tt">Assets/KeewanoCustomEvents</span>, please add it with all its content to your source control, as it contains definitions of the custom events from which the <a class="el" href="classKeewanoSDK.html">KeewanoSDK</a> methods will be generated.</p>
 <h1 class="doxsection"><a class="anchor" id="custom_events_string_limits"></a>
 String Parameter Limits</h1>

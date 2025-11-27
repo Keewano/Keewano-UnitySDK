@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['in_20game_20balance_0',['In-Game Balance',['../_item_exchange.html',1,'']]],
-  ['integration_1',['Step-by-Step Example Integration',['../_dummy_game_integration.html',1,'']]],
-  ['integration_20testing_2',['SDK Integration Testing',['../_integration_testing.html',1,'']]]
+  ['7_3a_20multiple_20item_20rewards_0',['Scenario 7: Multiple Item Rewards',['../AdRevenue.html#ad_scenario_multiple_items',1,'']]],
+  ['7_3a_20store_20purchases_20iap_1',['Scenario 7: Store Purchases (IAP)',['../DummyGameIntegration.html#Scenario_7',1,'']]]
 ];

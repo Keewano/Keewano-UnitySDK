@@ -212,7 +212,7 @@ If Player consent is required in your game, set it in the following way: <div cl
 <div class="line">{</div>
 <div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a856040b9eda8528ccfbe38fa792a0e7b">MarkAsTestUser</a>(<span class="stringliteral">&quot;John Doe&quot;</span>);</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassKeewanoSDK_html_a856040b9eda8528ccfbe38fa792a0e7b"><div class="ttname"><a href="classKeewanoSDK.html#a856040b9eda8528ccfbe38fa792a0e7b">KeewanoSDK.MarkAsTestUser</a></div><div class="ttdeci">static void MarkAsTestUser(string testerName)</div><div class="ttdoc">Marks the device as a test user.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:511</div></div>
+<div class="ttc" id="aclassKeewanoSDK_html_a856040b9eda8528ccfbe38fa792a0e7b"><div class="ttname"><a href="classKeewanoSDK.html#a856040b9eda8528ccfbe38fa792a0e7b">KeewanoSDK.MarkAsTestUser</a></div><div class="ttdeci">static void MarkAsTestUser(string testerName)</div><div class="ttdoc">Marks the device as a test user.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:613</div></div>
 </div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>We recommend using this feature to isolate test data.</dd></dl>
 </li>
 <li>Retrieve anonymous install ID for later attribution or debugging: <div class="fragment"><div class="line">Guid installId = <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#af3e2e868ee711a3e289cbcade6839fdd">GetInstallId</a>();</div>
@@ -225,7 +225,7 @@ If Player consent is required in your game, set it in the following way: <div cl
 <div class="line">    <span class="keywordflow">if</span> (!<span class="keywordtype">string</span>.IsNullOrEmpty(campaignSource))</div>
 <div class="line">        <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ac3e1433b5be7b52e16886f9cc5e64cf5">ReportInstallCampaign</a>(campaignSource);</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassKeewanoSDK_html_ac3e1433b5be7b52e16886f9cc5e64cf5"><div class="ttname"><a href="classKeewanoSDK.html#ac3e1433b5be7b52e16886f9cc5e64cf5">KeewanoSDK.ReportInstallCampaign</a></div><div class="ttdeci">static void ReportInstallCampaign(string campaignName)</div><div class="ttdoc">Reports a marketing install campaign for this user.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:344</div></div>
+<div class="ttc" id="aclassKeewanoSDK_html_ac3e1433b5be7b52e16886f9cc5e64cf5"><div class="ttname"><a href="classKeewanoSDK.html#ac3e1433b5be7b52e16886f9cc5e64cf5">KeewanoSDK.ReportInstallCampaign</a></div><div class="ttdeci">static void ReportInstallCampaign(string campaignName)</div><div class="ttdoc">Reports a marketing install campaign for this user.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:446</div></div>
 </div><!-- fragment --></li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="Scenario_2"></a>
@@ -236,14 +236,14 @@ Scenario 2: Player Registration &amp; Sign-In</h2>
 <div class="line">    <span class="comment">// Associate future events with this persistent user ID</span></div>
 <div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ae320ed2c960ce5635e229c14da73ad6d">SetUserId</a>(playerId);</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassKeewanoSDK_html_ae320ed2c960ce5635e229c14da73ad6d"><div class="ttname"><a href="classKeewanoSDK.html#ae320ed2c960ce5635e229c14da73ad6d">KeewanoSDK.SetUserId</a></div><div class="ttdeci">static void SetUserId(UInt64 uid)</div><div class="ttdoc">Sets the user identifier using a UInt64 value.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:444</div></div>
+<div class="ttc" id="aclassKeewanoSDK_html_ae320ed2c960ce5635e229c14da73ad6d"><div class="ttname"><a href="classKeewanoSDK.html#ae320ed2c960ce5635e229c14da73ad6d">KeewanoSDK.SetUserId</a></div><div class="ttdeci">static void SetUserId(UInt64 uid)</div><div class="ttdoc">Sets the user identifier using a UInt64 value.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:546</div></div>
 </div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>PlayerId can be a Guid or UInt64 value, according to your game needs.</dd></dl>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> AssignToAbGroup(<span class="keywordtype">char</span> abGroup)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Record which A/B test cohort they belong to</span></div>
 <div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#adcac900a769f4dddda9d65cc267a223f">ReportABTestGroupAssignment</a>(<span class="stringliteral">&quot;NewPowerupExperiment&quot;</span>, abGroup);</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassKeewanoSDK_html_adcac900a769f4dddda9d65cc267a223f"><div class="ttname"><a href="classKeewanoSDK.html#adcac900a769f4dddda9d65cc267a223f">KeewanoSDK.ReportABTestGroupAssignment</a></div><div class="ttdeci">static void ReportABTestGroupAssignment(string testName, char group)</div><div class="ttdoc">Marks the user as a participant in an specific test group.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:390</div></div>
+<div class="ttc" id="aclassKeewanoSDK_html_adcac900a769f4dddda9d65cc267a223f"><div class="ttname"><a href="classKeewanoSDK.html#adcac900a769f4dddda9d65cc267a223f">KeewanoSDK.ReportABTestGroupAssignment</a></div><div class="ttdeci">static void ReportABTestGroupAssignment(string testName, char group)</div><div class="ttdoc">Marks the user as a participant in an specific test group.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:492</div></div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="Scenario_3"></a>
 Scenario 3: Entering Main Menu &amp; Changing Language</h2>
 <p><b>Player Action:</b> After login, the <b>Main Menu</b> pops up. The player opens <b>Settings</b> and switches the language to French. Then closes Settings.<br  />
@@ -276,7 +276,7 @@ It will automatically track window open/close events.<br  />
 <div class="line">{</div>
 <div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a3f3fd38d4d987900b2ec64ce196d5914">ReportGameLanguage</a>(newLangCode);</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassKeewanoSDK_html_a3f3fd38d4d987900b2ec64ce196d5914"><div class="ttname"><a href="classKeewanoSDK.html#a3f3fd38d4d987900b2ec64ce196d5914">KeewanoSDK.ReportGameLanguage</a></div><div class="ttdeci">static void ReportGameLanguage(string language)</div><div class="ttdoc">Reports the game language.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:358</div></div>
+<div class="ttc" id="aclassKeewanoSDK_html_a3f3fd38d4d987900b2ec64ce196d5914"><div class="ttname"><a href="classKeewanoSDK.html#a3f3fd38d4d987900b2ec64ce196d5914">KeewanoSDK.ReportGameLanguage</a></div><div class="ttdeci">static void ReportGameLanguage(string language)</div><div class="ttdoc">Reports the game language.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:460</div></div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="Scenario_4"></a>
 Scenario 4: FTUE Milestones Tracking</h2>
 <p><b>Player Action:</b> During the first session the player completes key milestones.<br  />
@@ -322,7 +322,7 @@ Scenario 4: FTUE Milestones Tracking</h2>
 <div class="line">{</div>
 <div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ae478925a922b732056426e5a082c3e04">ReportOnboardingMilestone</a>(<span class="stringliteral">&quot;Tutorial Completed&quot;</span>);</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassKeewanoSDK_html_ae478925a922b732056426e5a082c3e04"><div class="ttname"><a href="classKeewanoSDK.html#ae478925a922b732056426e5a082c3e04">KeewanoSDK.ReportOnboardingMilestone</a></div><div class="ttdeci">static void ReportOnboardingMilestone(string milestoneName)</div><div class="ttdoc">Report that a user has reached a milestone during the onboarding (game tutorial) process.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:373</div></div>
+<div class="ttc" id="aclassKeewanoSDK_html_ae478925a922b732056426e5a082c3e04"><div class="ttname"><a href="classKeewanoSDK.html#ae478925a922b732056426e5a082c3e04">KeewanoSDK.ReportOnboardingMilestone</a></div><div class="ttdeci">static void ReportOnboardingMilestone(string milestoneName)</div><div class="ttdoc">Report that a user has reached a milestone during the onboarding (game tutorial) process.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:475</div></div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><b>Important:</b> Do <b>NOT</b> use custom events to report onboarding milestones.<br  />
  Using <a class="el" href="classKeewanoSDK.html#ae478925a922b732056426e5a082c3e04" title="Report that a user has reached a milestone during the onboarding (game tutorial) process.">KeewanoSDK.ReportOnboardingMilestone</a> API fuels the Keewano AI's FTUE funnel so it can flag tutorial drop-offs automatically.</dd></dl>
 <h2 class="doxsection"><a class="anchor" id="Scenario_5"></a>
@@ -388,7 +388,7 @@ Scenario 6: In-Game Combat &amp; Power-Ups</h2>
 <div class="line">    <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] usedItem = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Hyper Beam&quot;</span>) };</div>
 <div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a03af6ed00403dce0cad7dbcc44f88463">ReportItemsExchange</a>(<span class="stringliteral">&quot;OmegaCrusherCombat&quot;</span>, usedItem, <span class="keyword">null</span>);</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassKeewanoSDK_html_a03af6ed00403dce0cad7dbcc44f88463"><div class="ttname"><a href="classKeewanoSDK.html#a03af6ed00403dce0cad7dbcc44f88463">KeewanoSDK.ReportItemsExchange</a></div><div class="ttdeci">static void ReportItemsExchange(string exchangeLocation, Item[] from, Item[] to)</div><div class="ttdoc">Reports an item exchange event using item arrays.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:408</div></div>
+<div class="ttc" id="aclassKeewanoSDK_html_a03af6ed00403dce0cad7dbcc44f88463"><div class="ttname"><a href="classKeewanoSDK.html#a03af6ed00403dce0cad7dbcc44f88463">KeewanoSDK.ReportItemsExchange</a></div><div class="ttdeci">static void ReportItemsExchange(string exchangeLocation, Item[] from, Item[] to)</div><div class="ttdoc">Reports an item exchange event using item arrays.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:510</div></div>
 <div class="ttc" id="anamespaceKeewano_html"><div class="ttname"><a href="namespaceKeewano.html">Keewano</a></div><div class="ttdef"><b>Definition</b> KBatch.cs:6</div></div>
 <div class="ttc" id="astructKeewano_1_1Item_html"><div class="ttname"><a href="structKeewano_1_1Item.html">Keewano.Item</a></div><div class="ttdoc">Represents a game item with a unique identifier and a quantity.</div><div class="ttdef"><b>Definition</b> KeewanoItems.cs:11</div></div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Always Prefer using <a class="el" href="classKeewanoSDK.html#a03af6ed00403dce0cad7dbcc44f88463" title="Reports an item exchange event using item arrays.">KeewanoSDK.ReportItemsExchange</a> and <a class="el" href="classKeewanoSDK.html#a9e551800fbca5b7c84e61ac882fbe787" title="Resets the user&#39;s items at a specified location.">KeewanoSDK.ReportItemsReset</a> instead (or in addition to) a decidacted custom event.<br  />
@@ -428,7 +428,7 @@ Scenario 8: Daily Resets</h2>
 <div class="line">    <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] dailyFuelReset = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;FuelCell&quot;</span>, 100) };</div>
 <div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a9e551800fbca5b7c84e61ac882fbe787">ReportItemsReset</a>(<span class="stringliteral">&quot;DailyReset&quot;</span>, dailyFuelReset);</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassKeewanoSDK_html_a9e551800fbca5b7c84e61ac882fbe787"><div class="ttname"><a href="classKeewanoSDK.html#a9e551800fbca5b7c84e61ac882fbe787">KeewanoSDK.ReportItemsReset</a></div><div class="ttdeci">static void ReportItemsReset(string location, Item[] items)</div><div class="ttdoc">Resets the user&#39;s items at a specified location.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:485</div></div>
+<div class="ttc" id="aclassKeewanoSDK_html_a9e551800fbca5b7c84e61ac882fbe787"><div class="ttname"><a href="classKeewanoSDK.html#a9e551800fbca5b7c84e61ac882fbe787">KeewanoSDK.ReportItemsReset</a></div><div class="ttdeci">static void ReportItemsReset(string location, Item[] items)</div><div class="ttdoc">Resets the user&#39;s items at a specified location.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:587</div></div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="Scenario_9"></a>
 Scenario 9: Non Unity.UI Buttons &amp; Window Flow</h2>
 <p><b>Player Action:</b> Within Main Menu, taps <b>Leaderboard</b> button (which is implemented outside of Unity.UI), scans top scores, then closes it.<br  />
@@ -499,7 +499,7 @@ Scenario 11: Custom Error Reporting</h2>
 <div class="line">{</div>
 <div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a263fa179fc50f8ff84598bb34b99978d">LogError</a>(err);</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassKeewanoSDK_html_a263fa179fc50f8ff84598bb34b99978d"><div class="ttname"><a href="classKeewanoSDK.html#a263fa179fc50f8ff84598bb34b99978d">KeewanoSDK.LogError</a></div><div class="ttdeci">static void LogError(string message)</div><div class="ttdoc">Reports a technical issue encountered during gameplay.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:525</div></div>
+<div class="ttc" id="aclassKeewanoSDK_html_a263fa179fc50f8ff84598bb34b99978d"><div class="ttname"><a href="classKeewanoSDK.html#a263fa179fc50f8ff84598bb34b99978d">KeewanoSDK.LogError</a></div><div class="ttdeci">static void LogError(string message)</div><div class="ttdoc">Reports a technical issue encountered during gameplay.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:627</div></div>
 </div><!-- fragment --></div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

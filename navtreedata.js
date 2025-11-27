@@ -66,6 +66,7 @@ var NAVTREE =
     ] ],
     [ "In-Game Balance", "ItemExchange.html", [
       [ "Defining an \"Item\"", "ItemExchange.html#ItemConcept", null ],
+      [ "Item Names Identify Items Across All APIs", "ItemExchange.html#ItemConsistency", null ],
       [ "Items Reset", "ItemExchange.html#Items", null ],
       [ "Items Exchange", "ItemExchange.html#Exchange", null ],
       [ "Examples", "ItemExchange.html#Examples", [
@@ -108,6 +109,61 @@ var NAVTREE =
       ] ],
       [ "String Parameter Limits", "InAppPurchases.html#iap_string_limits", null ],
       [ "See Also", "InAppPurchases.html#iap_see_also", null ]
+    ] ],
+    [ "Ad Revenue", "AdRevenue.html", [
+      [ "Overview", "AdRevenue.html#ad_overview", null ],
+      [ "Ad Revenue vs IAP", "AdRevenue.html#ad_distinction", null ],
+      [ "The Two Ad Revenue Methods", "AdRevenue.html#ad_methods", [
+        [ "1. ReportAdRevenue - Track the Ad Revenue", "AdRevenue.html#ad_revenue_method", null ],
+        [ "2. ReportAdItemsGranted - Track Rewarded Ad Items", "AdRevenue.html#ad_items_granted_method", null ]
+      ] ],
+      [ "Placement Naming Best Practices", "AdRevenue.html#ad_placement_naming", [
+        [ "Use Game-Specific Context, Not Ad Types", "AdRevenue.html#ad_placement_context", null ],
+        [ "Placement Naming Examples", "AdRevenue.html#ad_placement_examples", null ],
+        [ "Keep Placement Names Static", "AdRevenue.html#ad_placement_static", null ],
+        [ "Why Context Matters", "AdRevenue.html#ad_placement_rationale", null ]
+      ] ],
+      [ "Why Are These Two Methods Separated?", "AdRevenue.html#ad_why_separated", [
+        [ "Common Cases", "AdRevenue.html#ad_separation_reasons", null ]
+      ] ],
+      [ "Common Scenarios", "AdRevenue.html#ad_scenarios", [
+        [ "Scenario 1: Interstitial Ad Between Levels (No Reward)", "AdRevenue.html#ad_scenario_interstitial", null ],
+        [ "Scenario 2: Out of Energy - Watch to Refill", "AdRevenue.html#ad_scenario_rewarded_energy", null ],
+        [ "Scenario 3: Level Failed - Watch for Extra Moves", "AdRevenue.html#ad_scenario_level_failed", null ],
+        [ "Scenario 4: Daily Bonus - Watch to Double Reward", "AdRevenue.html#ad_scenario_daily_bonus", null ],
+        [ "Scenario 5: Main Menu Banner (No Reward)", "AdRevenue.html#ad_scenario_banner", null ],
+        [ "Scenario 6: Shop - Watch for Free Coins", "AdRevenue.html#ad_scenario_shop", null ],
+        [ "Scenario 7: Multiple Item Rewards", "AdRevenue.html#ad_scenario_multiple_items", null ]
+      ] ],
+      [ "Best Practices", "AdRevenue.html#ad_best_practices", [
+        [ "Always Use Ad Network Callbacks", "AdRevenue.html#ad_use_callbacks", null ],
+        [ "Only Call ReportAdItemsGranted for Rewarded Ads", "AdRevenue.html#ad_only_rewarded_grants", null ],
+        [ "Use Consistent Placement Names", "AdRevenue.html#ad_consistent_placement", null ],
+        [ "Only Report Actually Granted Items", "AdRevenue.html#ad_only_granted_items", null ],
+        [ "Revenue Must Be in USD Cents", "AdRevenue.html#ad_revenue_usd", null ]
+      ] ],
+      [ "String Parameter Limits", "AdRevenue.html#ad_string_limits", null ],
+      [ "See Also", "AdRevenue.html#ad_see_also", null ]
+    ] ],
+    [ "Subscription Revenue", "SubscriptionRevenue.html", [
+      [ "Overview", "SubscriptionRevenue.html#sub_overview", null ],
+      [ "The Two Subscription Methods", "SubscriptionRevenue.html#sub_methods", [
+        [ "1. ReportSubscriptionRevenue - Track Subscription Billing", "SubscriptionRevenue.html#sub_revenue_method", null ],
+        [ "2. ReportSubscriptionItemsGranted - Track Subscriber Rewards", "SubscriptionRevenue.html#sub_items_granted_method", null ]
+      ] ],
+      [ "Common Scenarios", "SubscriptionRevenue.html#sub_scenarios", [
+        [ "Scenario 1: Initial Subscription Purchase", "SubscriptionRevenue.html#sub_scenario_initial", null ],
+        [ "Scenario 2: Free Trial Period", "SubscriptionRevenue.html#sub_scenario_trial", null ],
+        [ "Scenario 3: Subscription Renewal", "SubscriptionRevenue.html#sub_scenario_renewal", null ],
+        [ "Scenario 4: Daily Subscriber Rewards", "SubscriptionRevenue.html#sub_scenario_daily", null ],
+        [ "Scenario 5: Multiple Item Rewards", "SubscriptionRevenue.html#sub_scenario_multiple", null ]
+      ] ],
+      [ "Best Practices", "SubscriptionRevenue.html#sub_best_practices", [
+        [ "Use Consistent Package Names", "SubscriptionRevenue.html#sub_consistent_package", null ],
+        [ "Revenue Must Be in USD Cents", "SubscriptionRevenue.html#sub_revenue_usd", null ]
+      ] ],
+      [ "String Parameter Limits", "SubscriptionRevenue.html#sub_string_limits", null ],
+      [ "See Also", "SubscriptionRevenue.html#sub_see_also", null ]
     ] ],
     [ "Marketing Campaign", "install_campaign.html", [
       [ "Overview", "install_campaign.html#campaign_overview", null ],
@@ -167,7 +223,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"CustomEventsPage.html"
+"AdRevenue.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

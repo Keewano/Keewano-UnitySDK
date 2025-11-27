@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['offline_20analytics_0',['Offline Analytics',['../_offline_analytics.html',1,'']]],
-  ['onboarding_20tutorial_1',['Onboarding (Tutorial)',['../onboarding_milestone.html',1,'']]],
-  ['overview_2',['Overview',['../index.html',1,'']]]
+  ['9_3a_20non_20unity_20ui_20buttons_20window_20flow_0',['Scenario 9: Non Unity.UI Buttons &amp;amp; Window Flow',['../DummyGameIntegration.html#Scenario_9',1,'']]]
 ];

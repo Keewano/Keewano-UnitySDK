@@ -9,8 +9,7 @@ var searchData=
   ['levels_20no_20reward_6',['Scenario 1: Interstitial Ad Between Levels (No Reward)',['../AdRevenue.html#ad_scenario_interstitial',1,'']]],
   ['life_7',['Player Spends 5 Gold Coins and a Healing Potion to Get 1 Vial of Eternal Life',['../ItemExchange.html#Example1',1,'']]],
   ['limits_8',['Limits',['../InAppPurchases.html#iap_string_limits',1,'String Parameter Limits'],['../AdRevenue.html#ad_string_limits',1,'String Parameter Limits'],['../SubscriptionRevenue.html#sub_string_limits',1,'String Parameter Limits'],['../CustomEventsPage.html#custom_events_string_limits',1,'String Parameter Limits']]],
-  ['logerror_9',['LogError',['../classKeewanoSDK.html#a263fa179fc50f8ff84598bb34b99978d',1,'KeewanoSDK']]],
-  ['login_20package_10',['Example: Monthly Login Package',['../InAppPurchases.html#iap_separation_example',1,'']]],
-  ['loses_20a_20broken_20sword_20one_20sided_20transaction_11',['Player Loses a Broken Sword (One-Sided Transaction)',['../ItemExchange.html#Example2',1,'']]],
-  ['lost_12',['Your Data is Never Lost',['../OfflineAnalytics.html#OfflineOverview',1,'']]]
+  ['login_20package_9',['Example: Monthly Login Package',['../InAppPurchases.html#iap_separation_example',1,'']]],
+  ['loses_20a_20broken_20sword_20one_20sided_20transaction_10',['Player Loses a Broken Sword (One-Sided Transaction)',['../ItemExchange.html#Example2',1,'']]],
+  ['lost_11',['Your Data is Never Lost',['../OfflineAnalytics.html#OfflineOverview',1,'']]]
 ];
