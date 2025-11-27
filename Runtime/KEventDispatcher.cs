@@ -476,6 +476,44 @@ namespace Keewano.Internal
             }
         }
 
+        internal void ReportAdRevenue(string placement, uint revenueUsdCents)
+        {
+#if UNITY_EDITOR
+            validateString(placement);
+#endif
+            lock (m_swapLock)
+            {
+                uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
+
+                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_TIMESTAMP);
+                m_inBatch.Writer.Write(timestamp);
+                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_PLACEMENT);
+                m_inBatch.Writer.Write(placement);
+                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_USD_CENTS);
+                m_inBatch.Writer.Write(revenueUsdCents);
+                sendIfNeeded();
+            }
+        }
+
+        internal void ReportSubscriptionRevenue(string packageName, uint revenueUsdCents)
+        {
+#if UNITY_EDITOR
+            validateString(packageName);
+#endif
+            lock (m_swapLock)
+            {
+                uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
+
+                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_TIMESTAMP);
+                m_inBatch.Writer.Write(timestamp);
+                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_PACKAGE);
+                m_inBatch.Writer.Write(packageName);
+                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_USD_CENTS);
+                m_inBatch.Writer.Write(revenueUsdCents);
+                sendIfNeeded();
+            }
+        }
+
         internal void ReportInstallCampaign(string campaignName)
         {
             addEvent((ushort)KEvents.INSTALL_CAMPAIGN, campaignName);
@@ -742,6 +780,34 @@ namespace Keewano.Internal
             {
                 m_inBatch.Writer.Write((ushort)KEvents.ITEMS_PURCHASED_GRANT);
                 m_inBatch.Writer.Write(productId);
+                writeItems(m_inBatch.Writer, items);
+                sendIfNeeded();
+            }
+        }
+
+        internal void ReportAdItemsGranted(string placement, ReadOnlySpan<Item> items)
+        {
+#if UNITY_EDITOR
+            validateString(placement);
+#endif
+            lock (m_swapLock)
+            {
+                m_inBatch.Writer.Write((ushort)KEvents.ITEMS_AD_GRANTED);
+                m_inBatch.Writer.Write(placement);
+                writeItems(m_inBatch.Writer, items);
+                sendIfNeeded();
+            }
+        }
+
+        internal void ReportSubscriptionItemsGranted(string packageName, ReadOnlySpan<Item> items)
+        {
+#if UNITY_EDITOR
+            validateString(packageName);
+#endif
+            lock (m_swapLock)
+            {
+                m_inBatch.Writer.Write((ushort)KEvents.ITEMS_SUBSCRIPTION_GRANTED);
+                m_inBatch.Writer.Write(packageName);
                 writeItems(m_inBatch.Writer, items);
                 sendIfNeeded();
             }

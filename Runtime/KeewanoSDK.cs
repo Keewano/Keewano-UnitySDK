@@ -334,6 +334,108 @@ public partial class KeewanoSDK : MonoBehaviour
     }
 
     /**
+     @brief Reports an ad revenue event.
+
+     Use this method to log revenue generated from displaying an advertisement by specifying the
+     placement name and the revenue amount in US cents. This event helps track ad monetization
+     activity within the %Keewano system for further analysis and reporting.
+
+     @param placement The ad placement identifier (e.g., "main_menu_banner", "level_complete_interstitial").
+     @param revenueUsdCents The revenue generated from the ad impression in US cents.
+
+     @sa ReportAdItemsGranted, \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportAdRevenue(string placement, uint revenueUsdCents)
+    {
+        m_instance.m_dispatcher.ReportAdRevenue(placement, revenueUsdCents);
+    }
+
+    /**
+        @brief Reports items granted from watching an advertisement.
+
+        Use this method to track virtual items or currencies granted to the player after watching
+        an advertisement (e.g., rewarded video ads).
+
+        @param placement The ad placement identifier where the ad was shown.
+        @param items An array of items granted to the user from watching this ad.
+
+        @sa ReportAdRevenue, ReportItemsExchange, \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportAdItemsGranted(string placement, Item[] items)
+    {
+        ReadOnlySpan<Item> itemsSpan = items == null ? ReadOnlySpan<Item>.Empty : items.AsSpan();
+        m_instance.m_dispatcher.ReportAdItemsGranted(placement, itemsSpan);
+    }
+
+    /**
+        @brief Reports items granted from watching an advertisement using read-only spans.
+
+        Use this method to track virtual items or currencies granted to the player after watching
+        an advertisement (e.g., rewarded video ads).
+
+        @param placement The ad placement identifier where the ad was shown.
+        @param items A read-only span of items granted to the user from watching this ad.
+
+        @sa ReportAdRevenue, ReportItemsExchange, \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportAdItemsGranted(string placement, ReadOnlySpan<Keewano.Item> items)
+    {
+        m_instance.m_dispatcher.ReportAdItemsGranted(placement, items);
+    }
+
+    /**
+     @brief Reports a subscription revenue event.
+
+     Use this method to log revenue generated from subscription billing (initial purchase, trial conversion, or renewal).
+     This should be called when your app validates the receipt and detects a billing event.
+
+     @param packageName The subscription package identifier (e.g., "vip_monthly", "premium_yearly").
+     @param revenueUsdCents The revenue generated from this billing event in US cents.
+
+     @note This method should be called for each billing event: initial purchase, trial-to-paid conversion, and each renewal.
+           When the app launches, validate receipts and report any billing events that occurred since last app launch.
+
+     @sa ReportSubscriptionItemsGranted, \ref SubscriptionRevenue, \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportSubscriptionRevenue(string packageName, uint revenueUsdCents)
+    {
+        m_instance.m_dispatcher.ReportSubscriptionRevenue(packageName, revenueUsdCents);
+    }
+
+    /**
+        @brief Reports items granted from a subscription.
+
+        Use this method to track virtual items or currencies granted to the player from an active subscription
+        (e.g., monthly VIP rewards, daily subscription bonuses).
+
+        @param packageName The subscription package identifier.
+        @param items An array of items granted to the user from this subscription.
+
+        @sa ReportSubscriptionRevenue, ReportItemsExchange, \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportSubscriptionItemsGranted(string packageName, Item[] items)
+    {
+        ReadOnlySpan<Item> itemsSpan = items == null ? ReadOnlySpan<Item>.Empty : items.AsSpan();
+        m_instance.m_dispatcher.ReportSubscriptionItemsGranted(packageName, itemsSpan);
+    }
+
+    /**
+        @brief Reports items granted from a subscription using read-only spans.
+
+        Use this method to track virtual items or currencies granted to the player from an active subscription
+        (e.g., monthly VIP rewards, daily subscription bonuses).
+
+        @param packageName The subscription package identifier.
+        @param items A read-only span of items granted to the user from this subscription.
+
+        @sa ReportSubscriptionRevenue, ReportItemsExchange, \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportSubscriptionItemsGranted(string packageName, ReadOnlySpan<Keewano.Item> items)
+    {
+        m_instance.m_dispatcher.ReportSubscriptionItemsGranted(packageName, items);
+    }
+
+    /**
         @brief Reports a marketing install campaign for this user.
 
         This method logs the marketing campaign that was used to acquire the user into the game.

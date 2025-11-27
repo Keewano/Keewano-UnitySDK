@@ -51,6 +51,18 @@ namespace Keewano.Internal
         ONBOARDING_MILESTONE = 50,
         ITEMS_PURCHASED_GRANT = 54,
 
+        AD_REVENUE_TIMESTAMP = 57,
+        AD_REVENUE_PLACEMENT = 58,
+        AD_REVENUE_USD_CENTS = 59,
+
+        ITEMS_AD_GRANTED = 60,
+
+        SUBSCRIPTION_REVENUE_TIMESTAMP = 64,
+        SUBSCRIPTION_REVENUE_PACKAGE = 65,
+        SUBSCRIPTION_REVENUE_USD_CENTS = 66,
+
+        ITEMS_SUBSCRIPTION_GRANTED = 67,
+
     }
 
     enum KBatchDropReason : uint
