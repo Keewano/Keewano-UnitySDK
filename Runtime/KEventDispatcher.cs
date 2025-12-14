@@ -476,6 +476,28 @@ namespace Keewano.Internal
             }
         }
 
+        internal void ReportInAppPurchase(string productName, float localizedPrice, string currencyCode)
+        {
+#if UNITY_EDITOR
+            validateString(productName);
+            validateString(currencyCode);
+#endif
+            lock (m_swapLock)
+            {
+                uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
+
+                m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_TIMESTAMP);
+                m_inBatch.Writer.Write(timestamp);
+                m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_PRODUCT_ID);
+                m_inBatch.Writer.Write(productName);
+                m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_LOCAL_CURRENCY_NAME);
+                m_inBatch.Writer.Write(currencyCode);
+                m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_LOCAL_CURRENCY_AMOUNT);
+                m_inBatch.Writer.Write(localizedPrice);
+                sendIfNeeded();
+            }
+        }
+
         internal void ReportAdRevenue(string placement, uint revenueUsdCents)
         {
 #if UNITY_EDITOR
@@ -495,6 +517,28 @@ namespace Keewano.Internal
             }
         }
 
+        internal void ReportAdRevenue(string placement, float localizedRevenue, string currencyCode)
+        {
+#if UNITY_EDITOR
+            validateString(placement);
+            validateString(currencyCode);
+#endif
+            lock (m_swapLock)
+            {
+                uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
+
+                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_TIMESTAMP);
+                m_inBatch.Writer.Write(timestamp);
+                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_PLACEMENT);
+                m_inBatch.Writer.Write(placement);
+                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_LOCAL_CURRENCY_NAME);
+                m_inBatch.Writer.Write(currencyCode);
+                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_LOCAL_CURRENCY_AMOUNT);
+                m_inBatch.Writer.Write(localizedRevenue);
+                sendIfNeeded();
+            }
+        }
+
         internal void ReportSubscriptionRevenue(string packageName, uint revenueUsdCents)
         {
 #if UNITY_EDITOR
@@ -510,6 +554,28 @@ namespace Keewano.Internal
                 m_inBatch.Writer.Write(packageName);
                 m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_USD_CENTS);
                 m_inBatch.Writer.Write(revenueUsdCents);
+                sendIfNeeded();
+            }
+        }
+
+        internal void ReportSubscriptionRevenue(string packageName, float localizedRevenue, string currencyCode)
+        {
+#if UNITY_EDITOR
+            validateString(packageName);
+            validateString(currencyCode);
+#endif
+            lock (m_swapLock)
+            {
+                uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
+
+                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_TIMESTAMP);
+                m_inBatch.Writer.Write(timestamp);
+                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_PACKAGE);
+                m_inBatch.Writer.Write(packageName);
+                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_LOCAL_CURRENCY_NAME);
+                m_inBatch.Writer.Write(currencyCode);
+                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_LOCAL_CURRENCY_AMOUNT);
+                m_inBatch.Writer.Write(localizedRevenue);
                 sendIfNeeded();
             }
         }

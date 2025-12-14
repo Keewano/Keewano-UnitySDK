@@ -293,6 +293,28 @@ public partial class KeewanoSDK : MonoBehaviour
     }
 
     /**
+     @brief Reports an in-app purchase event in local currency.
+
+     Use this method to log an in-app purchase by specifying the product name,
+     the price in local currency, and the ISO 4217 currency code. This is useful
+     when integrating with Unity IAP which provides localized prices.
+
+     @param productName The product ID as defined in app stores (Apple App Store, Google Play).
+     @param localizedPrice The price as displayed to the user (e.g., 4.99f for €4.99, 990f for ¥990).
+                           Unlike ReportInAppPurchase(string, uint) which expects cents, this parameter
+                           takes the actual display price from Unity IAP's ProductMetadata.localizedPrice.
+     @param currencyCode The ISO 4217 currency code (e.g., "EUR", "USD", "JPY").
+
+     @note This method should ONLY be called after the purchase has been validated by your server.
+           Never report purchases immediately upon store callback - always validate with Apple/Google first.
+     @sa \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportInAppPurchase(string productName, float localizedPrice, string currencyCode)
+    {
+        m_instance.m_dispatcher.ReportInAppPurchase(productName, localizedPrice, currencyCode);
+    }
+
+    /**
         @brief Reports items granted from an in-app purchase.
 
         Use this method to track virtual items or currencies granted to the player after completing
@@ -351,6 +373,25 @@ public partial class KeewanoSDK : MonoBehaviour
     }
 
     /**
+     @brief Reports an ad revenue event in local currency.
+
+     Use this method to log revenue generated from displaying an advertisement by specifying the
+     placement name, the revenue amount in local currency, and the ISO 4217 currency code.
+
+     @param placement The ad placement identifier (e.g., "main_menu_banner", "level_complete_interstitial").
+     @param localizedRevenue The revenue as a decimal value (e.g., 0.02f for $0.02).
+                             Unlike ReportAdRevenue(string, uint) which expects US cents, this parameter
+                             takes the actual revenue amount in the specified currency.
+     @param currencyCode The ISO 4217 currency code (e.g., "EUR", "USD", "JPY").
+
+     @sa ReportAdItemsGranted, \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportAdRevenue(string placement, float localizedRevenue, string currencyCode)
+    {
+        m_instance.m_dispatcher.ReportAdRevenue(placement, localizedRevenue, currencyCode);
+    }
+
+    /**
         @brief Reports items granted from watching an advertisement.
 
         Use this method to track virtual items or currencies granted to the player after watching
@@ -400,6 +441,28 @@ public partial class KeewanoSDK : MonoBehaviour
     static public void ReportSubscriptionRevenue(string packageName, uint revenueUsdCents)
     {
         m_instance.m_dispatcher.ReportSubscriptionRevenue(packageName, revenueUsdCents);
+    }
+
+    /**
+     @brief Reports a subscription revenue event in local currency.
+
+     Use this method to log revenue generated from subscription billing (initial purchase, trial conversion, or renewal)
+     in local currency. This should be called when your app validates the receipt and detects a billing event.
+
+     @param packageName The subscription package identifier (e.g., "vip_monthly", "premium_yearly").
+     @param localizedRevenue The revenue as displayed to the user (e.g., 9.99f for €9.99).
+                             Unlike ReportSubscriptionRevenue(string, uint) which expects US cents, this parameter
+                             takes the actual subscription price from Unity IAP's ProductMetadata.localizedPrice.
+     @param currencyCode The ISO 4217 currency code (e.g., "EUR", "USD", "JPY").
+
+     @note This method should be called for each billing event: initial purchase, trial-to-paid conversion, and each renewal.
+           When the app launches, validate receipts and report any billing events that occurred since last app launch.
+
+     @sa ReportSubscriptionItemsGranted, \ref SubscriptionRevenue, \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportSubscriptionRevenue(string packageName, float localizedRevenue, string currencyCode)
+    {
+        m_instance.m_dispatcher.ReportSubscriptionRevenue(packageName, localizedRevenue, currencyCode);
     }
 
     /**

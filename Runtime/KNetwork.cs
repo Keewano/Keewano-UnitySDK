@@ -10,7 +10,7 @@ namespace Keewano.Internal
 
     internal class KNetwork
     {
-        private const string SDK_VERSION = "Unity/1.0.83";
+        private const string SDK_VERSION = "Unity/1.0.84";
 
         static readonly HttpClient m_client;
         static readonly MediaTypeHeaderValue m_contentTypeHeader;
