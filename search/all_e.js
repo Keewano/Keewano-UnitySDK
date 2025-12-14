@@ -9,7 +9,7 @@ var searchData=
   ['first_20launch_20consent_6',['Scenario 1: First Launch &amp;amp; Consent',['../DummyGameIntegration.html#Scenario_1',1,'']]],
   ['first_20time_20user_20experience_20ftue_7',['First-Time User Experience (FTUE)',['../onboarding_milestone.html#ftue_tracking',1,'']]],
   ['fix_20reset_20by_20support_20team_8',['User Balance Fix Reset by Support Team',['../ItemExchange.html#Example6',1,'']]],
-  ['flow_9',['Flow',['../DummyGameIntegration.html#Scenario_9',1,'Scenario 9: Non Unity.UI Buttons &amp; Window Flow'],['../InAppPurchases.html#iap_flow',1,'The Complete Purchase Flow']]],
+  ['flow_9',['Flow',['../DummyGameIntegration.html#Scenario_9',1,'Scenario 9: Non Unity.UI Buttons &amp;amp; Window Flow'],['../InAppPurchases.html#iap_flow',1,'The Complete Purchase Flow']]],
   ['flow_20diagram_10',['Flow Diagram',['../InAppPurchases.html#iap_flow_diagram',1,'']]],
   ['for_20advanced_20game_20features_11',['Tutorials for Advanced Game Features',['../onboarding_milestone.html#advanced_tutorials',1,'']]],
   ['for_20extra_20moves_12',['Scenario 3: Level Failed - Watch for Extra Moves',['../AdRevenue.html#ad_scenario_level_failed',1,'']]],

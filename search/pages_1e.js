@@ -6,7 +6,7 @@ var searchData=
   ['watch_20to_20refill_3',['Scenario 2: Out of Energy - Watch to Refill',['../AdRevenue.html#ad_scenario_rewarded_energy',1,'']]],
   ['when_20to_20use_20custom_20tutorial_20events_4',['When to Use Custom Tutorial Events',['../onboarding_milestone.html#tutorial_scenario',1,'']]],
   ['when_20to_20use_20reportonboardingmilestone_5',['When to Use ReportOnboardingMilestone',['../onboarding_milestone.html#ftue_when',1,'']]],
-  ['why_20are_20these_20two_20methods_20separated_6',['Why Are These Two Methods Separated',['../InAppPurchases.html#iap_why_separated',1,'Why Are These Two Methods Separated?'],['../AdRevenue.html#ad_why_separated',1,'Why Are These Two Methods Separated?']]],
+  ['why_20are_20these_20two_20steps_20separated_6',['Why Are These Two Steps Separated',['../InAppPurchases.html#iap_why_separated',1,'Why Are These Two Steps Separated?'],['../AdRevenue.html#ad_why_separated',1,'Why Are These Two Steps Separated?']]],
   ['why_20context_20matters_7',['Why Context Matters',['../AdRevenue.html#ad_placement_rationale',1,'']]],
   ['why_20track_20tutorials_8',['Why Track Tutorials?',['../onboarding_milestone.html#rationale',1,'']]],
   ['window_20flow_9',['Scenario 9: Non Unity.UI Buttons &amp;amp; Window Flow',['../DummyGameIntegration.html#Scenario_9',1,'']]],

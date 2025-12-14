@@ -82,11 +82,11 @@ var NAVTREE =
     [ "In-App Purchases", "InAppPurchases.html", [
       [ "Overview", "InAppPurchases.html#iap_overview", null ],
       [ "IAP vs Virtual Economy", "InAppPurchases.html#iap_distinction", null ],
-      [ "The Two IAP Methods", "InAppPurchases.html#iap_methods", [
-        [ "1. ReportInAppPurchase - Track the Monetary Transaction", "InAppPurchases.html#iap_purchase", null ],
-        [ "2. ReportInAppPurchaseItemsGranted - Track the Items Delivered", "InAppPurchases.html#iap_items_granted", null ]
+      [ "The Two IAP Steps", "InAppPurchases.html#iap_methods", [
+        [ "Step 1: ReportInAppPurchase - Track the Monetary Transaction", "InAppPurchases.html#iap_purchase", null ],
+        [ "Step 2: ReportInAppPurchaseItemsGranted - Track the Items Delivered", "InAppPurchases.html#iap_items_granted", null ]
       ] ],
-      [ "Why Are These Two Methods Separated?", "InAppPurchases.html#iap_why_separated", [
+      [ "Why Are These Two Steps Separated?", "InAppPurchases.html#iap_why_separated", [
         [ "Common Cases for Separation", "InAppPurchases.html#iap_separation_reasons", null ],
         [ "Example: Monthly Login Package", "InAppPurchases.html#iap_separation_example", null ]
       ] ],
@@ -104,7 +104,6 @@ var NAVTREE =
         [ "Server Validation is Critical", "InAppPurchases.html#iap_validation_critical", null ],
         [ "Use Consistent Product IDs", "InAppPurchases.html#iap_product_ids", null ],
         [ "Only Report Actually Granted Items", "InAppPurchases.html#iap_only_granted_items", null ],
-        [ "Prices Must Be in USD Cents", "InAppPurchases.html#iap_price_usd", null ],
         [ "Report Purchase Once Only", "InAppPurchases.html#iap_report_once", null ]
       ] ],
       [ "String Parameter Limits", "InAppPurchases.html#iap_string_limits", null ],
@@ -113,9 +112,9 @@ var NAVTREE =
     [ "Ad Revenue", "AdRevenue.html", [
       [ "Overview", "AdRevenue.html#ad_overview", null ],
       [ "Ad Revenue vs IAP", "AdRevenue.html#ad_distinction", null ],
-      [ "The Two Ad Revenue Methods", "AdRevenue.html#ad_methods", [
-        [ "1. ReportAdRevenue - Track the Ad Revenue", "AdRevenue.html#ad_revenue_method", null ],
-        [ "2. ReportAdItemsGranted - Track Rewarded Ad Items", "AdRevenue.html#ad_items_granted_method", null ]
+      [ "The Two Ad Revenue Steps", "AdRevenue.html#ad_methods", [
+        [ "Step 1: ReportAdRevenue - Track the Ad Revenue", "AdRevenue.html#ad_revenue_method", null ],
+        [ "Step 2: ReportAdItemsGranted - Track Rewarded Ad Items", "AdRevenue.html#ad_items_granted_method", null ]
       ] ],
       [ "Placement Naming Best Practices", "AdRevenue.html#ad_placement_naming", [
         [ "Use Game-Specific Context, Not Ad Types", "AdRevenue.html#ad_placement_context", null ],
@@ -123,7 +122,7 @@ var NAVTREE =
         [ "Keep Placement Names Static", "AdRevenue.html#ad_placement_static", null ],
         [ "Why Context Matters", "AdRevenue.html#ad_placement_rationale", null ]
       ] ],
-      [ "Why Are These Two Methods Separated?", "AdRevenue.html#ad_why_separated", [
+      [ "Why Are These Two Steps Separated?", "AdRevenue.html#ad_why_separated", [
         [ "Common Cases", "AdRevenue.html#ad_separation_reasons", null ]
       ] ],
       [ "Common Scenarios", "AdRevenue.html#ad_scenarios", [
@@ -139,17 +138,16 @@ var NAVTREE =
         [ "Always Use Ad Network Callbacks", "AdRevenue.html#ad_use_callbacks", null ],
         [ "Only Call ReportAdItemsGranted for Rewarded Ads", "AdRevenue.html#ad_only_rewarded_grants", null ],
         [ "Use Consistent Placement Names", "AdRevenue.html#ad_consistent_placement", null ],
-        [ "Only Report Actually Granted Items", "AdRevenue.html#ad_only_granted_items", null ],
-        [ "Revenue Must Be in USD Cents", "AdRevenue.html#ad_revenue_usd", null ]
+        [ "Only Report Actually Granted Items", "AdRevenue.html#ad_only_granted_items", null ]
       ] ],
       [ "String Parameter Limits", "AdRevenue.html#ad_string_limits", null ],
       [ "See Also", "AdRevenue.html#ad_see_also", null ]
     ] ],
     [ "Subscription Revenue", "SubscriptionRevenue.html", [
       [ "Overview", "SubscriptionRevenue.html#sub_overview", null ],
-      [ "The Two Subscription Methods", "SubscriptionRevenue.html#sub_methods", [
-        [ "1. ReportSubscriptionRevenue - Track Subscription Billing", "SubscriptionRevenue.html#sub_revenue_method", null ],
-        [ "2. ReportSubscriptionItemsGranted - Track Subscriber Rewards", "SubscriptionRevenue.html#sub_items_granted_method", null ]
+      [ "The Two Subscription Steps", "SubscriptionRevenue.html#sub_methods", [
+        [ "Step 1: ReportSubscriptionRevenue - Track Subscription Billing", "SubscriptionRevenue.html#sub_revenue_method", null ],
+        [ "Step 2: ReportSubscriptionItemsGranted - Track Subscriber Rewards", "SubscriptionRevenue.html#sub_items_granted_method", null ]
       ] ],
       [ "Common Scenarios", "SubscriptionRevenue.html#sub_scenarios", [
         [ "Scenario 1: Initial Subscription Purchase", "SubscriptionRevenue.html#sub_scenario_initial", null ],
@@ -159,8 +157,7 @@ var NAVTREE =
         [ "Scenario 5: Multiple Item Rewards", "SubscriptionRevenue.html#sub_scenario_multiple", null ]
       ] ],
       [ "Best Practices", "SubscriptionRevenue.html#sub_best_practices", [
-        [ "Use Consistent Package Names", "SubscriptionRevenue.html#sub_consistent_package", null ],
-        [ "Revenue Must Be in USD Cents", "SubscriptionRevenue.html#sub_revenue_usd", null ]
+        [ "Use Consistent Package Names", "SubscriptionRevenue.html#sub_consistent_package", null ]
       ] ],
       [ "String Parameter Limits", "SubscriptionRevenue.html#sub_string_limits", null ],
       [ "See Also", "SubscriptionRevenue.html#sub_see_also", null ]

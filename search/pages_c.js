@@ -12,7 +12,7 @@ var searchData=
   ['default_20privacy_20compliance_9',['Default Privacy Compliance',['../DataPrivacy.html#DP_default',1,'']]],
   ['defining_20an_20item_10',['Defining an &quot;Item&quot;',['../ItemExchange.html#ItemConcept',1,'']]],
   ['delayed_20grant_20asynchronous_11',['Scenario 2: Delayed Grant (Asynchronous)',['../InAppPurchases.html#iap_scenario_delayed',1,'']]],
-  ['delivered_12',['2. ReportInAppPurchaseItemsGranted - Track the Items Delivered',['../InAppPurchases.html#iap_items_granted',1,'']]],
+  ['delivered_12',['Step 2: ReportInAppPurchaseItemsGranted - Track the Items Delivered',['../InAppPurchases.html#iap_items_granted',1,'']]],
   ['description_13',['Description',['../install_campaign.html#campaign_description',1,'Description'],['../DummyGameIntegration.html#GameDescription',1,'Game Description']]],
   ['design_20principles_14',['Design Principles',['../index.html#design-principles',1,'']]],
   ['diagram_15',['Flow Diagram',['../InAppPurchases.html#iap_flow_diagram',1,'']]],

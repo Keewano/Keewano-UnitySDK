@@ -6,10 +6,10 @@ var searchData=
   ['across_20all_20apis_3',['Item Names Identify Items Across All APIs',['../ItemExchange.html#ItemConsistency',1,'']]],
   ['actually_20granted_20items_4',['Actually Granted Items',['../InAppPurchases.html#iap_only_granted_items',1,'Only Report Actually Granted Items'],['../AdRevenue.html#ad_only_granted_items',1,'Only Report Actually Granted Items']]],
   ['ad_20between_20levels_20no_20reward_5',['Scenario 1: Interstitial Ad Between Levels (No Reward)',['../AdRevenue.html#ad_scenario_interstitial',1,'']]],
-  ['ad_20items_6',['2. ReportAdItemsGranted - Track Rewarded Ad Items',['../AdRevenue.html#ad_items_granted_method',1,'']]],
+  ['ad_20items_6',['Step 2: ReportAdItemsGranted - Track Rewarded Ad Items',['../AdRevenue.html#ad_items_granted_method',1,'']]],
   ['ad_20network_20callbacks_7',['Always Use Ad Network Callbacks',['../AdRevenue.html#ad_use_callbacks',1,'']]],
-  ['ad_20revenue_8',['Ad Revenue',['../AdRevenue.html#ad_revenue_method',1,'1. ReportAdRevenue - Track the Ad Revenue'],['../AdRevenue.html',1,'Ad Revenue']]],
-  ['ad_20revenue_20methods_9',['The Two Ad Revenue Methods',['../AdRevenue.html#ad_methods',1,'']]],
+  ['ad_20revenue_8',['Ad Revenue',['../AdRevenue.html',1,'Ad Revenue'],['../AdRevenue.html#ad_revenue_method',1,'Step 1: ReportAdRevenue - Track the Ad Revenue']]],
+  ['ad_20revenue_20steps_9',['The Two Ad Revenue Steps',['../AdRevenue.html#ad_methods',1,'']]],
   ['ad_20revenue_20vs_20iap_10',['Ad Revenue vs IAP',['../AdRevenue.html#ad_distinction',1,'']]],
   ['ad_20types_11',['Use Game-Specific Context, Not Ad Types',['../AdRevenue.html#ad_placement_context',1,'']]],
   ['adding_20custom_20events_12',['Adding Custom Events',['../CustomEventsPage.html#custom_events_adding',1,'']]],
@@ -26,7 +26,7 @@ var searchData=
   ['apis_23',['Item Names Identify Items Across All APIs',['../ItemExchange.html#ItemConsistency',1,'']]],
   ['app_20purchases_24',['In-App Purchases',['../InAppPurchases.html',1,'']]],
   ['are_20built_25',['How Funnels Are Built',['../onboarding_milestone.html#ftue_funnel',1,'']]],
-  ['are_20these_20two_20methods_20separated_26',['Are These Two Methods Separated',['../InAppPurchases.html#iap_why_separated',1,'Why Are These Two Methods Separated?'],['../AdRevenue.html#ad_why_separated',1,'Why Are These Two Methods Separated?']]],
+  ['are_20these_20two_20steps_20separated_26',['Are These Two Steps Separated',['../InAppPurchases.html#iap_why_separated',1,'Why Are These Two Steps Separated?'],['../AdRevenue.html#ad_why_separated',1,'Why Are These Two Steps Separated?']]],
   ['asynchronous_27',['Scenario 2: Delayed Grant (Asynchronous)',['../InAppPurchases.html#iap_scenario_delayed',1,'']]],
   ['automatic_20event_20types_28',['Automatic Event Types',['../EventTypes.html#AutomaticEvents',1,'']]]
 ];
