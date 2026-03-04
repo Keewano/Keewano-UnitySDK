@@ -62,7 +62,6 @@ public partial class KeewanoSDK : MonoBehaviour
 #if KEEWANO_TEST_ENDPOINT
         //Used for internal testing
         string endpoint = Environment.GetEnvironmentVariable("KEEWANO_TEST_ENDPOINT");
-        settings.APIKey = Environment.GetEnvironmentVariable("KEEWANO_TEST_API_KEY");
 #else
         const string endpoint = "https://api.keewano.com/event/ingress/v1/data";
 #endif
@@ -109,7 +108,7 @@ public partial class KeewanoSDK : MonoBehaviour
         SceneManager.sceneUnloaded -= handleSceneUnloaded;
         SceneManager.sceneLoaded -= handleSceneLoaded;
         Application.deepLinkActivated -= handleOnDeepLinkActivated;
-        Application.logMessageReceived -= handleLogMessageReceivedThreaded;
+        Application.logMessageReceivedThreaded -= handleLogMessageReceivedThreaded;
         Application.lowMemory -= handleLowMemoryWarning;
 
         m_dispatcher.Stop();
@@ -215,6 +214,55 @@ public partial class KeewanoSDK : MonoBehaviour
     {
         UserConsentState state = m_instance.m_dispatcher.SetUserConsent(consentGiven);
         atomicSaveUserConsentState(state);
+    }
+
+    /**
+    @brief Reports the original registration date for users who existed before SDK integration.
+
+    When integrating the Keewano SDK into an existing game with an established player base,
+    use this method to report the original registration date for users who were already
+    playing before the SDK was added. This ensures accurate day-in-game calculations
+    and prevents veteran players from appearing as new users in analytics.
+
+    @param originalRegistrationTime The date when the user originally registered in your game,
+           before the Keewano SDK was integrated.
+
+    @note This method can only be called once per installation. Subsequent calls are ignored.
+    @note Only call this for users who existed before SDK integration. Do not call for new users.
+    @note The date must be in the past. Future dates are rejected.
+     */
+    static public void ReportUserRegisteredBeforeSDKIntegration(DateTime originalRegistrationTime)
+    {
+        if (hasPreSDKRegistrationBeenReported())
+            return;
+
+        DateTime utcTime = originalRegistrationTime.ToUniversalTime();
+        if (utcTime >= DateTime.UtcNow)
+        {
+#if UNITY_EDITOR
+            Debug.LogWarning("[KeewanoSDK] ReportUserRegisteredBeforeSDKIntegration: Registration date must be in the past. Call ignored.");
+#endif
+            return;
+        }
+
+        markPreSDKRegistrationAsReported();
+        m_instance.m_dispatcher.ReportPreSDKRegistrationDate(originalRegistrationTime);
+    }
+
+    static bool hasPreSDKRegistrationBeenReported()
+    {
+        string filename = $"{Application.persistentDataPath}/Keewano_PreSDKReg";
+        return File.Exists(filename);
+    }
+
+    static void markPreSDKRegistrationAsReported()
+    {
+        try
+        {
+            string filename = $"{Application.persistentDataPath}/Keewano_PreSDKReg";
+            File.WriteAllBytes(filename, new byte[] { 1 });
+        }
+        catch { /*Nothing to do here*/ }
     }
 
     /**
@@ -356,6 +404,22 @@ public partial class KeewanoSDK : MonoBehaviour
     }
 
     /**
+     @brief Reports that an ad opportunity was offered to the user.
+
+     Use this method to track when an ad is presented to the user as an option (e.g., "Watch ad for reward?").
+     Combined with ReportAdRevenue, this allows calculating ad acceptance rates per placement and ad type.
+
+     @param placement The ad placement identifier (e.g., "level_complete_reward", "shop_bonus").
+     @param adType The type of advertisement being offered.
+
+     @sa ReportAdRevenue, ReportAdItemsGranted, AdType, \ref DataFormatSpecs for string parameter requirements.
+    */
+    static public void ReportAdOffered(string placement, Keewano.AdType adType)
+    {
+        m_instance.m_dispatcher.ReportAdOffered(placement, adType);
+    }
+
+    /**
      @brief Reports an ad revenue event.
 
      Use this method to log revenue generated from displaying an advertisement by specifying the
@@ -365,7 +429,7 @@ public partial class KeewanoSDK : MonoBehaviour
      @param placement The ad placement identifier (e.g., "main_menu_banner", "level_complete_interstitial").
      @param revenueUsdCents The revenue generated from the ad impression in US cents.
 
-     @sa ReportAdItemsGranted, \ref DataFormatSpecs for string parameter requirements.
+     @sa ReportAdOffered, ReportAdItemsGranted, \ref DataFormatSpecs for string parameter requirements.
     */
     static public void ReportAdRevenue(string placement, uint revenueUsdCents)
     {

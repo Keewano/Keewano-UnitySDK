@@ -1,3 +1,4 @@
+
 using System;
 using System.Net;
 using System.Net.Http;
@@ -10,7 +11,7 @@ namespace Keewano.Internal
 
     internal class KNetwork
     {
-        private const string SDK_VERSION = "Unity/1.0.84";
+        private const string SDK_VERSION = "Unity/1.0.85";
 
         static readonly HttpClient m_client;
         static readonly MediaTypeHeaderValue m_contentTypeHeader;
@@ -24,6 +25,16 @@ namespace Keewano.Internal
 #endif
             m_contentTypeHeader = new MediaTypeHeaderValue("application/octet-stream");
         }
+
+#if UNITY_EDITOR
+        static void logActionableError(Uri endpoint, HttpStatusCode? statusCode)
+        {
+            if (endpoint.Scheme != "https")
+                UnityEngine.Debug.LogError($"[Keewano] Invalid endpoint '{endpoint}'. Please make sure the KEEWANO_TEST_ENDPOINT environment variable is set correctly.");
+            else if (statusCode == HttpStatusCode.Forbidden || statusCode == HttpStatusCode.Unauthorized)
+                UnityEngine.Debug.LogError("[Keewano] Access denied. Please verify that the correct API key is configured in Edit > Project Settings > Keewano.");
+        }
+#endif
 
         public static bool SendBatch(Uri endpoint, string appSecret, KBatch batch, string testUser, CancellationToken ct)
         {
@@ -57,11 +68,18 @@ namespace Keewano.Internal
 
                 HttpResponseMessage reply = m_client.SendAsync(req, ct).Result;
                 batch.Data.LeaveOpen = false;
+#if UNITY_EDITOR
+                if (!reply.IsSuccessStatusCode)
+                    logActionableError(endpoint, reply.StatusCode);
+#endif
                 return (reply.IsSuccessStatusCode);
             }
             catch
             {
                 batch.Data.LeaveOpen = false;
+#if UNITY_EDITOR
+                logActionableError(endpoint, null);
+#endif
                 return false;
             }
         }
@@ -91,11 +109,17 @@ namespace Keewano.Internal
                         needToRegister = true;
                         return false;
                     default:
+#if UNITY_EDITOR
+                        logActionableError(endpoint, reply.StatusCode);
+#endif
                         return false;
                 }
             }
             catch
             {
+#if UNITY_EDITOR
+                logActionableError(endpoint, null);
+#endif
                 return false;
             }
         }
@@ -120,10 +144,17 @@ namespace Keewano.Internal
                 req.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
                 HttpResponseMessage reply = m_client.SendAsync(req, ct).Result;
+#if UNITY_EDITOR
+                if (reply.StatusCode != HttpStatusCode.OK && reply.StatusCode != HttpStatusCode.Created)
+                    logActionableError(endpoint, reply.StatusCode);
+#endif
                 return reply.StatusCode == HttpStatusCode.OK || reply.StatusCode == HttpStatusCode.Created;
             }
             catch
             {
+#if UNITY_EDITOR
+                logActionableError(endpoint, null);
+#endif
                 return false;
             }
         }

@@ -57,7 +57,7 @@ namespace Keewano.Internal
         private Uri m_ingresEndPoint;
         private Uri m_ceRegPoint;
 
-        private UserConsentState m_userConsentState;
+        private volatile UserConsentState m_userConsentState;
 
         internal KEventDispatcher(string workingDirectory, string endpoint, string appSecret, UserConsentState userConsentState, Guid installId, Guid userId, Guid dataSessionId)
         {
@@ -73,7 +73,6 @@ namespace Keewano.Internal
             m_sendTestUserName = null;
 
             m_inBatch = new KBatch(installId, userId, dataSessionId);
-            m_inBatch.BatchStartTime = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
             m_sendingBatch = new KBatch(installId, userId, dataSessionId);
 
             try
@@ -241,6 +240,13 @@ namespace Keewano.Internal
             return string.Format("{0}/test_user.info", m_workFolder);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void markBatchStartIfNeeded()
+        {
+            if (m_inBatch.Data.Length == 0)
+                m_inBatch.BatchStartTime = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
+        }
+
         private void swapBatches()
         {
             lock (m_swapLock)
@@ -253,7 +259,6 @@ namespace Keewano.Internal
 
                 m_inBatch.UserId = m_userId;
                 m_inBatch.Data.SetLength(0);
-                m_inBatch.BatchStartTime = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
                 m_inBatch.CutPositions.Clear();
 
                 if (m_testUserName != null)
@@ -437,6 +442,7 @@ namespace Keewano.Internal
         {
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_userId = userId;
                 m_inBatch.UserId = userId;
                 m_inBatch.Writer.Write((ushort)KEvents.USER_ID_ASSIGNED);
@@ -450,6 +456,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write((ushort)KEvents.AB_TEST_ASSIGNMENT);
                 m_inBatch.Writer.Write(testName);
                 m_inBatch.Writer.Write(group);
@@ -464,6 +471,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
 
                 m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_TIMESTAMP);
@@ -484,6 +492,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
 
                 m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_TIMESTAMP);
@@ -498,6 +507,22 @@ namespace Keewano.Internal
             }
         }
 
+        internal void ReportAdOffered(string placement, Keewano.AdType adType)
+        {
+#if UNITY_EDITOR
+            validateString(placement);
+#endif
+            lock (m_swapLock)
+            {
+                markBatchStartIfNeeded();
+                m_inBatch.Writer.Write((ushort)KEvents.AD_OFFERED_PLACEMENT);
+                m_inBatch.Writer.Write(placement);
+                m_inBatch.Writer.Write((ushort)KEvents.AD_OFFERED_TYPE);
+                m_inBatch.Writer.Write((byte)adType);
+                sendIfNeeded();
+            }
+        }
+
         internal void ReportAdRevenue(string placement, uint revenueUsdCents)
         {
 #if UNITY_EDITOR
@@ -505,6 +530,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
 
                 m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_TIMESTAMP);
@@ -525,6 +551,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
 
                 m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_TIMESTAMP);
@@ -546,6 +573,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
 
                 m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_TIMESTAMP);
@@ -566,6 +594,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
 
                 m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_TIMESTAMP);
@@ -677,6 +706,7 @@ namespace Keewano.Internal
         {
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write(eventType);
                 sendIfNeeded();
             }
@@ -690,6 +720,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write(eventType);
                 m_inBatch.Writer.Write(str);
                 sendIfNeeded();
@@ -704,6 +735,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write(eventType);
                 m_inBatch.Writer.Write(str);
                 sendIfNeeded();
@@ -714,6 +746,7 @@ namespace Keewano.Internal
         {
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write(eventType);
                 m_inBatch.Writer.Write(value);
                 sendIfNeeded();
@@ -725,6 +758,7 @@ namespace Keewano.Internal
         {
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write(eventType);
                 m_inBatch.Writer.Write(x);
                 m_inBatch.Writer.Write(y);
@@ -740,6 +774,7 @@ namespace Keewano.Internal
             uint secondsSinceEpoch = (uint)(utcDate - m_utcEpoch).TotalSeconds;
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write(eventType);
                 m_inBatch.Writer.Write(secondsSinceEpoch);
 
@@ -751,6 +786,7 @@ namespace Keewano.Internal
         {
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write(eventType);
                 m_inBatch.Writer.Write(data);
                 sendIfNeeded();
@@ -762,6 +798,7 @@ namespace Keewano.Internal
         {
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write(eventType);
                 byte b = flag ? (byte)2 : (byte)1;
                 m_inBatch.Writer.Write(b);
@@ -815,6 +852,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write((ushort)KEvents.ITEMS_EXCHANGE);
                 m_inBatch.Writer.Write(exchangePoint);
                 writeItems(m_inBatch.Writer, from);
@@ -830,6 +868,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write((ushort)KEvents.ITEMS_RESET);
                 m_inBatch.Writer.Write(location);
                 writeItems(m_inBatch.Writer, items);
@@ -844,6 +883,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write((ushort)KEvents.ITEMS_PURCHASED_GRANT);
                 m_inBatch.Writer.Write(productId);
                 writeItems(m_inBatch.Writer, items);
@@ -858,6 +898,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write((ushort)KEvents.ITEMS_AD_GRANTED);
                 m_inBatch.Writer.Write(placement);
                 writeItems(m_inBatch.Writer, items);
@@ -872,6 +913,7 @@ namespace Keewano.Internal
 #endif
             lock (m_swapLock)
             {
+                markBatchStartIfNeeded();
                 m_inBatch.Writer.Write((ushort)KEvents.ITEMS_SUBSCRIPTION_GRANTED);
                 m_inBatch.Writer.Write(packageName);
                 writeItems(m_inBatch.Writer, items);
@@ -893,6 +935,19 @@ namespace Keewano.Internal
         internal void ReportGameLanguage(string language)
         {
             addEvent((ushort)KEvents.GAME_LANG, language);
+        }
+
+        internal void ReportPreSDKRegistrationDate(DateTime registrationDate)
+        {
+            DateTime utcDate = registrationDate.ToUniversalTime();
+            uint secondsSinceEpoch = (uint)(utcDate - m_utcEpoch).TotalSeconds;
+            lock (m_swapLock)
+            {
+                markBatchStartIfNeeded();
+                m_inBatch.Writer.Write((ushort)KEvents.PRE_SDK_REGISTRATION_DATE);
+                m_inBatch.Writer.Write(secondsSinceEpoch);
+                sendIfNeeded();
+            }
         }
 
         static Dictionary<string, uint> loadOnboardingCounters(string filePath)
