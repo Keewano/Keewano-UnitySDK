@@ -5,7 +5,9 @@ var indexSectionsWithContent =
   2: "k",
   3: "gilmrs",
   4: "cu",
-  5: "123456789abcdefghiklmnopqrstuvwy"
+  5: "a",
+  6: "biopr",
+  7: "123456789abcdefghiklmnopqrstuvwy"
 };
 
 var indexSectionNames =
@@ -15,7 +17,9 @@ var indexSectionNames =
   2: "namespaces",
   3: "functions",
   4: "variables",
-  5: "pages"
+  5: "enums",
+  6: "enumvalues",
+  7: "pages"
 };
 
 var indexSectionLabels =
@@ -25,6 +29,8 @@ var indexSectionLabels =
   2: "Namespaces",
   3: "Functions",
   4: "Variables",
-  5: "Pages"
+  5: "Enumerations",
+  6: "Enumerator",
+  7: "Pages"
 };
 

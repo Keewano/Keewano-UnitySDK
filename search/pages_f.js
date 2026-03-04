@@ -7,12 +7,15 @@ var searchData=
   ['game_20name_4',['Game Name',['../DummyGameIntegration.html#GameName',1,'']]],
   ['game_20specific_20context_20not_20ad_20types_5',['Use Game-Specific Context, Not Ad Types',['../AdRevenue.html#ad_placement_context',1,'']]],
   ['game_20windows_20and_20popups_6',['Tracking In-Game Windows and Popups',['../Windows.html#tracking-in-game-windows-and-popups',1,'']]],
-  ['get_201_20vial_20of_20eternal_20life_7',['Player Spends 5 Gold Coins and a Healing Potion to Get 1 Vial of Eternal Life',['../ItemExchange.html#Example1',1,'']]],
-  ['goal_20tracking_8',['Scenario 10: Advanced Item &amp;amp; Goal Tracking',['../DummyGameIntegration.html#Scenario_10',1,'']]],
-  ['gold_20coins_20and_20a_20healing_20potion_20to_20get_201_20vial_20of_20eternal_20life_9',['Player Spends 5 Gold Coins and a Healing Potion to Get 1 Vial of Eternal Life',['../ItemExchange.html#Example1',1,'']]],
-  ['grant_20asynchronous_10',['Scenario 2: Delayed Grant (Asynchronous)',['../InAppPurchases.html#iap_scenario_delayed',1,'']]],
-  ['grant_20fails_11',['Scenario 5: Purchase Validated but Grant Fails',['../InAppPurchases.html#iap_scenario_failed',1,'']]],
-  ['grant_20synchronous_12',['Scenario 1: Immediate Grant (Synchronous)',['../InAppPurchases.html#iap_scenario_immediate',1,'']]],
-  ['granted_20items_13',['Granted Items',['../InAppPurchases.html#iap_only_granted_items',1,'Only Report Actually Granted Items'],['../AdRevenue.html#ad_only_granted_items',1,'Only Report Actually Granted Items']]],
-  ['guide_14',['Quick Start Guide',['../QuickStart.html',1,'']]]
+  ['games_7',['Games',['../QuickStart.html#ExistingGame',1,'Integrating into Existing Games'],['../ExistingGameIntegration.html',1,'Integrating SDK into Existing Games']]],
+  ['get_201_20vial_20of_20eternal_20life_8',['Player Spends 5 Gold Coins and a Healing Potion to Get 1 Vial of Eternal Life',['../ItemExchange.html#Example1',1,'']]],
+  ['goal_20tracking_9',['Scenario 10: Advanced Item &amp;amp; Goal Tracking',['../DummyGameIntegration.html#Scenario_10',1,'']]],
+  ['gold_20coins_20and_20a_20healing_20potion_20to_20get_201_20vial_20of_20eternal_20life_10',['Player Spends 5 Gold Coins and a Healing Potion to Get 1 Vial of Eternal Life',['../ItemExchange.html#Example1',1,'']]],
+  ['grant_20asynchronous_11',['Scenario 2: Delayed Grant (Asynchronous)',['../InAppPurchases.html#iap_scenario_delayed',1,'']]],
+  ['grant_20fails_12',['Scenario 5: Purchase Validated but Grant Fails',['../InAppPurchases.html#iap_scenario_failed',1,'']]],
+  ['grant_20synchronous_13',['Scenario 1: Immediate Grant (Synchronous)',['../InAppPurchases.html#iap_scenario_immediate',1,'']]],
+  ['granted_14',['Only Call ReportAdItemsGranted When Items Are Granted',['../AdRevenue.html#ad_only_when_granted',1,'']]],
+  ['granted_20items_15',['Granted Items',['../InAppPurchases.html#iap_only_granted_items',1,'Only Report Actually Granted Items'],['../AdRevenue.html#ad_only_granted_items',1,'Only Report Actually Granted Items']]],
+  ['grants_20separate_16',['Why Are Revenue and Item Grants Separate?',['../AdRevenue.html#ad_why_separated',1,'']]],
+  ['guide_17',['Quick Start Guide',['../QuickStart.html',1,'']]]
 ];

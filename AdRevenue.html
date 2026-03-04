@@ -143,9 +143,9 @@ $(function(){initNavTree('AdRevenue.html','',''); });
 <div class="contents">
 <div class="textblock"><h1 class="doxsection"><a class="anchor" id="ad_overview"></a>
 Overview</h1>
-<p>Ad revenue tracking allows you to monitor monetization from advertisements shown in your game. The Keewano SDK provides dedicated methods to track both the revenue generated from ads and the virtual items granted as rewards (e.g., from rewarded video ads).</p>
+<p>Ad revenue tracking allows you to monitor monetization from advertisements shown in your game. The Keewano SDK provides dedicated methods to track ad offers, revenue generated from ads, and virtual items granted as rewards (e.g., from rewarded video ads).</p>
 <dl class="section note"><dt>Note</dt><dd><b>Best Practice: Use Ad Network Callbacks</b><br  />
-Always call these ad tracking methods from the revenue callbacks provided by your ad serving SDK (IronSource, Google AdMob, Unity Ads, etc.). These callbacks contain accurate revenue data from the ad network. Never estimate or hardcode revenue values.</dd></dl>
+Always call ad revenue tracking methods from the revenue callbacks provided by your ad serving SDK (IronSource, Google AdMob, Unity Ads, etc.). These callbacks contain accurate revenue data from the ad network. Never estimate or hardcode revenue values.</dd></dl>
 <h1 class="doxsection"><a class="anchor" id="ad_distinction"></a>
 Ad Revenue vs IAP</h1>
 <p>It's important to understand the distinction between different types of monetization in your game:</p>
@@ -159,32 +159,33 @@ Ad Revenue vs IAP</h1>
 <li>Player receives 100 Coins as reward for watching the ad → <b>Ad Item Grant</b></li>
 <li>Player buys "500 Crystals Pack" for $4.99 → <b>IAP</b> (see <a class="el" href="InAppPurchases.html">In-App Purchases</a>)</li>
 </ul>
+<h1 class="doxsection"><a class="anchor" id="ad_offer_tracking"></a>
+Tracking Ad Offer Acceptance Rate</h1>
+<p>Use <span class="tt"><a class="el" href="classKeewanoSDK.html#a0503b0da2dbf0670136aa3630b477e90" title="Reports that an ad opportunity was offered to the user.">KeewanoSDK.ReportAdOffered()</a></span> to track when an ad opportunity is presented to the player (e.g., "Watch ad for reward?" dialog). This allows you to measure ad acceptance rates by comparing how many players were offered an ad vs how many actually watched it.</p>
 <h1 class="doxsection"><a class="anchor" id="ad_methods"></a>
-The Two Ad Revenue Steps</h1>
-<p>Tracking ad revenue involves two steps:</p>
+Ad Revenue Tracking</h1>
 <h2 class="doxsection"><a class="anchor" id="ad_revenue_method"></a>
-Step 1: ReportAdRevenue - Track the Ad Revenue</h2>
+ReportAdRevenue - Track the Ad Revenue</h2>
 <p>Use <span class="tt"><a class="el" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191" title="Reports an ad revenue event.">KeewanoSDK.ReportAdRevenue()</a></span> to log the revenue generated from displaying an advertisement.</p>
 <p>All revenue is stored in USD on Keewano servers. Choose <b>one</b> of the two exclusive options:</p>
 <div class="tabbed"></div><div class="tabbed"><ul>
-<li><p class="startli"><b class="tab-title">USD Cents</b></p>
-<p class="startli">Pass whole USD cents (no sub-cent precision): </p><div class="fragment"><div class="line"><span class="comment">// After ad impression - pass revenue in whole USD cents</span></div>
-<div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placementId, revenueInUsdCents);</div>
-<div class="ttc" id="aclassKeewanoSDK_html"><div class="ttname"><a href="classKeewanoSDK.html">KeewanoSDK</a></div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:18</div></div>
-<div class="ttc" id="aclassKeewanoSDK_html_ad7a1cb7cf2ec193333b9f124bac94191"><div class="ttname"><a href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">KeewanoSDK.ReportAdRevenue</a></div><div class="ttdeci">static void ReportAdRevenue(string placement, uint revenueUsdCents)</div><div class="ttdoc">Reports an ad revenue event.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:370</div></div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>This method only supports whole cents. For sub-cent precision (common with banner ads), use the local currency method.</dd></dl>
-</li>
-<li><p class="startli"><b class="tab-title">Local Currency</b></p>
+<li><p class="startli"><b class="tab-title">Full Precision</b></p>
 <p class="startli">Pass the revenue amount with currency code for full precision: </p><div class="fragment"><div class="line"><span class="comment">// Sub-cent USD precision (e.g., $0.005 for half a cent)</span></div>
 <div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placementId, 0.005f, <span class="stringliteral">&quot;USD&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Or non-USD currency</span></div>
 <div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placementId, 0.05f, <span class="stringliteral">&quot;EUR&quot;</span>);</div>
+<div class="ttc" id="aclassKeewanoSDK_html"><div class="ttname"><a href="classKeewanoSDK.html">KeewanoSDK</a></div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:18</div></div>
+<div class="ttc" id="aclassKeewanoSDK_html_ad7a1cb7cf2ec193333b9f124bac94191"><div class="ttname"><a href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">KeewanoSDK.ReportAdRevenue</a></div><div class="ttdeci">static void ReportAdRevenue(string placement, uint revenueUsdCents)</div><div class="ttdoc">Reports an ad revenue event.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:434</div></div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Currency codes must follow <a href="https://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a>. Unrecognized codes are treated as USD. USD values are stored as-is without conversion.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>For non-USD currencies, different analytics systems use different exchange rate sources and conversion timing. If you use multiple analytics tools, each may report slightly different revenue figures.</dd></dl>
 </li>
+<li><p class="startli"><b class="tab-title">Quick &amp; Simple</b></p>
+<p class="startli">Convenient shorthand when your ad network already provides revenue in whole USD cents: </p><div class="fragment"><div class="line"><span class="comment">// After ad impression - pass revenue in whole USD cents</span></div>
+<div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placementId, revenueInUsdCents);</div>
+</div><!-- fragment --></li>
 </ul>
-</div><p><b>When to call:</b></p><ul>
+</div><div class="tabbed"></div><p><b>When to call:</b></p><ul>
 <li>ONLY after receiving the revenue callback from your ad serving SDK (IronSource, AdMob, Unity Ads, etc.)</li>
 <li>NEVER estimate or hardcode revenue values</li>
 </ul>
@@ -194,7 +195,7 @@ Step 2: ReportAdItemsGranted - Track Rewarded Ad Items</h2>
 <div class="fragment"><div class="line"><span class="comment">// After player watches rewarded ad and receives items</span></div>
 <div class="line"><a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] rewardItems = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Coins&quot;</span>, 100) };</div>
 <div class="line"><a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(placementId, rewardItems);</div>
-<div class="ttc" id="aclassKeewanoSDK_html_a742c5b095823cfab8656f1d9a68373ed"><div class="ttname"><a href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">KeewanoSDK.ReportAdItemsGranted</a></div><div class="ttdeci">static void ReportAdItemsGranted(string placement, Item[] items)</div><div class="ttdoc">Reports items granted from watching an advertisement.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:405</div></div>
+<div class="ttc" id="aclassKeewanoSDK_html_a742c5b095823cfab8656f1d9a68373ed"><div class="ttname"><a href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">KeewanoSDK.ReportAdItemsGranted</a></div><div class="ttdeci">static void ReportAdItemsGranted(string placement, Item[] items)</div><div class="ttdoc">Reports items granted from watching an advertisement.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:469</div></div>
 <div class="ttc" id="anamespaceKeewano_html"><div class="ttname"><a href="namespaceKeewano.html">Keewano</a></div><div class="ttdef"><b>Definition</b> KBatch.cs:6</div></div>
 <div class="ttc" id="astructKeewano_1_1Item_html"><div class="ttname"><a href="structKeewano_1_1Item.html">Keewano.Item</a></div><div class="ttdoc">Represents a game item with a unique identifier and a quantity.</div><div class="ttdef"><b>Definition</b> KeewanoItems.cs:11</div></div>
 </div><!-- fragment --><p><b>Parameters:</b></p><ul>
@@ -203,7 +204,7 @@ Step 2: ReportAdItemsGranted - Track Rewarded Ad Items</h2>
 </ul>
 <p><b>When to call:</b></p><ul>
 <li>ONLY after items are successfully granted to the player's account</li>
-<li>For rewarded ads where the player receives in-game items/currency</li>
+<li>When the player receives in-game items/currency for watching the ad</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="ad_placement_naming"></a>
 Placement Naming Best Practices</h1>
@@ -272,14 +273,12 @@ Why Context Matters</h2>
 </ul>
 <p>For example, seeing that "LevelFailed_Watch5Moves" has high engagement but "LevelComplete_Transition" has low engagement tells you meaningful information about your game design and player motivation.</p>
 <h1 class="doxsection"><a class="anchor" id="ad_why_separated"></a>
-Why Are These Two Steps Separated?</h1>
-<p>These steps are separated because <b>not all ads grant items</b>:</p>
-<h2 class="doxsection"><a class="anchor" id="ad_separation_reasons"></a>
-Common Cases</h2>
+Why Are Revenue and Item Grants Separate?</h1>
+<p><span class="tt">ReportAdRevenue</span> and <span class="tt">ReportAdItemsGranted</span> are separate because <b>not all ads grant items</b>:</p>
 <ol type="1">
-<li><b>Interstitial Ads Between Levels</b>: Generate revenue but don't grant items - only call <span class="tt">ReportAdRevenue</span></li>
-<li><b>Rewarded Video Ads</b>: Generate revenue AND grant items - call both steps</li>
-<li><b>Banner Ads</b>: Generate revenue but don't grant items - only call <span class="tt">ReportAdRevenue</span></li>
+<li><b>Interstitial Ads Between Levels</b>: Generate revenue but don't grant items</li>
+<li><b>Banner Ads</b>: Generate revenue but don't grant items</li>
+<li><b>Ads With Rewards</b>: Generate revenue AND grant items - call both methods</li>
 <li><b>Asynchronous Rewards</b>: Ad completes → revenue tracked → items granted later by server</li>
 </ol>
 <h1 class="doxsection"><a class="anchor" id="ad_scenarios"></a>
@@ -287,134 +286,162 @@ Common Scenarios</h1>
 <h2 class="doxsection"><a class="anchor" id="ad_scenario_interstitial"></a>
 Scenario 1: Interstitial Ad Between Levels (No Reward)</h2>
 <p>Very common in casual games - ads shown during level transitions that generate revenue but don't reward the player.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> OnLevelComplete(<span class="keywordtype">int</span> levelNumber)</div>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">string</span> PLACEMENT = <span class="stringliteral">&quot;LevelComplete_Transition&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> OnLevelComplete(<span class="keywordtype">int</span> levelNumber)</div>
 <div class="line">{</div>
+<div class="line">    <span class="comment">// Track that we&#39;re about to show an interstitial</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a0503b0da2dbf0670136aa3630b477e90">ReportAdOffered</a>(PLACEMENT, <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.AdType.Interstitial);</div>
+<div class="line"> </div>
 <div class="line">    <span class="comment">// Player completed level, show interstitial ad before next level</span></div>
 <div class="line">    ShowInterstitialAd();</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Ad network callback</span></div>
-<div class="line"><span class="keywordtype">void</span> OnInterstitialAdShown(uint revenueCents)</div>
+<div class="line"><span class="keywordtype">void</span> OnInterstitialAdShown(<span class="keywordtype">float</span> revenueUsd)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Only report revenue - player gets nothing for watching</span></div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(<span class="stringliteral">&quot;LevelComplete_Transition&quot;</span>, revenueCents);</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(PLACEMENT, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// NO ReportAdItemsGranted call - this ad doesn&#39;t reward anything</span></div>
 <div class="line">}</div>
+<div class="ttc" id="aclassKeewanoSDK_html_a0503b0da2dbf0670136aa3630b477e90"><div class="ttname"><a href="classKeewanoSDK.html#a0503b0da2dbf0670136aa3630b477e90">KeewanoSDK.ReportAdOffered</a></div><div class="ttdeci">static void ReportAdOffered(string placement, Keewano.AdType adType)</div><div class="ttdoc">Reports that an ad opportunity was offered to the user.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:417</div></div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ad_scenario_rewarded_energy"></a>
 Scenario 2: Out of Energy - Watch to Refill</h2>
-<p>Player runs out of energy, popup offers to watch ad to refill.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> OnOutOfEnergy()</div>
+<p>Player runs out of energy, popup offers to watch ad to refill. This example shows the full funnel: <b>Offered → Watched → Items Granted</b>.</p>
+<div class="fragment"><div class="line"><span class="comment">// Use the same placement string across all methods to link them together</span></div>
+<div class="line"><span class="keyword">const</span> <span class="keywordtype">string</span> PLACEMENT = <span class="stringliteral">&quot;OutOfEnergy_WatchForRefill&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> OnOutOfEnergy()</div>
 <div class="line">{</div>
+<div class="line">    <span class="comment">// Track that we offered the ad</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a0503b0da2dbf0670136aa3630b477e90">ReportAdOffered</a>(PLACEMENT, <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.AdType.Rewarded);</div>
+<div class="line"> </div>
 <div class="line">    <span class="comment">// Show popup: &quot;Out of energy! Watch ad to refill?&quot;</span></div>
 <div class="line">    ShowRewardedAdOffer();</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Ad network callback</span></div>
-<div class="line"><span class="keywordtype">void</span> OnOutOfEnergyAdCompleted(uint revenueCents)</div>
+<div class="line"><span class="comment">// Ad network callback - only called if player watched the ad</span></div>
+<div class="line"><span class="keywordtype">void</span> OnOutOfEnergyAdCompleted(<span class="keywordtype">float</span> revenueUsd)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> placement = <span class="stringliteral">&quot;OutOfEnergyPrompt_WatchForRefill&quot;</span>;</div>
+<div class="line">    <span class="comment">// Report revenue - use local currency for sub-cent precision</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(PLACEMENT, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">// 1. Report the ad revenue</span></div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placement, revenueCents);</div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// 2. Grant energy to the player</span></div>
+<div class="line">    <span class="comment">// Grant energy to the player</span></div>
 <div class="line">    <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] rewardItems = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Energy&quot;</span>, 5) };</div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(placement, rewardItems);</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(PLACEMENT, rewardItems);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ad_scenario_level_failed"></a>
 Scenario 3: Level Failed - Watch for Extra Moves</h2>
 <p>Common in Match-3 games - player fails level, offered extra moves to continue.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> OnLevelFailed(<span class="keywordtype">int</span> levelNumber)</div>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">string</span> PLACEMENT = <span class="stringliteral">&quot;LevelFailed_WatchFor5Moves&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> OnLevelFailed(<span class="keywordtype">int</span> levelNumber)</div>
 <div class="line">{</div>
+<div class="line">    <span class="comment">// Track that we offered the ad</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a0503b0da2dbf0670136aa3630b477e90">ReportAdOffered</a>(PLACEMENT, <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.AdType.Rewarded);</div>
+<div class="line"> </div>
 <div class="line">    <span class="comment">// Show popup: &quot;Level failed! Watch ad for 5 more moves?&quot;</span></div>
 <div class="line">    ShowRewardedAdOffer();</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Ad network callback</span></div>
-<div class="line"><span class="keywordtype">void</span> OnLevelFailedAdCompleted(uint revenueCents)</div>
+<div class="line"><span class="keywordtype">void</span> OnLevelFailedAdCompleted(<span class="keywordtype">float</span> revenueUsd)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> placement = <span class="stringliteral">&quot;LevelFailed_WatchFor5Moves&quot;</span>;</div>
+<div class="line">    <span class="comment">// Report revenue</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(PLACEMENT, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">// 1. Report revenue</span></div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placement, revenueCents);</div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// 2. Grant 5 moves and let player continue</span></div>
+<div class="line">    <span class="comment">// Grant 5 moves and let player continue</span></div>
 <div class="line">    <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] moves = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Moves&quot;</span>, 5) };</div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(placement, moves);</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(PLACEMENT, moves);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ad_scenario_daily_bonus"></a>
 Scenario 4: Daily Bonus - Watch to Double Reward</h2>
 <p>Player opens daily bonus, can watch ad to double the reward.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> OnDailyBonusPopup()</div>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">string</span> PLACEMENT = <span class="stringliteral">&quot;DailyBonus_DoubleReward&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> OnDailyBonusPopup()</div>
 <div class="line">{</div>
+<div class="line">    <span class="comment">// Track that we offered the ad</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a0503b0da2dbf0670136aa3630b477e90">ReportAdOffered</a>(PLACEMENT, <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.AdType.Rewarded);</div>
+<div class="line"> </div>
 <div class="line">    <span class="comment">// Show popup: &quot;Daily bonus: 50 coins. Watch ad to double it!&quot;</span></div>
 <div class="line">    ShowRewardedAdOffer();</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Ad network callback</span></div>
-<div class="line"><span class="keywordtype">void</span> OnDailyBonusAdCompleted(uint revenueCents)</div>
+<div class="line"><span class="keywordtype">void</span> OnDailyBonusAdCompleted(<span class="keywordtype">float</span> revenueUsd)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> placement = <span class="stringliteral">&quot;DailyBonus_DoubleReward&quot;</span>;</div>
-<div class="line"> </div>
 <div class="line">    <span class="comment">// Report revenue</span></div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placement, revenueCents);</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(PLACEMENT, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Grant doubled reward</span></div>
 <div class="line">    <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] doubledReward = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Coins&quot;</span>, 100) }; <span class="comment">// 50 * 2</span></div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(placement, doubledReward);</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(PLACEMENT, doubledReward);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ad_scenario_banner"></a>
 Scenario 5: Main Menu Banner (No Reward)</h2>
 <p>Banner ad shown in main menu that generates revenue but doesn't grant anything.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> OnMainMenuShown()</div>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">string</span> PLACEMENT = <span class="stringliteral">&quot;MainMenu_TopBanner&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> OnMainMenuShown()</div>
 <div class="line">{</div>
+<div class="line">    <span class="comment">// Track that we&#39;re showing a banner</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a0503b0da2dbf0670136aa3630b477e90">ReportAdOffered</a>(PLACEMENT, <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.AdType.Banner);</div>
+<div class="line"> </div>
 <div class="line">    ShowBannerAd();</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Ad network callback</span></div>
-<div class="line"><span class="keywordtype">void</span> OnBannerAdImpression(uint revenueCents)</div>
+<div class="line"><span class="keywordtype">void</span> OnBannerAdImpression(<span class="keywordtype">float</span> revenueUsd)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Only report revenue - banners don&#39;t grant items</span></div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(<span class="stringliteral">&quot;MainMenu_TopBanner&quot;</span>, revenueCents);</div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// NO ReportAdItemsGranted call</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(PLACEMENT, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ad_scenario_shop"></a>
 Scenario 6: Shop - Watch for Free Coins</h2>
 <p>Player in shop, can watch ad to get free coins.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> OnShopOpened()</div>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">string</span> PLACEMENT = <span class="stringliteral">&quot;Shop_WatchForFreeCoins&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> OnShopOpened()</div>
 <div class="line">{</div>
 <div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#aca10811bff16611511be5b985c61dd0f">ReportWindowOpen</a>(<span class="stringliteral">&quot;Shop&quot;</span>);</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">// Show &quot;Watch ad for free coins&quot; button</span></div>
+<div class="line">    <span class="comment">// Track that we offered the ad (button is now visible)</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a0503b0da2dbf0670136aa3630b477e90">ReportAdOffered</a>(PLACEMENT, <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.AdType.Rewarded);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> OnWatchForCoinsButtonClicked()</div>
 <div class="line">{</div>
+<div class="line">    ShowRewardedAd();</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Ad network callback</span></div>
+<div class="line"><span class="keywordtype">void</span> OnShopAdCompleted(<span class="keywordtype">float</span> revenueUsd)</div>
+<div class="line">{</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(PLACEMENT, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] freeCoins = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Coins&quot;</span>, 50) };</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(PLACEMENT, freeCoins);</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassKeewanoSDK_html_aca10811bff16611511be5b985c61dd0f"><div class="ttname"><a href="classKeewanoSDK.html#aca10811bff16611511be5b985c61dd0f">KeewanoSDK.ReportWindowOpen</a></div><div class="ttdeci">static void ReportWindowOpen(string windowName)</div><div class="ttdoc">Reports a window/popup open event.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:309</div></div>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ad_scenario_multiple_items"></a>
+Scenario 7: Multiple Item Rewards</h2>
+<p>When a rewarded ad grants multiple different items.</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">string</span> PLACEMENT = <span class="stringliteral">&quot;SpecialOffer_BonusReward&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> OnSpecialOfferPopup()</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Track that we offered the ad</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a0503b0da2dbf0670136aa3630b477e90">ReportAdOffered</a>(PLACEMENT, <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.AdType.Rewarded);</div>
+<div class="line"> </div>
 <div class="line">    ShowRewardedAdOffer();</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Ad network callback</span></div>
-<div class="line"><span class="keywordtype">void</span> OnShopAdCompleted(uint revenueCents)</div>
+<div class="line"><span class="keywordtype">void</span> OnSpecialOfferAdCompleted(<span class="keywordtype">float</span> revenueUsd)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> placement = <span class="stringliteral">&quot;Shop_WatchForFreeCoins&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placement, revenueCents);</div>
-<div class="line"> </div>
-<div class="line">    <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] freeCoins = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Coins&quot;</span>, 50) };</div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(placement, freeCoins);</div>
-<div class="line">}</div>
-<div class="ttc" id="aclassKeewanoSDK_html_aca10811bff16611511be5b985c61dd0f"><div class="ttname"><a href="classKeewanoSDK.html#aca10811bff16611511be5b985c61dd0f">KeewanoSDK.ReportWindowOpen</a></div><div class="ttdeci">static void ReportWindowOpen(string windowName)</div><div class="ttdoc">Reports a window/popup open event.</div><div class="ttdef"><b>Definition</b> KeewanoSDK.cs:261</div></div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ad_scenario_multiple_items"></a>
-Scenario 7: Multiple Item Rewards</h2>
-<p>When a rewarded ad grants multiple different items.</p>
-<div class="fragment"><div class="line"><span class="comment">// Ad network callback</span></div>
-<div class="line"><span class="keywordtype">void</span> OnSpecialOfferAdCompleted(uint revenueCents)</div>
-<div class="line">{</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> placement = <span class="stringliteral">&quot;SpecialOffer_BonusReward&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placement, revenueCents);</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(PLACEMENT, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Grant multiple rewards</span></div>
 <div class="line">    <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] bonusRewards = {</div>
@@ -422,7 +449,7 @@ Scenario 7: Multiple Item Rewards</h2>
 <div class="line">        <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Energy&quot;</span>, 10),</div>
 <div class="line">        <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Booster_Hammer&quot;</span>, 1)</div>
 <div class="line">    };</div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(placement, bonusRewards);</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(PLACEMENT, bonusRewards);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="ad_best_practices"></a>
 Best Practices</h1>
@@ -435,51 +462,51 @@ Always Use Ad Network Callbacks</h2>
 <div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(<span class="stringliteral">&quot;LevelComplete_Transition&quot;</span>, 10); <span class="comment">// ❌ Hardcoded estimate</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><p>✅ <b>ALWAYS do this:</b> </p><div class="fragment"><div class="line"><span class="comment">// GOOD: Using actual revenue from your ad network&#39;s callback</span></div>
-<div class="line"><span class="keywordtype">void</span> OnAdImpressionCallback(uint revenueFromAdNetwork)</div>
+<div class="line"><span class="keywordtype">void</span> OnAdImpressionCallback(<span class="keywordtype">float</span> revenueUsd)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> placement = <span class="stringliteral">&quot;LevelComplete_Transition&quot;</span>;</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> PLACEMENT = <span class="stringliteral">&quot;LevelComplete_Transition&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Use the actual revenue provided by the ad network</span></div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placement, revenueFromAdNetwork);</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(PLACEMENT, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ad_only_rewarded_grants"></a>
-Only Call ReportAdItemsGranted for Rewarded Ads</h2>
-<p>Not all ads grant items to the player:</p>
-<div class="fragment"><div class="line"><span class="comment">// ✅ CORRECT: Interstitial between levels (no reward)</span></div>
-<div class="line"><span class="keywordtype">void</span> OnInterstitialShown(uint revenue)</div>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ad_only_when_granted"></a>
+Only Call ReportAdItemsGranted When Items Are Granted</h2>
+<p>Not all ads grant items to the player - it depends on your game logic:</p>
+<div class="fragment"><div class="line"><span class="comment">// ✅ CORRECT: Ad with no reward</span></div>
+<div class="line"><span class="keywordtype">void</span> OnAdCompleted(<span class="keywordtype">float</span> revenueUsd)</div>
 <div class="line">{</div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(<span class="stringliteral">&quot;LevelComplete_Transition&quot;</span>, revenue);</div>
-<div class="line">    <span class="comment">// NO ReportAdItemsGranted - player gets nothing</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(<span class="stringliteral">&quot;LevelComplete_Transition&quot;</span>, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
+<div class="line">    <span class="comment">// NO ReportAdItemsGranted - player gets nothing for this ad</span></div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// ✅ CORRECT: Rewarded video (grants items)</span></div>
-<div class="line"><span class="keywordtype">void</span> OnRewardedAdCompleted(uint revenue)</div>
+<div class="line"><span class="comment">// ✅ CORRECT: Ad that grants items</span></div>
+<div class="line"><span class="keywordtype">void</span> OnAdWithRewardCompleted(<span class="keywordtype">float</span> revenueUsd)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> placement = <span class="stringliteral">&quot;LevelFailed_Watch5Moves&quot;</span>;</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> PLACEMENT = <span class="stringliteral">&quot;LevelFailed_Watch5Moves&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placement, revenue);</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(PLACEMENT, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
 <div class="line">    <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] items = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Moves&quot;</span>, 5) };</div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(placement, items); <span class="comment">// Player gets reward</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(PLACEMENT, items); <span class="comment">// Player gets reward</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ad_consistent_placement"></a>
 Use Consistent Placement Names</h2>
-<p>Use the same placement name for both steps:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> OnRewardedAdCompleted(uint revenue)</div>
+<p>Use the same placement name for all methods:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> OnAdCompleted(<span class="keywordtype">float</span> revenueUsd)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> placement = <span class="stringliteral">&quot;LevelFailed_WatchFor5Moves&quot;</span>;</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> PLACEMENT = <span class="stringliteral">&quot;LevelFailed_WatchFor5Moves&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placement, revenue);</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(PLACEMENT, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
 <div class="line">    <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] items = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Moves&quot;</span>, 5) };</div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(placement, items); <span class="comment">// Same placement</span></div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(PLACEMENT, items); <span class="comment">// Same placement</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ad_only_granted_items"></a>
 Only Report Actually Granted Items</h2>
 <p>Only call <span class="tt">ReportAdItemsGranted()</span> when items are successfully added to the player's account:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> OnRewardedAdCompleted(uint revenue)</div>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> OnAdCompleted(<span class="keywordtype">float</span> revenueUsd)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> placement = <span class="stringliteral">&quot;LevelFailed_Watch5Moves&quot;</span>;</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">string</span> PLACEMENT = <span class="stringliteral">&quot;LevelFailed_Watch5Moves&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(placement, revenue);</div>
+<div class="line">    <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a>(PLACEMENT, revenueUsd, <span class="stringliteral">&quot;USD&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line">    <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>[] items = { <span class="keyword">new</span> <a class="code hl_namespace" href="namespaceKeewano.html">Keewano</a>.<a class="code hl_struct" href="structKeewano_1_1Item.html">Item</a>(<span class="stringliteral">&quot;Moves&quot;</span>, 5) };</div>
 <div class="line">    <span class="keywordtype">bool</span> itemsGranted = AddRewardToPlayerInventory(items);</div>
@@ -487,7 +514,7 @@ Only Report Actually Granted Items</h2>
 <div class="line">    <span class="keywordflow">if</span> (itemsGranted)</div>
 <div class="line">    {</div>
 <div class="line">        <span class="comment">// Only report if grant succeeded</span></div>
-<div class="line">        <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(placement, items);</div>
+<div class="line">        <a class="code hl_class" href="classKeewanoSDK.html">KeewanoSDK</a>.<a class="code hl_function" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed">ReportAdItemsGranted</a>(PLACEMENT, items);</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="ad_string_limits"></a>
@@ -498,6 +525,7 @@ See Also</h1>
 <ul>
 <li><a class="el" href="InAppPurchases.html">In-App Purchases</a> - For tracking real-money purchases</li>
 <li><a class="el" href="ItemExchange.html">In-Game Balance</a> - For tracking virtual-to-virtual item exchanges</li>
+<li><a class="el" href="classKeewanoSDK.html#a0503b0da2dbf0670136aa3630b477e90" title="Reports that an ad opportunity was offered to the user.">KeewanoSDK.ReportAdOffered</a> - API reference</li>
 <li><a class="el" href="classKeewanoSDK.html#ad7a1cb7cf2ec193333b9f124bac94191" title="Reports an ad revenue event.">KeewanoSDK.ReportAdRevenue</a> - API reference</li>
 <li><a class="el" href="classKeewanoSDK.html#a742c5b095823cfab8656f1d9a68373ed" title="Reports items granted from watching an advertisement.">KeewanoSDK.ReportAdItemsGranted</a> - API reference</li>
 <li><a class="el" href="classKeewanoSDK.html#a865cb9d89581de571b8e52f113661cec" title="Reports an in-app purchase event.">KeewanoSDK.ReportInAppPurchase</a> - API reference </li>

@@ -8,8 +8,9 @@ var searchData=
   ['naming_20examples_5',['Placement Naming Examples',['../AdRevenue.html#ad_placement_examples',1,'']]],
   ['network_20callbacks_6',['Always Use Ad Network Callbacks',['../AdRevenue.html#ad_use_callbacks',1,'']]],
   ['never_20lost_7',['Your Data is Never Lost',['../OfflineAnalytics.html#OfflineOverview',1,'']]],
-  ['no_20reward_8',['No Reward',['../AdRevenue.html#ad_scenario_interstitial',1,'Scenario 1: Interstitial Ad Between Levels (No Reward)'],['../AdRevenue.html#ad_scenario_banner',1,'Scenario 5: Main Menu Banner (No Reward)']]],
-  ['non_20empty_20requirement_9',['Non-Empty Requirement',['../DataFormatSpecs.html#StringNonEmpty',1,'']]],
-  ['non_20unity_20ui_20buttons_20window_20flow_10',['Scenario 9: Non Unity.UI Buttons &amp;amp; Window Flow',['../DummyGameIntegration.html#Scenario_9',1,'']]],
-  ['not_20ad_20types_11',['Use Game-Specific Context, Not Ad Types',['../AdRevenue.html#ad_placement_context',1,'']]]
+  ['new_20users_8',['Don&apos;t Call for New Users',['../ExistingGameIntegration.html#existing_warn_new_users',1,'']]],
+  ['no_20reward_9',['No Reward',['../AdRevenue.html#ad_scenario_interstitial',1,'Scenario 1: Interstitial Ad Between Levels (No Reward)'],['../AdRevenue.html#ad_scenario_banner',1,'Scenario 5: Main Menu Banner (No Reward)']]],
+  ['non_20empty_20requirement_10',['Non-Empty Requirement',['../DataFormatSpecs.html#StringNonEmpty',1,'']]],
+  ['non_20unity_20ui_20buttons_20window_20flow_11',['Scenario 9: Non Unity.UI Buttons &amp;amp; Window Flow',['../DummyGameIntegration.html#Scenario_9',1,'']]],
+  ['not_20ad_20types_12',['Use Game-Specific Context, Not Ad Types',['../AdRevenue.html#ad_placement_context',1,'']]]
 ];

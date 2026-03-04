@@ -33,7 +33,8 @@ var NAVTREE =
       [ "Report Events", "QuickStart.html#ReportEvents", null ],
       [ "Privacy Compliance", "QuickStart.html#Default", null ],
       [ "User Consent", "QuickStart.html#Optional", null ],
-      [ "Optional Button Click Tracking Control", "QuickStart.html#ButtonClickControl", null ]
+      [ "Optional Button Click Tracking Control", "QuickStart.html#ButtonClickControl", null ],
+      [ "Integrating into Existing Games", "QuickStart.html#ExistingGame", null ]
     ] ],
     [ "Event Types", "EventTypes.html", [
       [ "Automatic Event Types", "EventTypes.html#AutomaticEvents", null ],
@@ -112,8 +113,9 @@ var NAVTREE =
     [ "Ad Revenue", "AdRevenue.html", [
       [ "Overview", "AdRevenue.html#ad_overview", null ],
       [ "Ad Revenue vs IAP", "AdRevenue.html#ad_distinction", null ],
-      [ "The Two Ad Revenue Steps", "AdRevenue.html#ad_methods", [
-        [ "Step 1: ReportAdRevenue - Track the Ad Revenue", "AdRevenue.html#ad_revenue_method", null ],
+      [ "Tracking Ad Offer Acceptance Rate", "AdRevenue.html#ad_offer_tracking", null ],
+      [ "Ad Revenue Tracking", "AdRevenue.html#ad_methods", [
+        [ "ReportAdRevenue - Track the Ad Revenue", "AdRevenue.html#ad_revenue_method", null ],
         [ "Step 2: ReportAdItemsGranted - Track Rewarded Ad Items", "AdRevenue.html#ad_items_granted_method", null ]
       ] ],
       [ "Placement Naming Best Practices", "AdRevenue.html#ad_placement_naming", [
@@ -122,9 +124,7 @@ var NAVTREE =
         [ "Keep Placement Names Static", "AdRevenue.html#ad_placement_static", null ],
         [ "Why Context Matters", "AdRevenue.html#ad_placement_rationale", null ]
       ] ],
-      [ "Why Are These Two Steps Separated?", "AdRevenue.html#ad_why_separated", [
-        [ "Common Cases", "AdRevenue.html#ad_separation_reasons", null ]
-      ] ],
+      [ "Why Are Revenue and Item Grants Separate?", "AdRevenue.html#ad_why_separated", null ],
       [ "Common Scenarios", "AdRevenue.html#ad_scenarios", [
         [ "Scenario 1: Interstitial Ad Between Levels (No Reward)", "AdRevenue.html#ad_scenario_interstitial", null ],
         [ "Scenario 2: Out of Energy - Watch to Refill", "AdRevenue.html#ad_scenario_rewarded_energy", null ],
@@ -136,7 +136,7 @@ var NAVTREE =
       ] ],
       [ "Best Practices", "AdRevenue.html#ad_best_practices", [
         [ "Always Use Ad Network Callbacks", "AdRevenue.html#ad_use_callbacks", null ],
-        [ "Only Call ReportAdItemsGranted for Rewarded Ads", "AdRevenue.html#ad_only_rewarded_grants", null ],
+        [ "Only Call ReportAdItemsGranted When Items Are Granted", "AdRevenue.html#ad_only_when_granted", null ],
         [ "Use Consistent Placement Names", "AdRevenue.html#ad_consistent_placement", null ],
         [ "Only Report Actually Granted Items", "AdRevenue.html#ad_only_granted_items", null ]
       ] ],
@@ -206,6 +206,31 @@ var NAVTREE =
       [ "Configuring Consent Requirement", "DataPrivacy.html#DP_configure", null ],
       [ "SetUserConsent Method", "DataPrivacy.html#DP_method", null ],
       [ "Example Usage", "DataPrivacy.html#DP_example", null ]
+    ] ],
+    [ "Integrating SDK into Existing Games", "ExistingGameIntegration.html", [
+      [ "Overview", "ExistingGameIntegration.html#existing_overview", null ],
+      [ "Simple Integration", "ExistingGameIntegration.html#existing_simple", null ],
+      [ "The Method", "ExistingGameIntegration.html#existing_solution", null ],
+      [ "When to Use This Method", "ExistingGameIntegration.html#existing_when", null ],
+      [ "Usage", "ExistingGameIntegration.html#existing_usage", [
+        [ "Recommended Integration Flow", "ExistingGameIntegration.html#existing_usage_flow", null ],
+        [ "Simple Example", "ExistingGameIntegration.html#existing_usage_simple", null ]
+      ] ],
+      [ "Method Behavior", "ExistingGameIntegration.html#existing_behavior", [
+        [ "Once Per Installation", "ExistingGameIntegration.html#existing_behavior_once", null ],
+        [ "Date Validation", "ExistingGameIntegration.html#existing_behavior_validation", null ]
+      ] ],
+      [ "Best Practices", "ExistingGameIntegration.html#existing_best_practices", [
+        [ "Call Early", "ExistingGameIntegration.html#existing_bp_early", null ],
+        [ "Use Server-Side Data", "ExistingGameIntegration.html#existing_bp_server", null ]
+      ] ],
+      [ "Common Mistakes", "ExistingGameIntegration.html#existing_warnings", [
+        [ "Don't Call for New Users", "ExistingGameIntegration.html#existing_warn_new_users", null ]
+      ] ]
+    ] ],
+    [ "Package Members", "namespacemembers.html", [
+      [ "All", "namespacemembers.html", null ],
+      [ "Enumerations", "namespacemembers_enum.html", null ]
     ] ],
     [ "API Reference", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],

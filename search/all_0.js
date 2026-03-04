@@ -7,7 +7,6 @@ var searchData=
   ['1_3a_20immediate_20grant_20synchronous_4',['Scenario 1: Immediate Grant (Synchronous)',['../InAppPurchases.html#iap_scenario_immediate',1,'']]],
   ['1_3a_20initial_20subscription_20purchase_5',['Scenario 1: Initial Subscription Purchase',['../SubscriptionRevenue.html#sub_scenario_initial',1,'']]],
   ['1_3a_20interstitial_20ad_20between_20levels_20no_20reward_6',['Scenario 1: Interstitial Ad Between Levels (No Reward)',['../AdRevenue.html#ad_scenario_interstitial',1,'']]],
-  ['1_3a_20reportadrevenue_20track_20the_20ad_20revenue_7',['Step 1: ReportAdRevenue - Track the Ad Revenue',['../AdRevenue.html#ad_revenue_method',1,'']]],
-  ['1_3a_20reportinapppurchase_20track_20the_20monetary_20transaction_8',['Step 1: ReportInAppPurchase - Track the Monetary Transaction',['../InAppPurchases.html#iap_purchase',1,'']]],
-  ['1_3a_20reportsubscriptionrevenue_20track_20subscription_20billing_9',['Step 1: ReportSubscriptionRevenue - Track Subscription Billing',['../SubscriptionRevenue.html#sub_revenue_method',1,'']]]
+  ['1_3a_20reportinapppurchase_20track_20the_20monetary_20transaction_7',['Step 1: ReportInAppPurchase - Track the Monetary Transaction',['../InAppPurchases.html#iap_purchase',1,'']]],
+  ['1_3a_20reportsubscriptionrevenue_20track_20subscription_20billing_8',['Step 1: ReportSubscriptionRevenue - Track Subscription Billing',['../SubscriptionRevenue.html#sub_revenue_method',1,'']]]
 ];

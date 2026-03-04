@@ -156,6 +156,8 @@ Collaboration diagram for KeewanoSDK:</div>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a24c255658725d19b5c47654aeb8c1f17" id="r_a24c255658725d19b5c47654aeb8c1f17"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24c255658725d19b5c47654aeb8c1f17">SetUserConsent</a> (bool consentGiven)</td></tr>
 <tr class="memdesc:a24c255658725d19b5c47654aeb8c1f17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the user's consent for data collection and analytics.  <br /></td></tr>
+<tr class="memitem:a6f01138d37dc29d65eeee89aaa32cd1b" id="r_a6f01138d37dc29d65eeee89aaa32cd1b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f01138d37dc29d65eeee89aaa32cd1b">ReportUserRegisteredBeforeSDKIntegration</a> (DateTime originalRegistrationTime)</td></tr>
+<tr class="memdesc:a6f01138d37dc29d65eeee89aaa32cd1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports the original registration date for users who existed before SDK integration.  <br /></td></tr>
 <tr class="memitem:af3e2e868ee711a3e289cbcade6839fdd" id="r_af3e2e868ee711a3e289cbcade6839fdd"><td class="memItemLeft" align="right" valign="top">static Guid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af3e2e868ee711a3e289cbcade6839fdd">GetInstallId</a> ()</td></tr>
 <tr class="memdesc:af3e2e868ee711a3e289cbcade6839fdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the unique installation ID for the game.  <br /></td></tr>
 <tr class="memitem:a9944b568e714a66a4626f0bff69fe5bd" id="r_a9944b568e714a66a4626f0bff69fe5bd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9944b568e714a66a4626f0bff69fe5bd">ReportButtonClick</a> (string buttonName)</td></tr>
@@ -172,6 +174,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:a3ead93092535e6bf2eed29f7688c9632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports items granted from an in-app purchase.  <br /></td></tr>
 <tr class="memitem:a9516e661d72f9b563a5b0e4c0617b745" id="r_a9516e661d72f9b563a5b0e4c0617b745"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9516e661d72f9b563a5b0e4c0617b745">ReportInAppPurchaseItemsGranted</a> (string productName, ReadOnlySpan&lt; <a class="el" href="structKeewano_1_1Item.html">Keewano.Item</a> &gt; items)</td></tr>
 <tr class="memdesc:a9516e661d72f9b563a5b0e4c0617b745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports items granted from an in-app purchase using read-only spans.  <br /></td></tr>
+<tr class="memitem:a0503b0da2dbf0670136aa3630b477e90" id="r_a0503b0da2dbf0670136aa3630b477e90"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0503b0da2dbf0670136aa3630b477e90">ReportAdOffered</a> (string placement, <a class="el" href="namespaceKeewano.html#afdfeb6f81f95f7adfbfb52086bc63014">Keewano.AdType</a> adType)</td></tr>
+<tr class="memdesc:a0503b0da2dbf0670136aa3630b477e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports that an ad opportunity was offered to the user.  <br /></td></tr>
 <tr class="memitem:ad7a1cb7cf2ec193333b9f124bac94191" id="r_ad7a1cb7cf2ec193333b9f124bac94191"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7a1cb7cf2ec193333b9f124bac94191">ReportAdRevenue</a> (string placement, uint revenueUsdCents)</td></tr>
 <tr class="memdesc:ad7a1cb7cf2ec193333b9f124bac94191"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports an ad revenue event.  <br /></td></tr>
 <tr class="memitem:ab84d2e991db6701dc32d77019110ab6a" id="r_ab84d2e991db6701dc32d77019110ab6a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab84d2e991db6701dc32d77019110ab6a">ReportAdRevenue</a> (string placement, float localizedRevenue, string currencyCode)</td></tr>
@@ -431,6 +435,46 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0503b0da2dbf0670136aa3630b477e90" name="a0503b0da2dbf0670136aa3630b477e90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0503b0da2dbf0670136aa3630b477e90">&#9670;&#160;</a></span>ReportAdOffered()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void KeewanoSDK.ReportAdOffered </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>placement</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceKeewano.html#afdfeb6f81f95f7adfbfb52086bc63014">Keewano.AdType</a></td>          <td class="paramname"><span class="paramname"><em>adType</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reports that an ad opportunity was offered to the user. </p>
+<p>Use this method to track when an ad is presented to the user as an option (e.g., "Watch ad for reward?"). Combined with ReportAdRevenue, this allows calculating ad acceptance rates per placement and ad type.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">placement</td><td>The ad placement identifier (e.g., "level_complete_reward", "shop_bonus"). </td></tr>
+    <tr><td class="paramname">adType</td><td>The type of advertisement being offered.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ad7a1cb7cf2ec193333b9f124bac94191" title="Reports an ad revenue event.">ReportAdRevenue</a>, <a class="el" href="#a742c5b095823cfab8656f1d9a68373ed" title="Reports items granted from watching an advertisement.">ReportAdItemsGranted</a>, <a class="el" href="namespaceKeewano.html#afdfeb6f81f95f7adfbfb52086bc63014" title="Represents the type of advertisement.">AdType</a>, <a class="el" href="DataFormatSpecs.html">Data Format Specifications</a> for string parameter requirements. </dd></dl>
+
+</div>
+</div>
 <a id="ab84d2e991db6701dc32d77019110ab6a" name="ab84d2e991db6701dc32d77019110ab6a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab84d2e991db6701dc32d77019110ab6a">&#9670;&#160;</a></span>ReportAdRevenue() <span class="overload">[1/2]</span></h2>
 
@@ -513,7 +557,7 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a742c5b095823cfab8656f1d9a68373ed" title="Reports items granted from watching an advertisement.">ReportAdItemsGranted</a>, <a class="el" href="DataFormatSpecs.html">Data Format Specifications</a> for string parameter requirements. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a0503b0da2dbf0670136aa3630b477e90" title="Reports that an ad opportunity was offered to the user.">ReportAdOffered</a>, <a class="el" href="#a742c5b095823cfab8656f1d9a68373ed" title="Reports items granted from watching an advertisement.">ReportAdItemsGranted</a>, <a class="el" href="DataFormatSpecs.html">Data Format Specifications</a> for string parameter requirements. </dd></dl>
 
 </div>
 </div>
@@ -1087,6 +1131,45 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method should be called for each billing event: initial purchase, trial-to-paid conversion, and each renewal. When the app launches, validate receipts and report any billing events that occurred since last app launch.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="#a9c131c279adc0fde06b7d0ce43a1c8b7" title="Reports items granted from a subscription.">ReportSubscriptionItemsGranted</a>, <a class="el" href="SubscriptionRevenue.html">Subscription Revenue</a>, <a class="el" href="DataFormatSpecs.html">Data Format Specifications</a> for string parameter requirements. </dd></dl>
+
+</div>
+</div>
+<a id="a6f01138d37dc29d65eeee89aaa32cd1b" name="a6f01138d37dc29d65eeee89aaa32cd1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f01138d37dc29d65eeee89aaa32cd1b">&#9670;&#160;</a></span>ReportUserRegisteredBeforeSDKIntegration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void KeewanoSDK.ReportUserRegisteredBeforeSDKIntegration </td>
+          <td>(</td>
+          <td class="paramtype">DateTime</td>          <td class="paramname"><span class="paramname"><em>originalRegistrationTime</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reports the original registration date for users who existed before SDK integration. </p>
+<p>When integrating the <a class="el" href="namespaceKeewano.html">Keewano</a> SDK into an existing game with an established player base, use this method to report the original registration date for users who were already playing before the SDK was added. This ensures accurate day-in-game calculations and prevents veteran players from appearing as new users in analytics.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">originalRegistrationTime</td><td>The date when the user originally registered in your game, before the <a class="el" href="namespaceKeewano.html">Keewano</a> SDK was integrated.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method can only be called once per installation. Subsequent calls are ignored. </dd>
+<dd>
+Only call this for users who existed before SDK integration. Do not call for new users. </dd>
+<dd>
+The date must be in the past. Future dates are rejected. </dd></dl>
 
 </div>
 </div>
