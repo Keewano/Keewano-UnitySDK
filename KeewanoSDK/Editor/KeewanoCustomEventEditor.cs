@@ -223,10 +223,23 @@ namespace Keewano.Internal
 
             byte[] gzipData = compressedStream.ToArray();
 
+            // Normalize platform-dependent gzip header fields so the embedded byte
+            // literal and the derived hash are identical across OSes (RFC 1952:
+            // bytes 4-7 MTIME, byte 8 XFL, byte 9 OS — informational, not used by
+            // decompressors).
+            if (gzipData.Length >= 10)
+            {
+                gzipData[4] = 0; gzipData[5] = 0; gzipData[6] = 0; gzipData[7] = 0;
+                gzipData[8] = 0;
+                gzipData[9] = 0xFF;
+            }
+
             sb.Append("\t\tpartial void getCustomEventSet(ref CustomEventSet dst)\n\t\t{\n");
 
-            int hash = StructuralComparisons.StructuralEqualityComparer.GetHashCode(gzipData);
-            sb.AppendFormat("\t\t\tdst.Version = {0};\n", (uint)hash);
+            uint hash = 2166136261u;
+            for (int i = 0; i < gzipData.Length; i++)
+                hash = (hash ^ gzipData[i]) * 16777619u;
+            sb.AppendFormat("\t\t\tdst.Version = {0};\n", hash);
             sb.AppendFormat("\t\t\tdst.EventCount = {0};\n", events.Count);
 
             sb.Append("\t\t\tdst.GzipData = new byte[] {\n");
@@ -327,6 +340,7 @@ namespace Keewano.Internal
             if (Directory.Exists(definitionPath))
             {
                 var files = Directory.GetFiles(definitionPath, "*.json");
+                Array.Sort(files, StringComparer.Ordinal);
                 foreach (var file in files)
                 {
                     try

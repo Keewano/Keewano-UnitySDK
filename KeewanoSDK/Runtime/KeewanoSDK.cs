@@ -67,7 +67,8 @@ public partial class KeewanoSDK : MonoBehaviour
 #endif
 
         string dispatcherWorkingDir = Application.persistentDataPath + "/Keewano/";
-        m_dispatcher = new KEventDispatcher(dispatcherWorkingDir, endpoint, settings.APIKey, consentState, uid.InstallId, uid.UserId, dataSessionId);
+        uint initialTimestamp = (uint)(DateTime.UtcNow - DateTime.UnixEpoch).TotalSeconds;
+        m_dispatcher = new KEventDispatcher(dispatcherWorkingDir, endpoint, settings.APIKey, consentState, uid.InstallId, uid.UserId, dataSessionId, initialTimestamp);
 
         m_dispatcher.addEvent((ushort)KEvents.APP_LAUNCH, Application.version);
 
@@ -116,6 +117,8 @@ public partial class KeewanoSDK : MonoBehaviour
 
     void Update()
     {
+        m_dispatcher.SetFrameTimestamp((uint)(DateTime.UtcNow - DateTime.UnixEpoch).TotalSeconds);
+
         if (!m_disableAutomaticButtonClickTracking)
         {
             if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
@@ -170,13 +173,16 @@ public partial class KeewanoSDK : MonoBehaviour
 
     private void OnApplicationPause(bool pause)
     {
+        m_dispatcher.SetFrameTimestamp((uint)(DateTime.UtcNow - DateTime.UnixEpoch).TotalSeconds);
         if (pause)
         {
             m_dispatcher.ReportAppPause();
             m_dispatcher.SendNow();
         }
         else
+        {
             m_dispatcher.ReportAppResume();
+        }
     }
 
 #if UNITY_EDITOR
@@ -801,10 +807,13 @@ public partial class KeewanoSDK : MonoBehaviour
                 ReadOnlySpan<UserIdentifiers> span = MemoryMarshal.CreateReadOnlySpan(ref identifiers, 1);
                 ReadOnlySpan<byte> byteSpan = MemoryMarshal.AsBytes(span);
                 fs.Write(byteSpan);
+                fs.Flush(true);
             }
 
-            File.Delete(finalFilename);
-            File.Move(tmpFilename, finalFilename);
+            if (File.Exists(finalFilename))
+                File.Replace(tmpFilename, finalFilename, null);
+            else
+                File.Move(tmpFilename, finalFilename);
         }
         catch { /*Nothing to do_here*/}
     }
@@ -820,10 +829,13 @@ public partial class KeewanoSDK : MonoBehaviour
                 Span<UserConsentState> span = MemoryMarshal.CreateSpan(ref state, 1);
                 Span<byte> byteSpan = MemoryMarshal.AsBytes(span);
                 fs.Write(byteSpan);
+                fs.Flush(true);
             }
 
-            File.Delete(finalFilename);
-            File.Move(tmpFilename, finalFilename);
+            if (File.Exists(finalFilename))
+                File.Replace(tmpFilename, finalFilename, null);
+            else
+                File.Move(tmpFilename, finalFilename);
         }
         catch { /*Nothing to do_here*/}
     }

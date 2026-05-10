@@ -11,7 +11,7 @@ namespace Keewano.Internal
 
     internal class KNetwork
     {
-        private const string SDK_VERSION = "Unity/1.0.85";
+        private const string SDK_VERSION = "Unity/1.0.86";
 
         static readonly HttpClient m_client;
         static readonly MediaTypeHeaderValue m_contentTypeHeader;
@@ -51,6 +51,7 @@ namespace Keewano.Internal
                 ctx.Headers.Add("K-Batch", batch.BatchNum.ToString());
                 ctx.Headers.Add("K-BatchStartTime", batch.BatchStartTime.ToString());
                 ctx.Headers.Add("K-BatchEndTime", batch.BatchEndTime.ToString());
+                ctx.Headers.Add("K-BatchVersion", batch.BatchVersion.ToString());
                 ctx.Headers.Add("K-CustomEventHash", batch.CustomEventsVersion.ToString());
 
                 if (testUser != null)

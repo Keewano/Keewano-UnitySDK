@@ -44,6 +44,8 @@ namespace Keewano.Internal
         KBatch m_inBatch;
         KBatch m_sendingBatch;
 
+        volatile uint m_frameTimestamp;
+
         readonly string m_appSecret;
 
         Guid m_userId;
@@ -59,7 +61,7 @@ namespace Keewano.Internal
 
         private volatile UserConsentState m_userConsentState;
 
-        internal KEventDispatcher(string workingDirectory, string endpoint, string appSecret, UserConsentState userConsentState, Guid installId, Guid userId, Guid dataSessionId)
+        internal KEventDispatcher(string workingDirectory, string endpoint, string appSecret, UserConsentState userConsentState, Guid installId, Guid userId, Guid dataSessionId, uint initialTimestamp)
         {
             m_userConsentState = userConsentState;
 
@@ -71,6 +73,7 @@ namespace Keewano.Internal
             m_workFolder = workingDirectory;
             m_testUserName = null;
             m_sendTestUserName = null;
+            m_frameTimestamp = initialTimestamp;
 
             m_inBatch = new KBatch(installId, userId, dataSessionId);
             m_sendingBatch = new KBatch(installId, userId, dataSessionId);
@@ -122,6 +125,11 @@ namespace Keewano.Internal
             m_readyToSendEvent.Set();
         }
 
+        internal void SetFrameTimestamp(uint unixSec)
+        {
+            m_frameTimestamp = unixSec;
+        }
+
         internal UserConsentState SetUserConsent(bool granted)
         {
             if (m_userConsentState == UserConsentState.Pending)
@@ -152,6 +160,9 @@ namespace Keewano.Internal
                 {
                     swapBatches();
 
+                    if (m_sendingBatch.Data.Length == 0)
+                        continue;
+
                     uint secondsSinceEpoch = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
                     m_sendingBatch.BatchEndTime = secondsSinceEpoch;
 
@@ -161,31 +172,30 @@ namespace Keewano.Internal
                     {
                         KBatch subBatch = new KBatch(m_sendingBatch.InstallId, m_sendingBatch.UserId, m_sendingBatch.DataSessionId)
                         {
-                            BatchStartTime = m_sendingBatch.BatchStartTime,
-                            BatchEndTime = m_sendingBatch.BatchEndTime,
                             CustomEventsVersion = m_sendingBatch.CustomEventsVersion,
                         };
 
-                        int cutPosIdx = 0;
                         int lastReadPos = 0;
+                        uint sliceStart = m_sendingBatch.BatchStartTime;
                         byte[] dataBuff = m_sendingBatch.Data.GetBuffer();
 
                         //Split to subbatches
-                        while (cutPosIdx < m_sendingBatch.CutPositions.Count)
+                        for (int cutPosIdx = 0; cutPosIdx < m_sendingBatch.CutPositions.Count; ++cutPosIdx)
                         {
-                            int cutPos = m_sendingBatch.CutPositions[cutPosIdx];
-                            int dataSize = cutPos - lastReadPos;
+                            CutPoint cut = m_sendingBatch.CutPositions[cutPosIdx];
+                            int dataSize = cut.Pos - lastReadPos;
 
                             subBatch.Data.SetLength(0);
                             subBatch.BatchNum = nextBatchNum++;
+                            subBatch.BatchStartTime = sliceStart;
+                            subBatch.BatchEndTime = cut.LastEventTime;
                             subBatch.Data.Write(dataBuff, lastReadPos, dataSize);
 
                             uint bytesWritten = KSerializer.SaveToFile(subBatch, getBatchFilename(subBatch));
                             pendingBatches.Add(new PendingBatchInfo { BatchEndTime = subBatch.BatchEndTime, BatchNum = subBatch.BatchNum, Size = bytesWritten });
 
-                            lastReadPos = cutPos;
-
-                            ++cutPosIdx;
+                            lastReadPos = cut.Pos;
+                            sliceStart = cut.LastEventTime;
                         }
 
                         //Save remaining batch
@@ -194,6 +204,8 @@ namespace Keewano.Internal
                         {
                             subBatch.Data.SetLength(0);
                             subBatch.BatchNum = nextBatchNum++;
+                            subBatch.BatchStartTime = sliceStart;
+                            subBatch.BatchEndTime = m_sendingBatch.BatchEndTime;
                             subBatch.Data.Write(dataBuff, lastReadPos, remainingBytes);
 
                             uint bytesWritten = KSerializer.SaveToFile(subBatch, getBatchFilename(subBatch));
@@ -210,7 +222,7 @@ namespace Keewano.Internal
                             BatchNum = nextBatchNum++
                         };
 
-                        reducedBatch.Writer.Write((ushort)KEvents.BATCH_DROPPED);
+                        writeEventId(reducedBatch.Writer, reducedBatch.BatchStartTime, (ushort)KEvents.BATCH_DROPPED);
                         reducedBatch.Writer.Write((uint)KBatchDropReason.TOO_MANY_UNSENT_EVENTS);
 
                         uint bytesWritten = KSerializer.SaveToFile(reducedBatch, getBatchFilename(reducedBatch));
@@ -244,7 +256,14 @@ namespace Keewano.Internal
         private void markBatchStartIfNeeded()
         {
             if (m_inBatch.Data.Length == 0)
-                m_inBatch.BatchStartTime = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
+                m_inBatch.BatchStartTime = m_frameTimestamp;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void writeEventId(BinaryWriter w, uint timestamp, ushort eventId)
+        {
+            w.Write(timestamp);
+            w.Write(eventId);
         }
 
         private void swapBatches()
@@ -266,7 +285,6 @@ namespace Keewano.Internal
                     m_sendTestUserName = m_testUserName;
                     m_testUserName = null;
                 }
-
             }
         }
 
@@ -306,7 +324,7 @@ namespace Keewano.Internal
                         {
                             totalUnsentBytes -= batchInfo.Size;
                             reducedBatch.Data.SetLength(0);
-                            reducedBatch.Writer.Write((ushort)KEvents.BATCH_DROPPED);
+                            writeEventId(reducedBatch.Writer, reducedBatch.BatchStartTime, (ushort)KEvents.BATCH_DROPPED);
                             reducedBatch.Writer.Write((uint)KBatchDropReason.TOO_MANY_UNSENT_EVENTS);
                             batchInfo.Size = KSerializer.SaveToFile(reducedBatch, filename);
                             unsentBatches[i] = batchInfo;
@@ -445,7 +463,7 @@ namespace Keewano.Internal
                 markBatchStartIfNeeded();
                 m_userId = userId;
                 m_inBatch.UserId = userId;
-                m_inBatch.Writer.Write((ushort)KEvents.USER_ID_ASSIGNED);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.USER_ID_ASSIGNED);
             }
         }
 
@@ -457,7 +475,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write((ushort)KEvents.AB_TEST_ASSIGNMENT);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.AB_TEST_ASSIGNMENT);
                 m_inBatch.Writer.Write(testName);
                 m_inBatch.Writer.Write(group);
                 sendIfNeeded();
@@ -472,13 +490,11 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
-
-                m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_TIMESTAMP);
-                m_inBatch.Writer.Write(timestamp);
-                m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_PRODUCT_ID);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.PURCHASE_TIMESTAMP);
+                m_inBatch.Writer.Write(m_frameTimestamp);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.PURCHASE_PRODUCT_ID);
                 m_inBatch.Writer.Write(productName);
-                m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_PRODUCT_PRICE_USD_CENTS);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.PURCHASE_PRODUCT_PRICE_USD_CENTS);
                 m_inBatch.Writer.Write(priceUsdCents);
                 sendIfNeeded();
             }
@@ -493,15 +509,13 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
-
-                m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_TIMESTAMP);
-                m_inBatch.Writer.Write(timestamp);
-                m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_PRODUCT_ID);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.PURCHASE_TIMESTAMP);
+                m_inBatch.Writer.Write(m_frameTimestamp);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.PURCHASE_PRODUCT_ID);
                 m_inBatch.Writer.Write(productName);
-                m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_LOCAL_CURRENCY_NAME);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.PURCHASE_LOCAL_CURRENCY_NAME);
                 m_inBatch.Writer.Write(currencyCode);
-                m_inBatch.Writer.Write((ushort)KEvents.PURCHASE_LOCAL_CURRENCY_AMOUNT);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.PURCHASE_LOCAL_CURRENCY_AMOUNT);
                 m_inBatch.Writer.Write(localizedPrice);
                 sendIfNeeded();
             }
@@ -515,9 +529,9 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write((ushort)KEvents.AD_OFFERED_PLACEMENT);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.AD_OFFERED_PLACEMENT);
                 m_inBatch.Writer.Write(placement);
-                m_inBatch.Writer.Write((ushort)KEvents.AD_OFFERED_TYPE);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.AD_OFFERED_TYPE);
                 m_inBatch.Writer.Write((byte)adType);
                 sendIfNeeded();
             }
@@ -531,13 +545,11 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
-
-                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_TIMESTAMP);
-                m_inBatch.Writer.Write(timestamp);
-                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_PLACEMENT);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.AD_REVENUE_TIMESTAMP);
+                m_inBatch.Writer.Write(m_frameTimestamp);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.AD_REVENUE_PLACEMENT);
                 m_inBatch.Writer.Write(placement);
-                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_USD_CENTS);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.AD_REVENUE_USD_CENTS);
                 m_inBatch.Writer.Write(revenueUsdCents);
                 sendIfNeeded();
             }
@@ -552,15 +564,13 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
-
-                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_TIMESTAMP);
-                m_inBatch.Writer.Write(timestamp);
-                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_PLACEMENT);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.AD_REVENUE_TIMESTAMP);
+                m_inBatch.Writer.Write(m_frameTimestamp);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.AD_REVENUE_PLACEMENT);
                 m_inBatch.Writer.Write(placement);
-                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_LOCAL_CURRENCY_NAME);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.AD_REVENUE_LOCAL_CURRENCY_NAME);
                 m_inBatch.Writer.Write(currencyCode);
-                m_inBatch.Writer.Write((ushort)KEvents.AD_REVENUE_LOCAL_CURRENCY_AMOUNT);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.AD_REVENUE_LOCAL_CURRENCY_AMOUNT);
                 m_inBatch.Writer.Write(localizedRevenue);
                 sendIfNeeded();
             }
@@ -574,13 +584,11 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
-
-                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_TIMESTAMP);
-                m_inBatch.Writer.Write(timestamp);
-                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_PACKAGE);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.SUBSCRIPTION_REVENUE_TIMESTAMP);
+                m_inBatch.Writer.Write(m_frameTimestamp);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.SUBSCRIPTION_REVENUE_PACKAGE);
                 m_inBatch.Writer.Write(packageName);
-                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_USD_CENTS);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.SUBSCRIPTION_REVENUE_USD_CENTS);
                 m_inBatch.Writer.Write(revenueUsdCents);
                 sendIfNeeded();
             }
@@ -595,15 +603,13 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                uint timestamp = (uint)(DateTime.UtcNow - m_utcEpoch).TotalSeconds;
-
-                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_TIMESTAMP);
-                m_inBatch.Writer.Write(timestamp);
-                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_REVENUE_PACKAGE);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.SUBSCRIPTION_REVENUE_TIMESTAMP);
+                m_inBatch.Writer.Write(m_frameTimestamp);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.SUBSCRIPTION_REVENUE_PACKAGE);
                 m_inBatch.Writer.Write(packageName);
-                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_LOCAL_CURRENCY_NAME);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.SUBSCRIPTION_LOCAL_CURRENCY_NAME);
                 m_inBatch.Writer.Write(currencyCode);
-                m_inBatch.Writer.Write((ushort)KEvents.SUBSCRIPTION_LOCAL_CURRENCY_AMOUNT);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.SUBSCRIPTION_LOCAL_CURRENCY_AMOUNT);
                 m_inBatch.Writer.Write(localizedRevenue);
                 sendIfNeeded();
             }
@@ -707,7 +713,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write(eventType);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, eventType);
                 sendIfNeeded();
             }
         }
@@ -721,7 +727,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write(eventType);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, eventType);
                 m_inBatch.Writer.Write(str);
                 sendIfNeeded();
             }
@@ -736,7 +742,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write(eventType);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, eventType);
                 m_inBatch.Writer.Write(str);
                 sendIfNeeded();
             }
@@ -747,7 +753,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write(eventType);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, eventType);
                 m_inBatch.Writer.Write(value);
                 sendIfNeeded();
             }
@@ -759,7 +765,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write(eventType);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, eventType);
                 m_inBatch.Writer.Write(x);
                 m_inBatch.Writer.Write(y);
                 sendIfNeeded();
@@ -775,7 +781,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write(eventType);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, eventType);
                 m_inBatch.Writer.Write(secondsSinceEpoch);
 
                 sendIfNeeded();
@@ -787,7 +793,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write(eventType);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, eventType);
                 m_inBatch.Writer.Write(data);
                 sendIfNeeded();
             }
@@ -799,7 +805,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write(eventType);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, eventType);
                 byte b = flag ? (byte)2 : (byte)1;
                 m_inBatch.Writer.Write(b);
                 sendIfNeeded();
@@ -817,10 +823,10 @@ namespace Keewano.Internal
                 const uint BATCH_CUTTING_TRESHOLD = 50 * 1024;
 
                 int lastIdx = m_inBatch.CutPositions.Count - 1;
-                int lastCutPos = lastIdx == -1 ? 0 : m_inBatch.CutPositions[lastIdx];
+                int lastCutPos = lastIdx == -1 ? 0 : m_inBatch.CutPositions[lastIdx].Pos;
 
                 if (currentBatchSize - lastCutPos >= BATCH_CUTTING_TRESHOLD)
-                    m_inBatch.CutPositions.Add(currentBatchSize);
+                    m_inBatch.CutPositions.Add(new CutPoint { Pos = currentBatchSize, LastEventTime = m_frameTimestamp });
 
                 m_readyToSendEvent.Set();
             }
@@ -853,7 +859,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write((ushort)KEvents.ITEMS_EXCHANGE);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.ITEMS_EXCHANGE);
                 m_inBatch.Writer.Write(exchangePoint);
                 writeItems(m_inBatch.Writer, from);
                 writeItems(m_inBatch.Writer, to);
@@ -869,7 +875,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write((ushort)KEvents.ITEMS_RESET);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.ITEMS_RESET);
                 m_inBatch.Writer.Write(location);
                 writeItems(m_inBatch.Writer, items);
                 sendIfNeeded();
@@ -884,7 +890,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write((ushort)KEvents.ITEMS_PURCHASED_GRANT);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.ITEMS_PURCHASED_GRANT);
                 m_inBatch.Writer.Write(productId);
                 writeItems(m_inBatch.Writer, items);
                 sendIfNeeded();
@@ -899,7 +905,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write((ushort)KEvents.ITEMS_AD_GRANTED);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.ITEMS_AD_GRANTED);
                 m_inBatch.Writer.Write(placement);
                 writeItems(m_inBatch.Writer, items);
                 sendIfNeeded();
@@ -914,7 +920,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write((ushort)KEvents.ITEMS_SUBSCRIPTION_GRANTED);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.ITEMS_SUBSCRIPTION_GRANTED);
                 m_inBatch.Writer.Write(packageName);
                 writeItems(m_inBatch.Writer, items);
                 sendIfNeeded();
@@ -944,7 +950,7 @@ namespace Keewano.Internal
             lock (m_swapLock)
             {
                 markBatchStartIfNeeded();
-                m_inBatch.Writer.Write((ushort)KEvents.PRE_SDK_REGISTRATION_DATE);
+                writeEventId(m_inBatch.Writer, m_frameTimestamp, (ushort)KEvents.PRE_SDK_REGISTRATION_DATE);
                 m_inBatch.Writer.Write(secondsSinceEpoch);
                 sendIfNeeded();
             }
@@ -992,12 +998,13 @@ namespace Keewano.Internal
                         w.Write(pair.Key);
                         w.Write(pair.Value);
                     }
+                    fs.Flush(true);
                 }
 
                 if (File.Exists(filePath))
-                    File.Delete(filePath);
-
-                File.Move(tempFilePath, filePath);
+                    File.Replace(tempFilePath, filePath, null);
+                else
+                    File.Move(tempFilePath, filePath);
             }
             catch (Exception)
             {

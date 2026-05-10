@@ -7,7 +7,7 @@ namespace Keewano.Internal
 {
     class KSerializer
     {
-        const uint BATCH_FORMAT_VERSION = 1;
+        public const uint CURRENT_BATCH_VERSION = 2;
         const int BATCH_FOURCC = 0x57554242; //KWUB
 
         static void writeGuid(FileStream fs, Guid guid)
@@ -57,7 +57,7 @@ namespace Keewano.Internal
                 {
                     //FourCC
                     w.Write(BATCH_FOURCC);
-                    w.Write(BATCH_FORMAT_VERSION);
+                    w.Write(CURRENT_BATCH_VERSION);
 
                     writeGuid(fs, batch.UserId);
                     writeGuid(fs, batch.DataSessionId);
@@ -96,10 +96,11 @@ namespace Keewano.Internal
                     if (fourcc != BATCH_FOURCC)
                         return false;
 
-                    uint format_version = r.ReadUInt32();
-                    if (format_version != BATCH_FORMAT_VERSION)
+                    uint batch_version = r.ReadUInt32();
+                    if (batch_version != 1 && batch_version != CURRENT_BATCH_VERSION)
                         return false;
 
+                    dst.BatchVersion = batch_version;
                     dst.UserId = readGuid(fs);
                     dst.DataSessionId = readGuid(fs);
                     dst.BatchNum = r.ReadInt32();
