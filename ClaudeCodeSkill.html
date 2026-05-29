@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.16.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Keewano Unity SDK: Class Hierarchy</title>
+<title>Keewano Unity SDK: AI-Assisted Integration with Claude Code</title>
 <link rel="icon" href="KeewanoLogo.svg" type="image/x-icon" />
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -112,7 +112,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('hierarchy.html','',''); });
+$(function(){initNavTree('ClaudeCodeSkill.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -137,22 +137,41 @@ $(function(){initNavTree('hierarchy.html','',''); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Class Hierarchy</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">AI-Assisted Integration with Claude Code </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">
-<p><a href="inherits.html">Go to the graphical class hierarchy</a></p>
-This inheritance list is sorted roughly, but not completely, alphabetically:</div><div class="directory">
-<div class="levels">[detail level <span onclick="javascript:dynsection.toggleLevel(1);">1</span><span onclick="javascript:dynsection.toggleLevel(2);">2</span>]</div><table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structKeewano_1_1Item.html" target="_self">Keewano.Item</a></td><td class="desc">Represents a game item with a unique identifier and a quantity </td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_1_" class="arrow" onclick="dynsection.toggleFolder('1_')"><span class="arrowhead opened"></span></span><span class="icona"><span class="icon">C</span></span><b>MonoBehaviour</b></td><td class="desc"></td></tr>
-<tr id="row_1_0_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classKeewanoSDK.html" target="_self">KeewanoSDK</a></td><td class="desc"></td></tr>
-<tr id="row_1_1_" class="odd"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classKeewanoWindow.html" target="_self">KeewanoWindow</a></td><td class="desc">Unity Component to track opening and closing windows and popups </td></tr>
-</table>
-</div><!-- directory -->
-</div><!-- contents -->
+<div class="textblock"><h1 class="doxsection"><a class="anchor" id="claude_code_overview"></a>
+Overview</h1>
+<p>Keewano publishes an official <a href="https://claude.com/claude-code">Claude Code</a> skill that turns Claude into a proactive integration partner for the Keewano Unity SDK. Once installed, Claude surveys your Unity project for instrumentation gaps, proposes concrete event reports at specific file/line locations, flags anti-patterns in existing usage, and helps you produce an event stream that reads like the player's story.</p>
+<p>The skill is optional. The Keewano Unity SDK itself does not require it; install only if your team uses Claude Code.</p>
+<h1 class="doxsection"><a class="anchor" id="claude_code_install"></a>
+Installation</h1>
+<p>The skill lives in its own GitHub repository: <a href="https://github.com/Keewano/Keewano-UnitySDK-ClaudeCode-Skill">https://github.com/Keewano/Keewano-UnitySDK-ClaudeCode-Skill</a>.</p>
+<p>Copy the <span class="tt">keewano-unity-sdk/</span> folder from the repo into Claude Code's skills directory.</p>
+<p><b>Project-scoped</b> (versioned with your game; available to everyone on the team running Claude Code in the project): </p><div class="fragment"><div class="line">&lt;your-unity-project&gt;/.claude/skills/keewano-unity-sdk/SKILL.md</div>
+</div><!-- fragment --><p><b>User-scoped</b> (available across all your Claude Code sessions, in any project): </p><div class="fragment"><div class="line">~/.claude/skills/keewano-unity-sdk/SKILL.md</div>
+</div><!-- fragment --><p>After copying, restart Claude Code (or start a new session) so it loads the skill. Claude auto-activates the skill when you work on Keewano-related code.</p>
+<h1 class="doxsection"><a class="anchor" id="claude_code_behaviors"></a>
+What Claude Does With It</h1>
+<p>Once active, Claude understands:</p>
+<ul>
+<li>The Keewano data model and reporting patterns: small atomic events as a temporal narrative, scoped opener/closer pairs (windows, levels, encounters), item exchanges, IAP server-validation requirements.</li>
+<li>Where in a Unity codebase analytics belong: IAP managers, ad mediation handlers, tutorial controllers, level managers, virtual economy code, custom popups.</li>
+<li>Anti-patterns to flag in existing instrumentation: pre-aggregated summary events, raw-store-callback IAP reporting, direction-only <span class="tt">loc</span> strings, hand-edited generated files, generic GameObject names that land in the stream verbatim.</li>
+<li>The custom-events workflow: writing JSONs in <span class="tt">Assets/KeewanoCustomEvents/</span> and triggering codegen via the Custom Events Editor's Save button.</li>
+</ul>
+<p>Claude proposes concrete edits with file/line citations, asks for context it can't infer from the code, and stays additive, instrumenting alongside your existing logic rather than redesigning your architecture. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

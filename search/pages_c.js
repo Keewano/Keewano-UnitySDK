@@ -18,6 +18,7 @@ var searchData=
   ['description_15',['Description',['../install_campaign.html#campaign_description',1,'Description'],['../DummyGameIntegration.html#GameDescription',1,'Game Description']]],
   ['design_20principles_16',['Design Principles',['../index.html#design-principles',1,'']]],
   ['diagram_17',['Flow Diagram',['../InAppPurchases.html#iap_flow_diagram',1,'']]],
-  ['don_20t_20call_20for_20new_20users_18',['Don&apos;t Call for New Users',['../ExistingGameIntegration.html#existing_warn_new_users',1,'']]],
-  ['double_20reward_19',['Scenario 4: Daily Bonus - Watch to Double Reward',['../AdRevenue.html#ad_scenario_daily_bonus',1,'']]]
+  ['does_20with_20it_18',['What Claude Does With It',['../ClaudeCodeSkill.html#claude_code_behaviors',1,'']]],
+  ['don_20t_20call_20for_20new_20users_19',['Don&apos;t Call for New Users',['../ExistingGameIntegration.html#existing_warn_new_users',1,'']]],
+  ['double_20reward_20',['Scenario 4: Daily Bonus - Watch to Double Reward',['../AdRevenue.html#ad_scenario_daily_bonus',1,'']]]
 ];

@@ -228,6 +228,11 @@ var NAVTREE =
         [ "Don't Call for New Users", "ExistingGameIntegration.html#existing_warn_new_users", null ]
       ] ]
     ] ],
+    [ "AI-Assisted Integration with Claude Code", "ClaudeCodeSkill.html", [
+      [ "Overview", "ClaudeCodeSkill.html#claude_code_overview", null ],
+      [ "Installation", "ClaudeCodeSkill.html#claude_code_install", null ],
+      [ "What Claude Does With It", "ClaudeCodeSkill.html#claude_code_behaviors", null ]
+    ] ],
     [ "Package Members", "namespacemembers.html", [
       [ "All", "namespacemembers.html", null ],
       [ "Enumerations", "namespacemembers_enum.html", null ]
